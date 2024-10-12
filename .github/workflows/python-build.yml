@@ -10,7 +10,6 @@ on:
       - main
       - master
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -47,6 +46,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set Git committer identity
+        run: |
+          git config --global user.email "p_srivastav@outlook.com"
+          git config --global user.name "Prashant Srivastav"
 
       - name: Tag the release
         id: tag
