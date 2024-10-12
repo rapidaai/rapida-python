@@ -1,0 +1,3 @@
+[submodule "rapida/artifacts/internal"]
+	path = rapida/artifacts/internal
+	url = git@github.com:lexatic/internal-bridge.git

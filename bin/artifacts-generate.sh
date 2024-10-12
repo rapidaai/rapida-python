@@ -1,12 +1,9 @@
-# python3 -m grpc_tools.protoc -I rapida/artifacts/protos --pyi_out=rapida/artifacts/protos --python_out=rapida/artifacts/protos/ --grpc_python_out=rapida/artifacts/protos/ rapida/artifacts/protos/*.proto
-
-
 python3 -m grpc.tools.protoc \
-    -I ./rapida/artifacts/protos \
+    -I ./rapida/artifacts/internal \
     --pyi_out=./rapida/artifacts/protos \
     --python_out=./rapida/artifacts/protos \
     --grpc_python_out=./rapida/artifacts/protos \
-    ./rapida/artifacts/protos/*.proto
+    ./rapida/artifacts/internal/*.proto
 
 # Find all .py files and replace the import statement
 find "rapida/artifacts/protos/" -name '*.py' -exec sed -i.bak 's/import common_pb2 as common__pb2/import rapida.artifacts.protos.common_pb2 as common__pb2/g' {} +
