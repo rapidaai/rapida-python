@@ -91,12 +91,12 @@ class RapidaEndpointClient(RapidaClient):
         rapida_endpoint, rapida_endpoint_version = endpoint
         if rapida_endpoint is None:
             raise Exception(
-                "The endpoint key is required. Please provide a endpoint key.",
+                "The endpoint id is required. Please provide a endpoint id.",
             )
 
         if rapida_endpoint_version is None:
             warnings.warn(
-                "The version is required. Default latest will be used.",
+                "The version is optional. Default latest will be used.",
             )
             return rapida_endpoint, "latest"
         return rapida_endpoint, rapida_endpoint_version
@@ -255,7 +255,7 @@ class RapidaGatewayClient(RapidaClient):
         for v in tools:
             tool_definitions.append(v.to_tool_definition())
 
-        return await self.rapida_bridge.chat(
+        return await self.rapida_bridge.make_chat_call(
             cred=credentials,
             provider=provider,
             model=model,
@@ -294,7 +294,7 @@ class RapidaGatewayClient(RapidaClient):
         for v in tools:
             tool_definitions.append(v.to_tool_definition())
 
-        async for response in self.rapida_bridge.chat_stream(
+        async for response in self.rapida_bridge.make_chat_stream(
             cred=credentials,
             provider=provider,
             model=model,
@@ -316,7 +316,7 @@ class RapidaGatewayClient(RapidaClient):
         meta: Mapping[str, str],
     ):
 
-        return await self.rapida_bridge.generate(
+        return await self.rapida_bridge.make_generate_call(
             cred=cred,
             provider=provider,
             model=model,
@@ -335,7 +335,7 @@ class RapidaGatewayClient(RapidaClient):
         model_parameters: Mapping[str, str],
         meta: Mapping[str, str],
     ):
-        return await self.rapida_bridge.embedding(
+        return await self.rapida_bridge.make_embedding_call(
             cred=cred,
             provider=provider,
             model=model,
@@ -360,4 +360,29 @@ class RapidaAssistantClient(RapidaClient):
             rapida_region=options.rapida_region.get(),
             rapida_environment=options.rapida_environment.get(),
             rapida_is_secure=options.is_secure,
+            rapida_source=options.rapida_source.get(),
         )
+
+    def _assistant_params(
+            self,
+            assistant: Tuple[int, Union[str, None]],
+    ) -> Tuple[int, str]:
+        assistant_id, assistant_version = assistant
+        if assistant_id is None:
+            raise Exception(
+                "The assistant id is required. Please provide a assistant id.",
+            )
+
+        if assistant_version is None:
+            warnings.warn(
+                "The version is optional. Default latest will be used.",
+            )
+            return assistant_id, "latest"
+        return assistant_id, assistant_version
+
+    async def initiate_assistant_deployment(self,
+                                            arguments: Optional[Dict[str, Any]] = None,
+                                            metadata: Optional[Dict[str, Any]] = None,
+                                            options: Optional[Dict[str, Any]] = None):
+        pass
+

@@ -152,7 +152,7 @@ class RapidaBridge(GRPCBridge):
             response, invoker_api_pb2.UpdateResponse(), ignore_unknown_fields=True
         )
 
-    async def chat(
+    async def make_chat_call(
         self,
         cred: Dict,
         provider: str,
@@ -216,7 +216,7 @@ class RapidaBridge(GRPCBridge):
             response, integration_api_pb2.ChatResponse(), ignore_unknown_fields=True
         )
 
-    async def generate(
+    async def make_generate_call(
         self,
         cred: Dict,
         provider: str,
@@ -278,7 +278,7 @@ class RapidaBridge(GRPCBridge):
             response, integration_api_pb2.GenerateResponse(), ignore_unknown_fields=True
         )
 
-    async def embedding(
+    async def make_embedding_call(
         self,
         cred: Dict,
         provider: str,
@@ -324,7 +324,7 @@ class RapidaBridge(GRPCBridge):
             ignore_unknown_fields=True,
         )
 
-    async def chat_stream(
+    async def make_chat_stream(
         self,
         cred: Dict,
         provider: str,

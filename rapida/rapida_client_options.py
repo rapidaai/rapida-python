@@ -46,10 +46,10 @@ class RapidaClientOptions:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        endpoint_url: Optional[str] = None,
         environment: Optional[RapidaEnvironment] = RapidaEnvironment.PRODUCTION,
         region: Optional[RapidaRegion] = RapidaRegion.ALL,
         is_secure: bool = True,
+        endpoint_url: Optional[str] = None,
         assistant_url: Optional[str] = None,
         gateway_url: Optional[str] = None,
     ):
