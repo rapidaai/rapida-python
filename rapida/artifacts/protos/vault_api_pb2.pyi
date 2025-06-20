@@ -4,7 +4,8 @@ import rapida.artifacts.protos.common_pb2 as _common_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from collections.abc import Iterable as _Iterable, Mapping as _Mapping
+from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -141,3 +142,25 @@ class GetAllOrganizationCredentialRequest(_message.Message):
     paginate: _common_pb2.Paginate
     criterias: _containers.RepeatedCompositeFieldContainer[_common_pb2.Criteria]
     def __init__(self, paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ...) -> None: ...
+
+class GetOauth2VaultCredentialRequest(_message.Message):
+    __slots__ = ("vaultId", "providerId", "organizationId")
+    VAULTID_FIELD_NUMBER: _ClassVar[int]
+    PROVIDERID_FIELD_NUMBER: _ClassVar[int]
+    ORGANIZATIONID_FIELD_NUMBER: _ClassVar[int]
+    vaultId: int
+    providerId: int
+    organizationId: int
+    def __init__(self, vaultId: _Optional[int] = ..., providerId: _Optional[int] = ..., organizationId: _Optional[int] = ...) -> None: ...
+
+class GetOauth2VaultCredentialResponse(_message.Message):
+    __slots__ = ("code", "success", "data", "error")
+    CODE_FIELD_NUMBER: _ClassVar[int]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    DATA_FIELD_NUMBER: _ClassVar[int]
+    ERROR_FIELD_NUMBER: _ClassVar[int]
+    code: int
+    success: bool
+    data: VaultCredential
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[VaultCredential, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...

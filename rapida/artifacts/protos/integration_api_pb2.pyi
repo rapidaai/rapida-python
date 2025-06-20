@@ -4,7 +4,8 @@ from google.protobuf import any_pb2 as _any_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from collections.abc import Iterable as _Iterable, Mapping as _Mapping
+from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -52,12 +53,16 @@ class FunctionParameter(_message.Message):
     def __init__(self, required: _Optional[_Iterable[str]] = ..., type: _Optional[str] = ..., properties: _Optional[_Mapping[str, FunctionParameterProperty]] = ...) -> None: ...
 
 class FunctionParameterProperty(_message.Message):
-    __slots__ = ("type", "description")
+    __slots__ = ("type", "description", "enum", "items")
     TYPE_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
+    ENUM_FIELD_NUMBER: _ClassVar[int]
+    ITEMS_FIELD_NUMBER: _ClassVar[int]
     type: str
     description: str
-    def __init__(self, type: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
+    enum: _containers.RepeatedScalarFieldContainer[str]
+    items: FunctionParameter
+    def __init__(self, type: _Optional[str] = ..., description: _Optional[str] = ..., enum: _Optional[_Iterable[str]] = ..., items: _Optional[_Union[FunctionParameter, _Mapping]] = ...) -> None: ...
 
 class ModelParameter(_message.Message):
     __slots__ = ("key", "value", "type", "place")
@@ -139,6 +144,13 @@ class Reranking(_message.Message):
 
 class RerankingRequest(_message.Message):
     __slots__ = ("credential", "model", "version", "query", "content", "modelParameters", "additionalData")
+    class ContentEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: int
+        value: _common_pb2.Content
+        def __init__(self, key: _Optional[int] = ..., value: _Optional[_Union[_common_pb2.Content, _Mapping]] = ...) -> None: ...
     class AdditionalDataEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -156,11 +168,11 @@ class RerankingRequest(_message.Message):
     credential: Credential
     model: str
     version: str
-    query: _common_pb2.Content
-    content: _containers.RepeatedCompositeFieldContainer[_common_pb2.Content]
+    query: str
+    content: _containers.MessageMap[int, _common_pb2.Content]
     modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
     additionalData: _containers.ScalarMap[str, str]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., query: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., content: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., query: _Optional[str] = ..., content: _Optional[_Mapping[int, _common_pb2.Content]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class RerankingResponse(_message.Message):
     __slots__ = ("code", "success", "requestId", "data", "error", "metrics")

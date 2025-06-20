@@ -5,7 +5,8 @@ from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from collections.abc import Iterable as _Iterable, Mapping as _Mapping
+from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -156,7 +157,7 @@ class GetAllKnowledgeDocumentResponse(_message.Message):
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[KnowledgeDocument, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
 
 class CreateKnowledgeDocumentRequest(_message.Message):
-    __slots__ = ("knowledgeId", "documentSource", "dataSource", "contents", "preProcess", "separator", "maxChunkSize", "chunkOverlap", "name", "description")
+    __slots__ = ("knowledgeId", "documentSource", "dataSource", "contents", "preProcess", "separator", "maxChunkSize", "chunkOverlap", "name", "description", "documentStructure")
     class PRE_PROCESS(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         AUTOMATIC: _ClassVar[CreateKnowledgeDocumentRequest.PRE_PROCESS]
@@ -179,6 +180,7 @@ class CreateKnowledgeDocumentRequest(_message.Message):
     CHUNKOVERLAP_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
+    DOCUMENTSTRUCTURE_FIELD_NUMBER: _ClassVar[int]
     knowledgeId: int
     documentSource: CreateKnowledgeDocumentRequest.DOCUMENT_SOURCE
     dataSource: str
@@ -189,7 +191,8 @@ class CreateKnowledgeDocumentRequest(_message.Message):
     chunkOverlap: int
     name: str
     description: str
-    def __init__(self, knowledgeId: _Optional[int] = ..., documentSource: _Optional[_Union[CreateKnowledgeDocumentRequest.DOCUMENT_SOURCE, str]] = ..., dataSource: _Optional[str] = ..., contents: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., preProcess: _Optional[_Union[CreateKnowledgeDocumentRequest.PRE_PROCESS, str]] = ..., separator: _Optional[str] = ..., maxChunkSize: _Optional[int] = ..., chunkOverlap: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
+    documentStructure: str
+    def __init__(self, knowledgeId: _Optional[int] = ..., documentSource: _Optional[_Union[CreateKnowledgeDocumentRequest.DOCUMENT_SOURCE, str]] = ..., dataSource: _Optional[str] = ..., contents: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., preProcess: _Optional[_Union[CreateKnowledgeDocumentRequest.PRE_PROCESS, str]] = ..., separator: _Optional[str] = ..., maxChunkSize: _Optional[int] = ..., chunkOverlap: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., documentStructure: _Optional[str] = ...) -> None: ...
 
 class CreateKnowledgeDocumentResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error", "paginated")
@@ -206,56 +209,68 @@ class CreateKnowledgeDocumentResponse(_message.Message):
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[KnowledgeDocument, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
 
 class KnowledgeDocumentSegment(_message.Message):
-    __slots__ = ("knowledgeDocumentId", "position", "content", "answer", "wordCount", "tokenCount", "hitCount", "keywords", "indexNodeId", "indexNodeHash", "enabled", "disabledAt", "disabledBy", "status", "indexingAt", "completedAt", "error", "stoppedAt")
-    KNOWLEDGEDOCUMENTID_FIELD_NUMBER: _ClassVar[int]
-    POSITION_FIELD_NUMBER: _ClassVar[int]
-    CONTENT_FIELD_NUMBER: _ClassVar[int]
-    ANSWER_FIELD_NUMBER: _ClassVar[int]
-    WORDCOUNT_FIELD_NUMBER: _ClassVar[int]
-    TOKENCOUNT_FIELD_NUMBER: _ClassVar[int]
-    HITCOUNT_FIELD_NUMBER: _ClassVar[int]
-    KEYWORDS_FIELD_NUMBER: _ClassVar[int]
-    INDEXNODEID_FIELD_NUMBER: _ClassVar[int]
-    INDEXNODEHASH_FIELD_NUMBER: _ClassVar[int]
-    ENABLED_FIELD_NUMBER: _ClassVar[int]
-    DISABLEDAT_FIELD_NUMBER: _ClassVar[int]
-    DISABLEDBY_FIELD_NUMBER: _ClassVar[int]
-    STATUS_FIELD_NUMBER: _ClassVar[int]
-    INDEXINGAT_FIELD_NUMBER: _ClassVar[int]
-    COMPLETEDAT_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    STOPPEDAT_FIELD_NUMBER: _ClassVar[int]
-    knowledgeDocumentId: int
-    position: int
-    content: str
-    answer: str
-    wordCount: int
-    tokenCount: int
-    hitCount: int
-    keywords: _containers.RepeatedScalarFieldContainer[str]
-    indexNodeId: str
-    indexNodeHash: str
-    enabled: bool
-    disabledAt: _timestamp_pb2.Timestamp
-    disabledBy: str
-    status: str
-    indexingAt: _timestamp_pb2.Timestamp
-    completedAt: _timestamp_pb2.Timestamp
-    error: str
-    stoppedAt: _timestamp_pb2.Timestamp
-    def __init__(self, knowledgeDocumentId: _Optional[int] = ..., position: _Optional[int] = ..., content: _Optional[str] = ..., answer: _Optional[str] = ..., wordCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., hitCount: _Optional[int] = ..., keywords: _Optional[_Iterable[str]] = ..., indexNodeId: _Optional[str] = ..., indexNodeHash: _Optional[str] = ..., enabled: bool = ..., disabledAt: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., disabledBy: _Optional[str] = ..., status: _Optional[str] = ..., indexingAt: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., completedAt: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., error: _Optional[str] = ..., stoppedAt: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    __slots__ = ("index", "document_hash", "document_id", "text", "metadata", "entities")
+    class Metadata(_message.Message):
+        __slots__ = ("document_hash", "document_id", "knowledge_document_id", "knowledge_id", "project_id", "organization_id", "document_name")
+        DOCUMENT_HASH_FIELD_NUMBER: _ClassVar[int]
+        DOCUMENT_ID_FIELD_NUMBER: _ClassVar[int]
+        KNOWLEDGE_DOCUMENT_ID_FIELD_NUMBER: _ClassVar[int]
+        KNOWLEDGE_ID_FIELD_NUMBER: _ClassVar[int]
+        PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
+        ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
+        DOCUMENT_NAME_FIELD_NUMBER: _ClassVar[int]
+        document_hash: str
+        document_id: str
+        knowledge_document_id: int
+        knowledge_id: int
+        project_id: int
+        organization_id: int
+        document_name: str
+        def __init__(self, document_hash: _Optional[str] = ..., document_id: _Optional[str] = ..., knowledge_document_id: _Optional[int] = ..., knowledge_id: _Optional[int] = ..., project_id: _Optional[int] = ..., organization_id: _Optional[int] = ..., document_name: _Optional[str] = ...) -> None: ...
+    class Entities(_message.Message):
+        __slots__ = ("organizations", "dates", "products", "events", "people", "times", "quantities", "locations", "industries")
+        ORGANIZATIONS_FIELD_NUMBER: _ClassVar[int]
+        DATES_FIELD_NUMBER: _ClassVar[int]
+        PRODUCTS_FIELD_NUMBER: _ClassVar[int]
+        EVENTS_FIELD_NUMBER: _ClassVar[int]
+        PEOPLE_FIELD_NUMBER: _ClassVar[int]
+        TIMES_FIELD_NUMBER: _ClassVar[int]
+        QUANTITIES_FIELD_NUMBER: _ClassVar[int]
+        LOCATIONS_FIELD_NUMBER: _ClassVar[int]
+        INDUSTRIES_FIELD_NUMBER: _ClassVar[int]
+        organizations: _containers.RepeatedScalarFieldContainer[str]
+        dates: _containers.RepeatedScalarFieldContainer[str]
+        products: _containers.RepeatedScalarFieldContainer[str]
+        events: _containers.RepeatedScalarFieldContainer[str]
+        people: _containers.RepeatedScalarFieldContainer[str]
+        times: _containers.RepeatedScalarFieldContainer[str]
+        quantities: _containers.RepeatedScalarFieldContainer[str]
+        locations: _containers.RepeatedScalarFieldContainer[str]
+        industries: _containers.RepeatedScalarFieldContainer[str]
+        def __init__(self, organizations: _Optional[_Iterable[str]] = ..., dates: _Optional[_Iterable[str]] = ..., products: _Optional[_Iterable[str]] = ..., events: _Optional[_Iterable[str]] = ..., people: _Optional[_Iterable[str]] = ..., times: _Optional[_Iterable[str]] = ..., quantities: _Optional[_Iterable[str]] = ..., locations: _Optional[_Iterable[str]] = ..., industries: _Optional[_Iterable[str]] = ...) -> None: ...
+    INDEX_FIELD_NUMBER: _ClassVar[int]
+    DOCUMENT_HASH_FIELD_NUMBER: _ClassVar[int]
+    DOCUMENT_ID_FIELD_NUMBER: _ClassVar[int]
+    TEXT_FIELD_NUMBER: _ClassVar[int]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    ENTITIES_FIELD_NUMBER: _ClassVar[int]
+    index: str
+    document_hash: str
+    document_id: str
+    text: str
+    metadata: KnowledgeDocumentSegment.Metadata
+    entities: KnowledgeDocumentSegment.Entities
+    def __init__(self, index: _Optional[str] = ..., document_hash: _Optional[str] = ..., document_id: _Optional[str] = ..., text: _Optional[str] = ..., metadata: _Optional[_Union[KnowledgeDocumentSegment.Metadata, _Mapping]] = ..., entities: _Optional[_Union[KnowledgeDocumentSegment.Entities, _Mapping]] = ...) -> None: ...
 
 class GetAllKnowledgeDocumentSegmentRequest(_message.Message):
-    __slots__ = ("knowledgeId", "knowledgeDocumentId", "paginate", "criterias")
+    __slots__ = ("knowledgeId", "paginate", "criterias")
     KNOWLEDGEID_FIELD_NUMBER: _ClassVar[int]
-    KNOWLEDGEDOCUMENTID_FIELD_NUMBER: _ClassVar[int]
     PAGINATE_FIELD_NUMBER: _ClassVar[int]
     CRITERIAS_FIELD_NUMBER: _ClassVar[int]
     knowledgeId: int
-    knowledgeDocumentId: int
     paginate: _common_pb2.Paginate
     criterias: _containers.RepeatedCompositeFieldContainer[_common_pb2.Criteria]
-    def __init__(self, knowledgeId: _Optional[int] = ..., knowledgeDocumentId: _Optional[int] = ..., paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ...) -> None: ...
+    def __init__(self, knowledgeId: _Optional[int] = ..., paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ...) -> None: ...
 
 class GetAllKnowledgeDocumentSegmentResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error", "paginated")
@@ -280,3 +295,41 @@ class UpdateKnowledgeDetailRequest(_message.Message):
     name: str
     description: str
     def __init__(self, knowledgeId: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
+
+class UpdateKnowledgeDocumentSegmentRequest(_message.Message):
+    __slots__ = ("organizations", "dates", "products", "events", "people", "times", "quantities", "locations", "industries", "documentName", "documentId", "index")
+    ORGANIZATIONS_FIELD_NUMBER: _ClassVar[int]
+    DATES_FIELD_NUMBER: _ClassVar[int]
+    PRODUCTS_FIELD_NUMBER: _ClassVar[int]
+    EVENTS_FIELD_NUMBER: _ClassVar[int]
+    PEOPLE_FIELD_NUMBER: _ClassVar[int]
+    TIMES_FIELD_NUMBER: _ClassVar[int]
+    QUANTITIES_FIELD_NUMBER: _ClassVar[int]
+    LOCATIONS_FIELD_NUMBER: _ClassVar[int]
+    INDUSTRIES_FIELD_NUMBER: _ClassVar[int]
+    DOCUMENTNAME_FIELD_NUMBER: _ClassVar[int]
+    DOCUMENTID_FIELD_NUMBER: _ClassVar[int]
+    INDEX_FIELD_NUMBER: _ClassVar[int]
+    organizations: _containers.RepeatedScalarFieldContainer[str]
+    dates: _containers.RepeatedScalarFieldContainer[str]
+    products: _containers.RepeatedScalarFieldContainer[str]
+    events: _containers.RepeatedScalarFieldContainer[str]
+    people: _containers.RepeatedScalarFieldContainer[str]
+    times: _containers.RepeatedScalarFieldContainer[str]
+    quantities: _containers.RepeatedScalarFieldContainer[str]
+    locations: _containers.RepeatedScalarFieldContainer[str]
+    industries: _containers.RepeatedScalarFieldContainer[str]
+    documentName: str
+    documentId: str
+    index: str
+    def __init__(self, organizations: _Optional[_Iterable[str]] = ..., dates: _Optional[_Iterable[str]] = ..., products: _Optional[_Iterable[str]] = ..., events: _Optional[_Iterable[str]] = ..., people: _Optional[_Iterable[str]] = ..., times: _Optional[_Iterable[str]] = ..., quantities: _Optional[_Iterable[str]] = ..., locations: _Optional[_Iterable[str]] = ..., industries: _Optional[_Iterable[str]] = ..., documentName: _Optional[str] = ..., documentId: _Optional[str] = ..., index: _Optional[str] = ...) -> None: ...
+
+class DeleteKnowledgeDocumentSegmentRequest(_message.Message):
+    __slots__ = ("documentId", "index", "reason")
+    DOCUMENTID_FIELD_NUMBER: _ClassVar[int]
+    INDEX_FIELD_NUMBER: _ClassVar[int]
+    REASON_FIELD_NUMBER: _ClassVar[int]
+    documentId: str
+    index: str
+    reason: str
+    def __init__(self, documentId: _Optional[str] = ..., index: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...

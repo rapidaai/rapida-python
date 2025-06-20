@@ -3,7 +3,8 @@ import rapida.artifacts.protos.common_pb2 as _common_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from collections.abc import Iterable as _Iterable, Mapping as _Mapping
+from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -20,6 +21,32 @@ class KnowledgeConnectRequest(_message.Message):
     def __init__(self, state: _Optional[str] = ..., code: _Optional[str] = ..., scope: _Optional[str] = ..., connect: _Optional[str] = ...) -> None: ...
 
 class KnowledgeConnectResponse(_message.Message):
+    __slots__ = ("code", "success", "toolId", "redirectTo", "error")
+    CODE_FIELD_NUMBER: _ClassVar[int]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    TOOLID_FIELD_NUMBER: _ClassVar[int]
+    REDIRECTTO_FIELD_NUMBER: _ClassVar[int]
+    ERROR_FIELD_NUMBER: _ClassVar[int]
+    code: int
+    success: bool
+    toolId: int
+    redirectTo: str
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., toolId: _Optional[int] = ..., redirectTo: _Optional[str] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+
+class GeneralConnectRequest(_message.Message):
+    __slots__ = ("state", "code", "scope", "connect")
+    STATE_FIELD_NUMBER: _ClassVar[int]
+    CODE_FIELD_NUMBER: _ClassVar[int]
+    SCOPE_FIELD_NUMBER: _ClassVar[int]
+    CONNECT_FIELD_NUMBER: _ClassVar[int]
+    state: str
+    code: str
+    scope: str
+    connect: str
+    def __init__(self, state: _Optional[str] = ..., code: _Optional[str] = ..., scope: _Optional[str] = ..., connect: _Optional[str] = ...) -> None: ...
+
+class GeneralConnectResponse(_message.Message):
     __slots__ = ("code", "success", "toolId", "redirectTo", "error")
     CODE_FIELD_NUMBER: _ClassVar[int]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]

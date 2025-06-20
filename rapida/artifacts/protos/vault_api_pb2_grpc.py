@@ -5,10 +5,8 @@ import warnings
 
 import rapida.artifacts.protos.vault_api_pb2 as vault__api__pb2
 
-GRPC_GENERATED_VERSION = '1.65.4'
+GRPC_GENERATED_VERSION = '1.72.1'
 GRPC_VERSION = grpc.__version__
-EXPECTED_ERROR_RELEASE = '1.66.0'
-SCHEDULED_RELEASE_DATE = 'August 6, 2024'
 _version_not_supported = False
 
 try:
@@ -18,15 +16,12 @@ except ImportError:
     _version_not_supported = True
 
 if _version_not_supported:
-    warnings.warn(
+    raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
         + f' but the generated code in vault_api_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
-        + f' This warning will become an error in {EXPECTED_ERROR_RELEASE},'
-        + f' scheduled for release on {SCHEDULED_RELEASE_DATE}.',
-        RuntimeWarning
     )
 
 
@@ -64,6 +59,11 @@ class VaultServiceStub(object):
                 request_serializer=vault__api__pb2.GetProviderCredentialRequest.SerializeToString,
                 response_deserializer=vault__api__pb2.GetProviderCredentialResponse.FromString,
                 _registered_method=True)
+        self.GetOauth2VaultCredential = channel.unary_unary(
+                '/vault_api.VaultService/GetOauth2VaultCredential',
+                request_serializer=vault__api__pb2.GetOauth2VaultCredentialRequest.SerializeToString,
+                response_deserializer=vault__api__pb2.GetOauth2VaultCredentialResponse.FromString,
+                _registered_method=True)
 
 
 class VaultServiceServicer(object):
@@ -99,6 +99,12 @@ class VaultServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetOauth2VaultCredential(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_VaultServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -126,6 +132,11 @@ def add_VaultServiceServicer_to_server(servicer, server):
                     servicer.GetProviderCredential,
                     request_deserializer=vault__api__pb2.GetProviderCredentialRequest.FromString,
                     response_serializer=vault__api__pb2.GetProviderCredentialResponse.SerializeToString,
+            ),
+            'GetOauth2VaultCredential': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetOauth2VaultCredential,
+                    request_deserializer=vault__api__pb2.GetOauth2VaultCredentialRequest.FromString,
+                    response_serializer=vault__api__pb2.GetOauth2VaultCredentialResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -263,6 +274,33 @@ class VaultService(object):
             '/vault_api.VaultService/GetProviderCredential',
             vault__api__pb2.GetProviderCredentialRequest.SerializeToString,
             vault__api__pb2.GetProviderCredentialResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetOauth2VaultCredential(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/vault_api.VaultService/GetOauth2VaultCredential',
+            vault__api__pb2.GetOauth2VaultCredentialRequest.SerializeToString,
+            vault__api__pb2.GetOauth2VaultCredentialResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -3,12 +3,11 @@
 import grpc
 import warnings
 
+import rapida.artifacts.protos.common_pb2 as common__pb2
 import rapida.artifacts.protos.knowledge_api_pb2 as knowledge__api__pb2
 
-GRPC_GENERATED_VERSION = '1.65.4'
+GRPC_GENERATED_VERSION = '1.72.1'
 GRPC_VERSION = grpc.__version__
-EXPECTED_ERROR_RELEASE = '1.66.0'
-SCHEDULED_RELEASE_DATE = 'August 6, 2024'
 _version_not_supported = False
 
 try:
@@ -18,15 +17,12 @@ except ImportError:
     _version_not_supported = True
 
 if _version_not_supported:
-    warnings.warn(
+    raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
         + f' but the generated code in knowledge_api_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
-        + f' This warning will become an error in {EXPECTED_ERROR_RELEASE},'
-        + f' scheduled for release on {SCHEDULED_RELEASE_DATE}.',
-        RuntimeWarning
     )
 
 
@@ -78,6 +74,16 @@ class KnowledgeServiceStub(object):
                 '/knowledge_api.KnowledgeService/UpdateKnowledgeDetail',
                 request_serializer=knowledge__api__pb2.UpdateKnowledgeDetailRequest.SerializeToString,
                 response_deserializer=knowledge__api__pb2.GetKnowledgeResponse.FromString,
+                _registered_method=True)
+        self.UpdateKnowledgeDocumentSegment = channel.unary_unary(
+                '/knowledge_api.KnowledgeService/UpdateKnowledgeDocumentSegment',
+                request_serializer=knowledge__api__pb2.UpdateKnowledgeDocumentSegmentRequest.SerializeToString,
+                response_deserializer=common__pb2.BaseResponse.FromString,
+                _registered_method=True)
+        self.DeleteKnowledgeDocumentSegment = channel.unary_unary(
+                '/knowledge_api.KnowledgeService/DeleteKnowledgeDocumentSegment',
+                request_serializer=knowledge__api__pb2.DeleteKnowledgeDocumentSegmentRequest.SerializeToString,
+                response_deserializer=common__pb2.BaseResponse.FromString,
                 _registered_method=True)
 
 
@@ -132,6 +138,19 @@ class KnowledgeServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UpdateKnowledgeDocumentSegment(self, request, context):
+        """
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteKnowledgeDocumentSegment(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_KnowledgeServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -174,6 +193,16 @@ def add_KnowledgeServiceServicer_to_server(servicer, server):
                     servicer.UpdateKnowledgeDetail,
                     request_deserializer=knowledge__api__pb2.UpdateKnowledgeDetailRequest.FromString,
                     response_serializer=knowledge__api__pb2.GetKnowledgeResponse.SerializeToString,
+            ),
+            'UpdateKnowledgeDocumentSegment': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateKnowledgeDocumentSegment,
+                    request_deserializer=knowledge__api__pb2.UpdateKnowledgeDocumentSegmentRequest.FromString,
+                    response_serializer=common__pb2.BaseResponse.SerializeToString,
+            ),
+            'DeleteKnowledgeDocumentSegment': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteKnowledgeDocumentSegment,
+                    request_deserializer=knowledge__api__pb2.DeleteKnowledgeDocumentSegmentRequest.FromString,
+                    response_serializer=common__pb2.BaseResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -392,6 +421,60 @@ class KnowledgeService(object):
             '/knowledge_api.KnowledgeService/UpdateKnowledgeDetail',
             knowledge__api__pb2.UpdateKnowledgeDetailRequest.SerializeToString,
             knowledge__api__pb2.GetKnowledgeResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UpdateKnowledgeDocumentSegment(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/knowledge_api.KnowledgeService/UpdateKnowledgeDocumentSegment',
+            knowledge__api__pb2.UpdateKnowledgeDocumentSegmentRequest.SerializeToString,
+            common__pb2.BaseResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteKnowledgeDocumentSegment(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/knowledge_api.KnowledgeService/DeleteKnowledgeDocumentSegment',
+            knowledge__api__pb2.DeleteKnowledgeDocumentSegmentRequest.SerializeToString,
+            common__pb2.BaseResponse.FromString,
             options,
             channel_credentials,
             insecure,

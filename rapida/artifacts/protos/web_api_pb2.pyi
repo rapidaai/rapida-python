@@ -4,7 +4,8 @@ from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from collections.abc import Iterable as _Iterable, Mapping as _Mapping
+from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -62,17 +63,29 @@ class ProjectRole(_message.Message):
     projectName: str
     def __init__(self, id: _Optional[int] = ..., projectId: _Optional[int] = ..., role: _Optional[str] = ..., projectName: _Optional[str] = ...) -> None: ...
 
+class FeaturePermission(_message.Message):
+    __slots__ = ("id", "feature", "isEnable")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    FEATURE_FIELD_NUMBER: _ClassVar[int]
+    ISENABLE_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    feature: str
+    isEnable: bool
+    def __init__(self, id: _Optional[int] = ..., feature: _Optional[str] = ..., isEnable: bool = ...) -> None: ...
+
 class Authentication(_message.Message):
-    __slots__ = ("user", "token", "organizationRole", "projectRoles")
+    __slots__ = ("user", "token", "organizationRole", "projectRoles", "featurePermissions")
     USER_FIELD_NUMBER: _ClassVar[int]
     TOKEN_FIELD_NUMBER: _ClassVar[int]
     ORGANIZATIONROLE_FIELD_NUMBER: _ClassVar[int]
     PROJECTROLES_FIELD_NUMBER: _ClassVar[int]
+    FEATUREPERMISSIONS_FIELD_NUMBER: _ClassVar[int]
     user: _common_pb2.User
     token: Token
     organizationRole: OrganizationRole
     projectRoles: _containers.RepeatedCompositeFieldContainer[ProjectRole]
-    def __init__(self, user: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., token: _Optional[_Union[Token, _Mapping]] = ..., organizationRole: _Optional[_Union[OrganizationRole, _Mapping]] = ..., projectRoles: _Optional[_Iterable[_Union[ProjectRole, _Mapping]]] = ...) -> None: ...
+    featurePermissions: _containers.RepeatedCompositeFieldContainer[FeaturePermission]
+    def __init__(self, user: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., token: _Optional[_Union[Token, _Mapping]] = ..., organizationRole: _Optional[_Union[OrganizationRole, _Mapping]] = ..., projectRoles: _Optional[_Iterable[_Union[ProjectRole, _Mapping]]] = ..., featurePermissions: _Optional[_Iterable[_Union[FeaturePermission, _Mapping]]] = ...) -> None: ...
 
 class ScopedAuthentication(_message.Message):
     __slots__ = ("userId", "organizationId", "projectId", "status")

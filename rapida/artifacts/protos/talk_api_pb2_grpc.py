@@ -3,12 +3,11 @@
 import grpc
 import warnings
 
+import rapida.artifacts.protos.common_pb2 as common__pb2
 import talk_api_pb2 as talk__api__pb2
 
-GRPC_GENERATED_VERSION = '1.65.4'
+GRPC_GENERATED_VERSION = '1.72.1'
 GRPC_VERSION = grpc.__version__
-EXPECTED_ERROR_RELEASE = '1.66.0'
-SCHEDULED_RELEASE_DATE = 'August 6, 2024'
 _version_not_supported = False
 
 try:
@@ -18,15 +17,12 @@ except ImportError:
     _version_not_supported = True
 
 if _version_not_supported:
-    warnings.warn(
+    raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
         + f' but the generated code in talk_api_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
-        + f' This warning will become an error in {EXPECTED_ERROR_RELEASE},'
-        + f' scheduled for release on {SCHEDULED_RELEASE_DATE}.',
-        RuntimeWarning
     )
 
 
@@ -51,18 +47,33 @@ class TalkServiceStub(object):
                 _registered_method=True)
         self.GetAllAssistantConversation = channel.unary_unary(
                 '/talk_api.TalkService/GetAllAssistantConversation',
-                request_serializer=talk__api__pb2.GetAllAssistantConversationRequest.SerializeToString,
-                response_deserializer=talk__api__pb2.GetAllAssistantConversationResponse.FromString,
+                request_serializer=common__pb2.GetAllAssistantConversationRequest.SerializeToString,
+                response_deserializer=common__pb2.GetAllAssistantConversationResponse.FromString,
                 _registered_method=True)
         self.GetAllConversationMessage = channel.unary_unary(
                 '/talk_api.TalkService/GetAllConversationMessage',
-                request_serializer=talk__api__pb2.GetAllConversationMessageRequest.SerializeToString,
-                response_deserializer=talk__api__pb2.GetAllConversationMessageResponse.FromString,
+                request_serializer=common__pb2.GetAllConversationMessageRequest.SerializeToString,
+                response_deserializer=common__pb2.GetAllConversationMessageResponse.FromString,
                 _registered_method=True)
-        self.MessageFeedback = channel.unary_unary(
-                '/talk_api.TalkService/MessageFeedback',
-                request_serializer=talk__api__pb2.MessageFeedbackRequest.SerializeToString,
-                response_deserializer=talk__api__pb2.MessageFeedbackResponse.FromString,
+        self.CreateMessageMetric = channel.unary_unary(
+                '/talk_api.TalkService/CreateMessageMetric',
+                request_serializer=talk__api__pb2.CreateMessageMetricRequest.SerializeToString,
+                response_deserializer=talk__api__pb2.CreateMessageMetricResponse.FromString,
+                _registered_method=True)
+        self.CreateConversationMetric = channel.unary_unary(
+                '/talk_api.TalkService/CreateConversationMetric',
+                request_serializer=talk__api__pb2.CreateConversationMetricRequest.SerializeToString,
+                response_deserializer=talk__api__pb2.CreateConversationMetricResponse.FromString,
+                _registered_method=True)
+        self.InitiateAssistantTalk = channel.unary_unary(
+                '/talk_api.TalkService/InitiateAssistantTalk',
+                request_serializer=talk__api__pb2.InitiateAssistantTalkRequest.SerializeToString,
+                response_deserializer=talk__api__pb2.InitiateAssistantTalkResponse.FromString,
+                _registered_method=True)
+        self.InitiateBulkAssistantTalk = channel.unary_unary(
+                '/talk_api.TalkService/InitiateBulkAssistantTalk',
+                request_serializer=talk__api__pb2.InitiateBulkAssistantTalkRequest.SerializeToString,
+                response_deserializer=talk__api__pb2.InitiateBulkAssistantTalkResponse.FromString,
                 _registered_method=True)
 
 
@@ -93,7 +104,25 @@ class TalkServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def MessageFeedback(self, request, context):
+    def CreateMessageMetric(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateConversationMetric(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def InitiateAssistantTalk(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def InitiateBulkAssistantTalk(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -114,18 +143,33 @@ def add_TalkServiceServicer_to_server(servicer, server):
             ),
             'GetAllAssistantConversation': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllAssistantConversation,
-                    request_deserializer=talk__api__pb2.GetAllAssistantConversationRequest.FromString,
-                    response_serializer=talk__api__pb2.GetAllAssistantConversationResponse.SerializeToString,
+                    request_deserializer=common__pb2.GetAllAssistantConversationRequest.FromString,
+                    response_serializer=common__pb2.GetAllAssistantConversationResponse.SerializeToString,
             ),
             'GetAllConversationMessage': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllConversationMessage,
-                    request_deserializer=talk__api__pb2.GetAllConversationMessageRequest.FromString,
-                    response_serializer=talk__api__pb2.GetAllConversationMessageResponse.SerializeToString,
+                    request_deserializer=common__pb2.GetAllConversationMessageRequest.FromString,
+                    response_serializer=common__pb2.GetAllConversationMessageResponse.SerializeToString,
             ),
-            'MessageFeedback': grpc.unary_unary_rpc_method_handler(
-                    servicer.MessageFeedback,
-                    request_deserializer=talk__api__pb2.MessageFeedbackRequest.FromString,
-                    response_serializer=talk__api__pb2.MessageFeedbackResponse.SerializeToString,
+            'CreateMessageMetric': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateMessageMetric,
+                    request_deserializer=talk__api__pb2.CreateMessageMetricRequest.FromString,
+                    response_serializer=talk__api__pb2.CreateMessageMetricResponse.SerializeToString,
+            ),
+            'CreateConversationMetric': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateConversationMetric,
+                    request_deserializer=talk__api__pb2.CreateConversationMetricRequest.FromString,
+                    response_serializer=talk__api__pb2.CreateConversationMetricResponse.SerializeToString,
+            ),
+            'InitiateAssistantTalk': grpc.unary_unary_rpc_method_handler(
+                    servicer.InitiateAssistantTalk,
+                    request_deserializer=talk__api__pb2.InitiateAssistantTalkRequest.FromString,
+                    response_serializer=talk__api__pb2.InitiateAssistantTalkResponse.SerializeToString,
+            ),
+            'InitiateBulkAssistantTalk': grpc.unary_unary_rpc_method_handler(
+                    servicer.InitiateBulkAssistantTalk,
+                    request_deserializer=talk__api__pb2.InitiateBulkAssistantTalkRequest.FromString,
+                    response_serializer=talk__api__pb2.InitiateBulkAssistantTalkResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -207,8 +251,8 @@ class TalkService(object):
             request,
             target,
             '/talk_api.TalkService/GetAllAssistantConversation',
-            talk__api__pb2.GetAllAssistantConversationRequest.SerializeToString,
-            talk__api__pb2.GetAllAssistantConversationResponse.FromString,
+            common__pb2.GetAllAssistantConversationRequest.SerializeToString,
+            common__pb2.GetAllAssistantConversationResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -234,8 +278,8 @@ class TalkService(object):
             request,
             target,
             '/talk_api.TalkService/GetAllConversationMessage',
-            talk__api__pb2.GetAllConversationMessageRequest.SerializeToString,
-            talk__api__pb2.GetAllConversationMessageResponse.FromString,
+            common__pb2.GetAllConversationMessageRequest.SerializeToString,
+            common__pb2.GetAllConversationMessageResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -247,7 +291,7 @@ class TalkService(object):
             _registered_method=True)
 
     @staticmethod
-    def MessageFeedback(request,
+    def CreateMessageMetric(request,
             target,
             options=(),
             channel_credentials=None,
@@ -260,9 +304,90 @@ class TalkService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/talk_api.TalkService/MessageFeedback',
-            talk__api__pb2.MessageFeedbackRequest.SerializeToString,
-            talk__api__pb2.MessageFeedbackResponse.FromString,
+            '/talk_api.TalkService/CreateMessageMetric',
+            talk__api__pb2.CreateMessageMetricRequest.SerializeToString,
+            talk__api__pb2.CreateMessageMetricResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CreateConversationMetric(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/talk_api.TalkService/CreateConversationMetric',
+            talk__api__pb2.CreateConversationMetricRequest.SerializeToString,
+            talk__api__pb2.CreateConversationMetricResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def InitiateAssistantTalk(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/talk_api.TalkService/InitiateAssistantTalk',
+            talk__api__pb2.InitiateAssistantTalkRequest.SerializeToString,
+            talk__api__pb2.InitiateAssistantTalkResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def InitiateBulkAssistantTalk(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/talk_api.TalkService/InitiateBulkAssistantTalk',
+            talk__api__pb2.InitiateBulkAssistantTalkRequest.SerializeToString,
+            talk__api__pb2.InitiateBulkAssistantTalkResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -4,11 +4,10 @@ import grpc
 import warnings
 
 import assistant_api_pb2 as assistant__api__pb2
+import rapida.artifacts.protos.common_pb2 as common__pb2
 
-GRPC_GENERATED_VERSION = '1.65.4'
+GRPC_GENERATED_VERSION = '1.72.1'
 GRPC_VERSION = grpc.__version__
-EXPECTED_ERROR_RELEASE = '1.66.0'
-SCHEDULED_RELEASE_DATE = 'August 6, 2024'
 _version_not_supported = False
 
 try:
@@ -18,15 +17,12 @@ except ImportError:
     _version_not_supported = True
 
 if _version_not_supported:
-    warnings.warn(
+    raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
         + f' but the generated code in assistant_api_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
-        + f' This warning will become an error in {EXPECTED_ERROR_RELEASE},'
-        + f' scheduled for release on {SCHEDULED_RELEASE_DATE}.',
-        RuntimeWarning
     )
 
 
@@ -84,15 +80,30 @@ class AssistantServiceStub(object):
                 request_serializer=assistant__api__pb2.UpdateAssistantDetailRequest.SerializeToString,
                 response_deserializer=assistant__api__pb2.GetAssistantResponse.FromString,
                 _registered_method=True)
-        self.PersonalizeAssistant = channel.unary_unary(
-                '/assistant_api.AssistantService/PersonalizeAssistant',
-                request_serializer=assistant__api__pb2.PersonalizeAssistantRequest.SerializeToString,
-                response_deserializer=assistant__api__pb2.GetAssistantResponse.FromString,
-                _registered_method=True)
         self.GetAllAssistantMessage = channel.unary_unary(
                 '/assistant_api.AssistantService/GetAllAssistantMessage',
                 request_serializer=assistant__api__pb2.GetAllAssistantMessageRequest.SerializeToString,
                 response_deserializer=assistant__api__pb2.GetAllAssistantMessageResponse.FromString,
+                _registered_method=True)
+        self.GetAllAssistantConversation = channel.unary_unary(
+                '/assistant_api.AssistantService/GetAllAssistantConversation',
+                request_serializer=common__pb2.GetAllAssistantConversationRequest.SerializeToString,
+                response_deserializer=common__pb2.GetAllAssistantConversationResponse.FromString,
+                _registered_method=True)
+        self.GetAllConversationMessage = channel.unary_unary(
+                '/assistant_api.AssistantService/GetAllConversationMessage',
+                request_serializer=common__pb2.GetAllConversationMessageRequest.SerializeToString,
+                response_deserializer=common__pb2.GetAllConversationMessageResponse.FromString,
+                _registered_method=True)
+        self.CreateAssistantToolConfiguration = channel.unary_unary(
+                '/assistant_api.AssistantService/CreateAssistantToolConfiguration',
+                request_serializer=assistant__api__pb2.CreateAssistantToolConfigurationRequest.SerializeToString,
+                response_deserializer=assistant__api__pb2.GetAssistantResponse.FromString,
+                _registered_method=True)
+        self.GetAllAssistantTool = channel.unary_unary(
+                '/assistant_api.AssistantService/GetAllAssistantTool',
+                request_serializer=assistant__api__pb2.GetAllAssistantToolRequest.SerializeToString,
+                response_deserializer=assistant__api__pb2.GetAllAssistantToolResponse.FromString,
                 _registered_method=True)
 
 
@@ -154,13 +165,31 @@ class AssistantServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def PersonalizeAssistant(self, request, context):
+    def GetAllAssistantMessage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetAllAssistantMessage(self, request, context):
+    def GetAllAssistantConversation(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetAllConversationMessage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateAssistantToolConfiguration(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetAllAssistantTool(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -214,15 +243,30 @@ def add_AssistantServiceServicer_to_server(servicer, server):
                     request_deserializer=assistant__api__pb2.UpdateAssistantDetailRequest.FromString,
                     response_serializer=assistant__api__pb2.GetAssistantResponse.SerializeToString,
             ),
-            'PersonalizeAssistant': grpc.unary_unary_rpc_method_handler(
-                    servicer.PersonalizeAssistant,
-                    request_deserializer=assistant__api__pb2.PersonalizeAssistantRequest.FromString,
-                    response_serializer=assistant__api__pb2.GetAssistantResponse.SerializeToString,
-            ),
             'GetAllAssistantMessage': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllAssistantMessage,
                     request_deserializer=assistant__api__pb2.GetAllAssistantMessageRequest.FromString,
                     response_serializer=assistant__api__pb2.GetAllAssistantMessageResponse.SerializeToString,
+            ),
+            'GetAllAssistantConversation': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllAssistantConversation,
+                    request_deserializer=common__pb2.GetAllAssistantConversationRequest.FromString,
+                    response_serializer=common__pb2.GetAllAssistantConversationResponse.SerializeToString,
+            ),
+            'GetAllConversationMessage': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllConversationMessage,
+                    request_deserializer=common__pb2.GetAllConversationMessageRequest.FromString,
+                    response_serializer=common__pb2.GetAllConversationMessageResponse.SerializeToString,
+            ),
+            'CreateAssistantToolConfiguration': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateAssistantToolConfiguration,
+                    request_deserializer=assistant__api__pb2.CreateAssistantToolConfigurationRequest.FromString,
+                    response_serializer=assistant__api__pb2.GetAssistantResponse.SerializeToString,
+            ),
+            'GetAllAssistantTool': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllAssistantTool,
+                    request_deserializer=assistant__api__pb2.GetAllAssistantToolRequest.FromString,
+                    response_serializer=assistant__api__pb2.GetAllAssistantToolResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -479,33 +523,6 @@ class AssistantService(object):
             _registered_method=True)
 
     @staticmethod
-    def PersonalizeAssistant(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/assistant_api.AssistantService/PersonalizeAssistant',
-            assistant__api__pb2.PersonalizeAssistantRequest.SerializeToString,
-            assistant__api__pb2.GetAssistantResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def GetAllAssistantMessage(request,
             target,
             options=(),
@@ -522,6 +539,229 @@ class AssistantService(object):
             '/assistant_api.AssistantService/GetAllAssistantMessage',
             assistant__api__pb2.GetAllAssistantMessageRequest.SerializeToString,
             assistant__api__pb2.GetAllAssistantMessageResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllAssistantConversation(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.AssistantService/GetAllAssistantConversation',
+            common__pb2.GetAllAssistantConversationRequest.SerializeToString,
+            common__pb2.GetAllAssistantConversationResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllConversationMessage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.AssistantService/GetAllConversationMessage',
+            common__pb2.GetAllConversationMessageRequest.SerializeToString,
+            common__pb2.GetAllConversationMessageResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CreateAssistantToolConfiguration(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.AssistantService/CreateAssistantToolConfiguration',
+            assistant__api__pb2.CreateAssistantToolConfigurationRequest.SerializeToString,
+            assistant__api__pb2.GetAssistantResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllAssistantTool(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.AssistantService/GetAllAssistantTool',
+            assistant__api__pb2.GetAllAssistantToolRequest.SerializeToString,
+            assistant__api__pb2.GetAllAssistantToolResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+
+class ToolServiceStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.GetAllTool = channel.unary_unary(
+                '/assistant_api.ToolService/GetAllTool',
+                request_serializer=assistant__api__pb2.GetAllToolRequest.SerializeToString,
+                response_deserializer=assistant__api__pb2.GetAllToolResponse.FromString,
+                _registered_method=True)
+        self.GetTool = channel.unary_unary(
+                '/assistant_api.ToolService/GetTool',
+                request_serializer=assistant__api__pb2.GetToolRequest.SerializeToString,
+                response_deserializer=assistant__api__pb2.GetToolResponse.FromString,
+                _registered_method=True)
+
+
+class ToolServiceServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def GetAllTool(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetTool(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_ToolServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'GetAllTool': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllTool,
+                    request_deserializer=assistant__api__pb2.GetAllToolRequest.FromString,
+                    response_serializer=assistant__api__pb2.GetAllToolResponse.SerializeToString,
+            ),
+            'GetTool': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetTool,
+                    request_deserializer=assistant__api__pb2.GetToolRequest.FromString,
+                    response_serializer=assistant__api__pb2.GetToolResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'assistant_api.ToolService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+    server.add_registered_method_handlers('assistant_api.ToolService', rpc_method_handlers)
+
+
+ # This class is part of an EXPERIMENTAL API.
+class ToolService(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def GetAllTool(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.ToolService/GetAllTool',
+            assistant__api__pb2.GetAllToolRequest.SerializeToString,
+            assistant__api__pb2.GetAllToolResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetTool(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.ToolService/GetTool',
+            assistant__api__pb2.GetToolRequest.SerializeToString,
+            assistant__api__pb2.GetToolResponse.FromString,
             options,
             channel_credentials,
             insecure,

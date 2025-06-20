@@ -4,14 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-aiohttp="3.8.1"
-elastic-apm = "6.9.1"
-grpcio = "1.47.0"
-protobuf = "3.20.1"
-types-protobuf = "3.19.22"
-pydantic = "1.9.1"
-install = "*"
-grpcio-tools = "*"
+aiohttp = "3.12.13"
+grpc-interceptor = "0.15.4"
+grpcio = "1.72.1"
+grpcio-tools = "1.72.1"
+protobuf = "6.31.1"
+types-protobuf = "6.30.2.20250516"
+pydantic = "*"
+pillow = "*"
+invoke = "*"
 
 [dev-packages]
 pylint = "2.13.9"
