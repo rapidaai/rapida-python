@@ -22,8 +22,8 @@
 
 import mimetypes
 import re
+import typing
 
-from google.protobuf.any_pb2 import Any
 from google.protobuf.wrappers_pb2 import (
     StringValue as _StringValue,
     BytesValue,
@@ -34,6 +34,8 @@ import os
 from PIL import Image
 
 from rapida.exceptions.exceptions import RapidaException
+from google.protobuf.any_pb2 import Any
+from google.protobuf import wrappers_pb2, timestamp_pb2, duration_pb2, empty_pb2, struct_pb2, json_format
 
 
 def StringValue(_in: str) -> Any:
@@ -317,3 +319,53 @@ def URLValue(url: str) -> Any:
     any_message.Pack(string_value)
 
     return any_message
+
+
+def AnyToValue(any_value: Any) -> typing.Any:
+    if not any_value or not getattr(any_value, "type_url", None):
+        return None
+
+    type_map: dict[str, typing.Type] = {
+        "type.googleapis.com/google.protobuf.StringValue": wrappers_pb2.StringValue,
+        "type.googleapis.com/google.protobuf.Int32Value": wrappers_pb2.Int32Value,
+        "type.googleapis.com/google.protobuf.Int64Value": wrappers_pb2.Int64Value,
+        "type.googleapis.com/google.protobuf.UInt32Value": wrappers_pb2.UInt32Value,
+        "type.googleapis.com/google.protobuf.UInt64Value": wrappers_pb2.UInt64Value,
+        "type.googleapis.com/google.protobuf.FloatValue": wrappers_pb2.FloatValue,
+        "type.googleapis.com/google.protobuf.DoubleValue": wrappers_pb2.DoubleValue,
+        "type.googleapis.com/google.protobuf.BoolValue": wrappers_pb2.BoolValue,
+        "type.googleapis.com/google.protobuf.BytesValue": wrappers_pb2.BytesValue,
+        "type.googleapis.com/google.protobuf.Timestamp": timestamp_pb2.Timestamp,
+        "type.googleapis.com/google.protobuf.Duration": duration_pb2.Duration,
+        "type.googleapis.com/google.protobuf.Empty": empty_pb2.Empty,
+        "type.googleapis.com/google.protobuf.Struct": struct_pb2.Struct,
+    }
+
+    msg_class = type_map.get(any_value.type_url)
+    if msg_class:
+        msg = msg_class()
+        any_value.Unpack(msg)
+
+        if isinstance(msg, timestamp_pb2.Timestamp):
+            return msg.ToDatetime()
+        elif isinstance(msg, duration_pb2.Duration):
+            return msg.ToTimedelta()
+        elif isinstance(msg, empty_pb2.Empty):
+            return None
+        elif isinstance(msg, struct_pb2.Struct):
+            return json_format.MessageToDict(msg)
+        elif hasattr(msg, "value"):
+            return msg.value
+        else:
+            return json_format.MessageToDict(msg)
+    else:
+        return json_format.MessageToJson(any_value)
+
+
+def MapToDict(proto_map: typing.Mapping[str, Any]) -> dict[str, typing.Any]:
+    result: dict[str, typing.Any] = {}
+
+    for key, any_value in proto_map.items():
+        result[key] = AnyToValue(any_value)
+
+    return result

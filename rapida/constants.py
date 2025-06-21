@@ -29,5 +29,5 @@ HEADER_REGION_KEY = "x-rapida-region"
 
 
 ENDPOINT_URL = "connect.rapida.ai"
-ASSISTANT_URL = "assistant-01.rapida.ai"
+ASSISTANT_URL = "workflow-01.rapida.ai"
 GATEWAY_URL = "gateway-01.rapida.ai"

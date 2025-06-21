@@ -23,10 +23,11 @@
 import warnings
 from typing import AsyncIterator, Dict, List, Union, Optional, Tuple, Mapping
 
+from google.protobuf.json_format import ParseDict, MessageToDict
+
 from rapida.rapida_source import RapidaSource
 from rapida.client.rapida_bridge import RapidaBridge
 from rapida.client.response_wrapper import (
-    ToolDefinition,
     InvokeResponseWrapper,
     Message,
     ToolDefinition,
@@ -35,9 +36,11 @@ from rapida.rapida_client_options import RapidaClientOptions
 from rapida.exceptions import RapidaException
 from rapida.exceptions.exceptions import handle_request_exception
 from rapida.exceptions.exceptions import RapidaConfigurationException
-from rapida.artifacts.protos import common_pb2, integration_api_pb2
+from rapida.artifacts.protos import common_pb2, integration_api_pb2, talk_api_pb2
 from rapida.artifacts.protos.invoker_api_pb2 import InvokerError
 from google.protobuf.any_pb2 import Any
+
+from rapida.values import MapToDict
 
 
 class RapidaClient:
@@ -390,7 +393,8 @@ class RapidaAssistantClient(RapidaClient):
                                             params: Mapping[str, Any],
                                             arguments: Optional[Mapping[str, Any]] = None,
                                             metadata: Optional[Mapping[str, Any]] = None,
-                                            options: Optional[Mapping[str, Any]] = None):
+                                            options: Optional[Mapping[
+                                                str, Any]] = None) -> Dict | None:
         assistant_id, version = self._assistant_params(assistant)
         response = await self.rapida_bridge.make_initiate_assistant_talk(
             assistant_id,
@@ -402,46 +406,50 @@ class RapidaAssistantClient(RapidaClient):
             options,
 
         )
-
         if response.success:
-            return response
-
+            return MapToDict(response.data.items)
+        self.handle_assistant_exception(response.error)
         return None
 
+    async def initiate_bulk_assistant_deployment(self,
+                                                 assistant: Tuple[int, Union[str, None]],
+                                                 source: RapidaSource,
+                                                 params: List[Dict[str, Any]],
+                                                 arguments: Optional[Dict[str, Any]] = None,
+                                                 metadata: Optional[Dict[str, Any]] = None,
+                                                 options: Optional[Dict[str, Any]] = None) -> List[Dict] | None:
+        assistant_id, version = self._assistant_params(assistant)
+        response = await self.rapida_bridge.make_initiate_bulk_assistant_talk(
+            assistant_id,
+            version,
+            source.source(),
+            params,
+            arguments,
+            metadata,
+            options,
+        )
 
-async def initiate_bulk_assistant_deployment(self,
-                                             assistant: Tuple[int, Union[str, None]],
-                                             source: RapidaSource,
-                                             params: List[Dict[str, Any]],
-                                             arguments: Optional[Dict[str, Any]] = None,
-                                             metadata: Optional[Dict[str, Any]] = None,
-                                             options: Optional[Dict[str, Any]] = None):
-    assistant_id, version = self._assistant_params(assistant)
-    response = await self.rapida_bridge.make_initiate_bulk_assistant_talk(
-        assistant_id,
-        version,
-        source.source(),
-        params,
-        arguments,
-        metadata,
-        options,
-    )
+        if response.success:
+            return [MapToDict(proto_map.items) for proto_map in response.data]
+        self.handle_assistant_exception(response.error)
+        return None
 
-    if response.success:
-        return response
-    self.handle_assistant_exception(response.error)
-    return None
-
-
-def handle_assistant_exception(self, error: Union[None, common_pb2.Error]):
-    """
-        Handling exception for all the common endpoint error
-        Args:
-            error: An instance of invokeError if found in response
-
+    def handle_assistant_exception(self, error: Union[None, common_pb2.Error]):
         """
-    raise RapidaException(
-        code=500,
-        message=error.errorMessage,
-        source=error.humanMessage,
-    )
+            Handling exception for all the common endpoint error
+            Args:
+                error: An instance of invokeError if found in response
+
+            """
+
+        if error is None:
+            raise RapidaException(
+                code=500,
+                message="An unknown error occurred.",
+                source="internal client error",
+            )
+        raise RapidaException(
+            code=500,
+            message=error.errorMessage,
+            source=error.humanMessage,
+        )
