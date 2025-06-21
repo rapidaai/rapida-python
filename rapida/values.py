@@ -33,7 +33,7 @@ from google.protobuf.wrappers_pb2 import (
 import os
 from PIL import Image
 
-from rapida import RapidaException
+from rapida.exceptions.exceptions import RapidaException
 
 
 def StringValue(_in: str) -> Any:

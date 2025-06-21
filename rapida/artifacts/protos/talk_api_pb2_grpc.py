@@ -4,7 +4,7 @@ import grpc
 import warnings
 
 import rapida.artifacts.protos.common_pb2 as common__pb2
-import talk_api_pb2 as talk__api__pb2
+import rapida.artifacts.protos.talk_api_pb2 as talk__api__pb2
 
 GRPC_GENERATED_VERSION = '1.72.1'
 GRPC_VERSION = grpc.__version__

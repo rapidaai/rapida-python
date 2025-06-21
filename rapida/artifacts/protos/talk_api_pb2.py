@@ -22,12 +22,11 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 import rapida.artifacts.protos.common_pb2 as common__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0etalk-api.proto\x12\x08talk_api\x1a\x1cgoogle/protobuf/struct.proto\x1a\x19google/protobuf/any.proto\x1a\x0c\x63ommon.proto\"?\n\x13\x41ssistantDefinition\x12\x17\n\x0b\x61ssistantId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12\x0f\n\x07version\x18\x02 \x01(\t\"\xdc\x04\n\x19\x41ssistantMessagingRequest\x12\x30\n\tassistant\x18\x02 \x01(\x0b\x32\x1d.talk_api.AssistantDefinition\x12\x19\n\x07message\x18\x03 \x01(\x0b\x32\x08.Message\x12(\n\x17\x61ssistantConversationId\x18\x04 \x01(\x04\x42\x02\x30\x01H\x00\x88\x01\x01\x12\x43\n\x08metadata\x18\x06 \x03(\x0b\x32\x31.talk_api.AssistantMessagingRequest.MetadataEntry\x12\x17\n\x06source\x18\x07 \x01(\x0e\x32\x07.Source\x12;\n\x04\x61rgs\x18\n \x03(\x0b\x32-.talk_api.AssistantMessagingRequest.ArgsEntry\x12\x41\n\x07options\x18\x0b \x03(\x0b\x32\x30.talk_api.AssistantMessagingRequest.OptionsEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x41\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x44\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x42\x1a\n\x18_assistantConversationId\"\xa5\x01\n\x1a\x41ssistantMessagingResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\x12\x30\n\x07message\x18\x03 \x01(\x0b\x32\x1d.AssistantConversationMessageH\x00\x12\x17\n\x05\x65vent\x18\x05 \x01(\x0b\x32\x06.EventH\x00\x42\x06\n\x04\x64\x61ta\"\x87\x01\n\x1a\x43reateMessageMetricRequest\x12\x17\n\x0b\x61ssistantId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12#\n\x17\x61ssistantConversationId\x18\x02 \x01(\x04\x42\x02\x30\x01\x12\x11\n\tmessageId\x18\x03 \x01(\t\x12\x18\n\x07metrics\x18\x04 \x03(\x0b\x32\x07.Metric\"j\n\x1b\x43reateMessageMetricResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x15\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x07.Metric\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"y\n\x1f\x43reateConversationMetricRequest\x12\x17\n\x0b\x61ssistantId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12#\n\x17\x61ssistantConversationId\x18\x02 \x01(\x04\x42\x02\x30\x01\x12\x18\n\x07metrics\x18\x03 \x03(\x0b\x32\x07.Metric\"o\n CreateConversationMetricResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x15\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x07.Metric\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"\xb0\x04\n\x1cInitiateAssistantTalkRequest\x12\x30\n\tassistant\x18\x01 \x01(\x0b\x32\x1d.talk_api.AssistantDefinition\x12\x17\n\x06source\x18\x02 \x01(\x0e\x32\x07.Source\x12\x46\n\x08metadata\x18\x03 \x03(\x0b\x32\x34.talk_api.InitiateAssistantTalkRequest.MetadataEntry\x12>\n\x04\x61rgs\x18\x04 \x03(\x0b\x32\x30.talk_api.InitiateAssistantTalkRequest.ArgsEntry\x12\x44\n\x07options\x18\x05 \x03(\x0b\x32\x33.talk_api.InitiateAssistantTalkRequest.OptionsEntry\x12\'\n\x06params\x18\x06 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x41\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x44\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"|\n\x1dInitiateAssistantTalkResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12%\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"\xc0\x04\n InitiateBulkAssistantTalkRequest\x12\x30\n\tassistant\x18\x01 \x01(\x0b\x32\x1d.talk_api.AssistantDefinition\x12\x17\n\x06source\x18\x02 \x01(\x0e\x32\x07.Source\x12J\n\x08metadata\x18\x03 \x03(\x0b\x32\x38.talk_api.InitiateBulkAssistantTalkRequest.MetadataEntry\x12\x42\n\x04\x61rgs\x18\x04 \x03(\x0b\x32\x34.talk_api.InitiateBulkAssistantTalkRequest.ArgsEntry\x12H\n\x07options\x18\x05 \x03(\x0b\x32\x37.talk_api.InitiateBulkAssistantTalkRequest.OptionsEntry\x12\'\n\x06params\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x41\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x44\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\x80\x01\n!InitiateBulkAssistantTalkResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12%\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error2\xd5\x06\n\x0bTalkService\x12\x61\n\x12\x41ssistantMessaging\x12#.talk_api.AssistantMessagingRequest\x1a$.talk_api.AssistantMessagingResponse0\x01\x12^\n\rAssistantTalk\x12#.talk_api.AssistantMessagingRequest\x1a$.talk_api.AssistantMessagingResponse(\x01\x30\x01\x12h\n\x1bGetAllAssistantConversation\x12#.GetAllAssistantConversationRequest\x1a$.GetAllAssistantConversationResponse\x12\x62\n\x19GetAllConversationMessage\x12!.GetAllConversationMessageRequest\x1a\".GetAllConversationMessageResponse\x12\x62\n\x13\x43reateMessageMetric\x12$.talk_api.CreateMessageMetricRequest\x1a%.talk_api.CreateMessageMetricResponse\x12q\n\x18\x43reateConversationMetric\x12).talk_api.CreateConversationMetricRequest\x1a*.talk_api.CreateConversationMetricResponse\x12h\n\x15InitiateAssistantTalk\x12&.talk_api.InitiateAssistantTalkRequest\x1a\'.talk_api.InitiateAssistantTalkResponse\x12t\n\x19InitiateBulkAssistantTalk\x12*.talk_api.InitiateBulkAssistantTalkRequest\x1a+.talk_api.InitiateBulkAssistantTalkResponseBP\n\x17\x61i.rapida.sdk.artifactsZ5github.com/lexatic/web-backend/protos/lexatic-backendb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0etalk-api.proto\x12\x08talk_api\x1a\x19google/protobuf/any.proto\x1a\x0c\x63ommon.proto\"?\n\x13\x41ssistantDefinition\x12\x17\n\x0b\x61ssistantId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12\x0f\n\x07version\x18\x02 \x01(\t\"\xdc\x04\n\x19\x41ssistantMessagingRequest\x12\x30\n\tassistant\x18\x02 \x01(\x0b\x32\x1d.talk_api.AssistantDefinition\x12\x19\n\x07message\x18\x03 \x01(\x0b\x32\x08.Message\x12(\n\x17\x61ssistantConversationId\x18\x04 \x01(\x04\x42\x02\x30\x01H\x00\x88\x01\x01\x12\x43\n\x08metadata\x18\x06 \x03(\x0b\x32\x31.talk_api.AssistantMessagingRequest.MetadataEntry\x12\x17\n\x06source\x18\x07 \x01(\x0e\x32\x07.Source\x12;\n\x04\x61rgs\x18\n \x03(\x0b\x32-.talk_api.AssistantMessagingRequest.ArgsEntry\x12\x41\n\x07options\x18\x0b \x03(\x0b\x32\x30.talk_api.AssistantMessagingRequest.OptionsEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x41\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x44\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x42\x1a\n\x18_assistantConversationId\"\xa5\x01\n\x1a\x41ssistantMessagingResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\x12\x30\n\x07message\x18\x03 \x01(\x0b\x32\x1d.AssistantConversationMessageH\x00\x12\x17\n\x05\x65vent\x18\x05 \x01(\x0b\x32\x06.EventH\x00\x42\x06\n\x04\x64\x61ta\"\x87\x01\n\x1a\x43reateMessageMetricRequest\x12\x17\n\x0b\x61ssistantId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12#\n\x17\x61ssistantConversationId\x18\x02 \x01(\x04\x42\x02\x30\x01\x12\x11\n\tmessageId\x18\x03 \x01(\t\x12\x18\n\x07metrics\x18\x04 \x03(\x0b\x32\x07.Metric\"j\n\x1b\x43reateMessageMetricResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x15\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x07.Metric\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"y\n\x1f\x43reateConversationMetricRequest\x12\x17\n\x0b\x61ssistantId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12#\n\x17\x61ssistantConversationId\x18\x02 \x01(\x04\x42\x02\x30\x01\x12\x18\n\x07metrics\x18\x03 \x03(\x0b\x32\x07.Metric\"o\n CreateConversationMetricResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x15\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x07.Metric\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"\xa8\x01\n\x1eInitiateAssistantTalkParameter\x12\x42\n\x05items\x18\x01 \x03(\x0b\x32\x33.talk_api.InitiateAssistantTalkParameter.ItemsEntry\x1a\x42\n\nItemsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\xc1\x04\n\x1cInitiateAssistantTalkRequest\x12\x30\n\tassistant\x18\x01 \x01(\x0b\x32\x1d.talk_api.AssistantDefinition\x12\x17\n\x06source\x18\x02 \x01(\x0e\x32\x07.Source\x12\x46\n\x08metadata\x18\x03 \x03(\x0b\x32\x34.talk_api.InitiateAssistantTalkRequest.MetadataEntry\x12>\n\x04\x61rgs\x18\x04 \x03(\x0b\x32\x30.talk_api.InitiateAssistantTalkRequest.ArgsEntry\x12\x44\n\x07options\x18\x05 \x03(\x0b\x32\x33.talk_api.InitiateAssistantTalkRequest.OptionsEntry\x12\x38\n\x06params\x18\x06 \x01(\x0b\x32(.talk_api.InitiateAssistantTalkParameter\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x41\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x44\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\x8d\x01\n\x1dInitiateAssistantTalkResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x36\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32(.talk_api.InitiateAssistantTalkParameter\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"\xd1\x04\n InitiateBulkAssistantTalkRequest\x12\x30\n\tassistant\x18\x01 \x01(\x0b\x32\x1d.talk_api.AssistantDefinition\x12\x17\n\x06source\x18\x02 \x01(\x0e\x32\x07.Source\x12J\n\x08metadata\x18\x03 \x03(\x0b\x32\x38.talk_api.InitiateBulkAssistantTalkRequest.MetadataEntry\x12\x42\n\x04\x61rgs\x18\x04 \x03(\x0b\x32\x34.talk_api.InitiateBulkAssistantTalkRequest.ArgsEntry\x12H\n\x07options\x18\x05 \x03(\x0b\x32\x37.talk_api.InitiateBulkAssistantTalkRequest.OptionsEntry\x12\x38\n\x06params\x18\x06 \x03(\x0b\x32(.talk_api.InitiateAssistantTalkParameter\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x41\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x44\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\x91\x01\n!InitiateBulkAssistantTalkResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x36\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32(.talk_api.InitiateAssistantTalkParameter\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error2\xd5\x06\n\x0bTalkService\x12\x61\n\x12\x41ssistantMessaging\x12#.talk_api.AssistantMessagingRequest\x1a$.talk_api.AssistantMessagingResponse0\x01\x12^\n\rAssistantTalk\x12#.talk_api.AssistantMessagingRequest\x1a$.talk_api.AssistantMessagingResponse(\x01\x30\x01\x12h\n\x1bGetAllAssistantConversation\x12#.GetAllAssistantConversationRequest\x1a$.GetAllAssistantConversationResponse\x12\x62\n\x19GetAllConversationMessage\x12!.GetAllConversationMessageRequest\x1a\".GetAllConversationMessageResponse\x12\x62\n\x13\x43reateMessageMetric\x12$.talk_api.CreateMessageMetricRequest\x1a%.talk_api.CreateMessageMetricResponse\x12q\n\x18\x43reateConversationMetric\x12).talk_api.CreateConversationMetricRequest\x1a*.talk_api.CreateConversationMetricResponse\x12h\n\x15InitiateAssistantTalk\x12&.talk_api.InitiateAssistantTalkRequest\x1a\'.talk_api.InitiateAssistantTalkResponse\x12t\n\x19InitiateBulkAssistantTalk\x12*.talk_api.InitiateBulkAssistantTalkRequest\x1a+.talk_api.InitiateBulkAssistantTalkResponseBP\n\x17\x61i.rapida.sdk.artifactsZ5github.com/lexatic/web-backend/protos/lexatic-backendb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -53,6 +52,8 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_CREATECONVERSATIONMETRICREQUEST'].fields_by_name['assistantId']._serialized_options = b'0\001'
   _globals['_CREATECONVERSATIONMETRICREQUEST'].fields_by_name['assistantConversationId']._loaded_options = None
   _globals['_CREATECONVERSATIONMETRICREQUEST'].fields_by_name['assistantConversationId']._serialized_options = b'0\001'
+  _globals['_INITIATEASSISTANTTALKPARAMETER_ITEMSENTRY']._loaded_options = None
+  _globals['_INITIATEASSISTANTTALKPARAMETER_ITEMSENTRY']._serialized_options = b'8\001'
   _globals['_INITIATEASSISTANTTALKREQUEST_METADATAENTRY']._loaded_options = None
   _globals['_INITIATEASSISTANTTALKREQUEST_METADATAENTRY']._serialized_options = b'8\001'
   _globals['_INITIATEASSISTANTTALKREQUEST_ARGSENTRY']._loaded_options = None
@@ -65,46 +66,50 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_INITIATEBULKASSISTANTTALKREQUEST_ARGSENTRY']._serialized_options = b'8\001'
   _globals['_INITIATEBULKASSISTANTTALKREQUEST_OPTIONSENTRY']._loaded_options = None
   _globals['_INITIATEBULKASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_options = b'8\001'
-  _globals['_ASSISTANTDEFINITION']._serialized_start=99
-  _globals['_ASSISTANTDEFINITION']._serialized_end=162
-  _globals['_ASSISTANTMESSAGINGREQUEST']._serialized_start=165
-  _globals['_ASSISTANTMESSAGINGREQUEST']._serialized_end=769
-  _globals['_ASSISTANTMESSAGINGREQUEST_METADATAENTRY']._serialized_start=535
-  _globals['_ASSISTANTMESSAGINGREQUEST_METADATAENTRY']._serialized_end=604
-  _globals['_ASSISTANTMESSAGINGREQUEST_ARGSENTRY']._serialized_start=606
-  _globals['_ASSISTANTMESSAGINGREQUEST_ARGSENTRY']._serialized_end=671
-  _globals['_ASSISTANTMESSAGINGREQUEST_OPTIONSENTRY']._serialized_start=673
-  _globals['_ASSISTANTMESSAGINGREQUEST_OPTIONSENTRY']._serialized_end=741
-  _globals['_ASSISTANTMESSAGINGRESPONSE']._serialized_start=772
-  _globals['_ASSISTANTMESSAGINGRESPONSE']._serialized_end=937
-  _globals['_CREATEMESSAGEMETRICREQUEST']._serialized_start=940
-  _globals['_CREATEMESSAGEMETRICREQUEST']._serialized_end=1075
-  _globals['_CREATEMESSAGEMETRICRESPONSE']._serialized_start=1077
-  _globals['_CREATEMESSAGEMETRICRESPONSE']._serialized_end=1183
-  _globals['_CREATECONVERSATIONMETRICREQUEST']._serialized_start=1185
-  _globals['_CREATECONVERSATIONMETRICREQUEST']._serialized_end=1306
-  _globals['_CREATECONVERSATIONMETRICRESPONSE']._serialized_start=1308
-  _globals['_CREATECONVERSATIONMETRICRESPONSE']._serialized_end=1419
-  _globals['_INITIATEASSISTANTTALKREQUEST']._serialized_start=1422
-  _globals['_INITIATEASSISTANTTALKREQUEST']._serialized_end=1982
-  _globals['_INITIATEASSISTANTTALKREQUEST_METADATAENTRY']._serialized_start=535
-  _globals['_INITIATEASSISTANTTALKREQUEST_METADATAENTRY']._serialized_end=604
-  _globals['_INITIATEASSISTANTTALKREQUEST_ARGSENTRY']._serialized_start=606
-  _globals['_INITIATEASSISTANTTALKREQUEST_ARGSENTRY']._serialized_end=671
-  _globals['_INITIATEASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_start=673
-  _globals['_INITIATEASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_end=741
-  _globals['_INITIATEASSISTANTTALKRESPONSE']._serialized_start=1984
-  _globals['_INITIATEASSISTANTTALKRESPONSE']._serialized_end=2108
-  _globals['_INITIATEBULKASSISTANTTALKREQUEST']._serialized_start=2111
-  _globals['_INITIATEBULKASSISTANTTALKREQUEST']._serialized_end=2687
-  _globals['_INITIATEBULKASSISTANTTALKREQUEST_METADATAENTRY']._serialized_start=535
-  _globals['_INITIATEBULKASSISTANTTALKREQUEST_METADATAENTRY']._serialized_end=604
-  _globals['_INITIATEBULKASSISTANTTALKREQUEST_ARGSENTRY']._serialized_start=606
-  _globals['_INITIATEBULKASSISTANTTALKREQUEST_ARGSENTRY']._serialized_end=671
-  _globals['_INITIATEBULKASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_start=673
-  _globals['_INITIATEBULKASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_end=741
-  _globals['_INITIATEBULKASSISTANTTALKRESPONSE']._serialized_start=2690
-  _globals['_INITIATEBULKASSISTANTTALKRESPONSE']._serialized_end=2818
-  _globals['_TALKSERVICE']._serialized_start=2821
-  _globals['_TALKSERVICE']._serialized_end=3674
+  _globals['_ASSISTANTDEFINITION']._serialized_start=69
+  _globals['_ASSISTANTDEFINITION']._serialized_end=132
+  _globals['_ASSISTANTMESSAGINGREQUEST']._serialized_start=135
+  _globals['_ASSISTANTMESSAGINGREQUEST']._serialized_end=739
+  _globals['_ASSISTANTMESSAGINGREQUEST_METADATAENTRY']._serialized_start=505
+  _globals['_ASSISTANTMESSAGINGREQUEST_METADATAENTRY']._serialized_end=574
+  _globals['_ASSISTANTMESSAGINGREQUEST_ARGSENTRY']._serialized_start=576
+  _globals['_ASSISTANTMESSAGINGREQUEST_ARGSENTRY']._serialized_end=641
+  _globals['_ASSISTANTMESSAGINGREQUEST_OPTIONSENTRY']._serialized_start=643
+  _globals['_ASSISTANTMESSAGINGREQUEST_OPTIONSENTRY']._serialized_end=711
+  _globals['_ASSISTANTMESSAGINGRESPONSE']._serialized_start=742
+  _globals['_ASSISTANTMESSAGINGRESPONSE']._serialized_end=907
+  _globals['_CREATEMESSAGEMETRICREQUEST']._serialized_start=910
+  _globals['_CREATEMESSAGEMETRICREQUEST']._serialized_end=1045
+  _globals['_CREATEMESSAGEMETRICRESPONSE']._serialized_start=1047
+  _globals['_CREATEMESSAGEMETRICRESPONSE']._serialized_end=1153
+  _globals['_CREATECONVERSATIONMETRICREQUEST']._serialized_start=1155
+  _globals['_CREATECONVERSATIONMETRICREQUEST']._serialized_end=1276
+  _globals['_CREATECONVERSATIONMETRICRESPONSE']._serialized_start=1278
+  _globals['_CREATECONVERSATIONMETRICRESPONSE']._serialized_end=1389
+  _globals['_INITIATEASSISTANTTALKPARAMETER']._serialized_start=1392
+  _globals['_INITIATEASSISTANTTALKPARAMETER']._serialized_end=1560
+  _globals['_INITIATEASSISTANTTALKPARAMETER_ITEMSENTRY']._serialized_start=1494
+  _globals['_INITIATEASSISTANTTALKPARAMETER_ITEMSENTRY']._serialized_end=1560
+  _globals['_INITIATEASSISTANTTALKREQUEST']._serialized_start=1563
+  _globals['_INITIATEASSISTANTTALKREQUEST']._serialized_end=2140
+  _globals['_INITIATEASSISTANTTALKREQUEST_METADATAENTRY']._serialized_start=505
+  _globals['_INITIATEASSISTANTTALKREQUEST_METADATAENTRY']._serialized_end=574
+  _globals['_INITIATEASSISTANTTALKREQUEST_ARGSENTRY']._serialized_start=576
+  _globals['_INITIATEASSISTANTTALKREQUEST_ARGSENTRY']._serialized_end=641
+  _globals['_INITIATEASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_start=643
+  _globals['_INITIATEASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_end=711
+  _globals['_INITIATEASSISTANTTALKRESPONSE']._serialized_start=2143
+  _globals['_INITIATEASSISTANTTALKRESPONSE']._serialized_end=2284
+  _globals['_INITIATEBULKASSISTANTTALKREQUEST']._serialized_start=2287
+  _globals['_INITIATEBULKASSISTANTTALKREQUEST']._serialized_end=2880
+  _globals['_INITIATEBULKASSISTANTTALKREQUEST_METADATAENTRY']._serialized_start=505
+  _globals['_INITIATEBULKASSISTANTTALKREQUEST_METADATAENTRY']._serialized_end=574
+  _globals['_INITIATEBULKASSISTANTTALKREQUEST_ARGSENTRY']._serialized_start=576
+  _globals['_INITIATEBULKASSISTANTTALKREQUEST_ARGSENTRY']._serialized_end=641
+  _globals['_INITIATEBULKASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_start=643
+  _globals['_INITIATEBULKASSISTANTTALKREQUEST_OPTIONSENTRY']._serialized_end=711
+  _globals['_INITIATEBULKASSISTANTTALKRESPONSE']._serialized_start=2883
+  _globals['_INITIATEBULKASSISTANTTALKRESPONSE']._serialized_end=3028
+  _globals['_TALKSERVICE']._serialized_start=3031
+  _globals['_TALKSERVICE']._serialized_end=3884
 # @@protoc_insertion_point(module_scope)

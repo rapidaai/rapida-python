@@ -16,5 +16,7 @@ find "rapida/artifacts/protos/" -name '*.py' -exec sed -i.bak 's/import knowledg
 find "rapida/artifacts/protos/" -name '*.py' -exec sed -i.bak 's/import invoker_api_pb2 as invoker__api__pb2/import rapida.artifacts.protos.invoker_api_pb2 as invoker__api__pb2/g' {} +
 # Remove backup files created by sed
 find "rapida/artifacts/protos/" -name '*.py' -exec sed -i.bak 's/import assistant_deployment_pb2 as assistant__deployment__pb2/import rapida.artifacts.protos.assistant_deployment_pb2 as assistant__deployment__pb2/g' {} +
+find "rapida/artifacts/protos/" -name '*.py' -exec sed -i.bak 's/import talk_api_pb2 as talk__api__pb2/import rapida.artifacts.protos.talk_api_pb2 as talk__api__pb2/g' {} +
+
 
 find "rapida/artifacts/protos/" -name '*.bak' -exec rm {} +

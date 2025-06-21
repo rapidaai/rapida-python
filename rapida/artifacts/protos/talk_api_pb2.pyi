@@ -1,4 +1,3 @@
-from google.protobuf import struct_pb2 as _struct_pb2
 from google.protobuf import any_pb2 as _any_pb2
 import rapida.artifacts.protos.common_pb2 as _common_pb2
 from google.protobuf.internal import containers as _containers
@@ -116,6 +115,19 @@ class CreateConversationMetricResponse(_message.Message):
     error: _common_pb2.Error
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
+class InitiateAssistantTalkParameter(_message.Message):
+    __slots__ = ("items",)
+    class ItemsEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
+    ITEMS_FIELD_NUMBER: _ClassVar[int]
+    items: _containers.MessageMap[str, _any_pb2.Any]
+    def __init__(self, items: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
+
 class InitiateAssistantTalkRequest(_message.Message):
     __slots__ = ("assistant", "source", "metadata", "args", "options", "params")
     class MetadataEntry(_message.Message):
@@ -150,8 +162,8 @@ class InitiateAssistantTalkRequest(_message.Message):
     metadata: _containers.MessageMap[str, _any_pb2.Any]
     args: _containers.MessageMap[str, _any_pb2.Any]
     options: _containers.MessageMap[str, _any_pb2.Any]
-    params: _struct_pb2.Struct
-    def __init__(self, assistant: _Optional[_Union[AssistantDefinition, _Mapping]] = ..., source: _Optional[_Union[_common_pb2.Source, str]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ..., params: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ...) -> None: ...
+    params: InitiateAssistantTalkParameter
+    def __init__(self, assistant: _Optional[_Union[AssistantDefinition, _Mapping]] = ..., source: _Optional[_Union[_common_pb2.Source, str]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ..., params: _Optional[_Union[InitiateAssistantTalkParameter, _Mapping]] = ...) -> None: ...
 
 class InitiateAssistantTalkResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")
@@ -161,9 +173,9 @@ class InitiateAssistantTalkResponse(_message.Message):
     ERROR_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    data: _struct_pb2.Struct
+    data: InitiateAssistantTalkParameter
     error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[InitiateAssistantTalkParameter, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class InitiateBulkAssistantTalkRequest(_message.Message):
     __slots__ = ("assistant", "source", "metadata", "args", "options", "params")
@@ -199,8 +211,8 @@ class InitiateBulkAssistantTalkRequest(_message.Message):
     metadata: _containers.MessageMap[str, _any_pb2.Any]
     args: _containers.MessageMap[str, _any_pb2.Any]
     options: _containers.MessageMap[str, _any_pb2.Any]
-    params: _containers.RepeatedCompositeFieldContainer[_struct_pb2.Struct]
-    def __init__(self, assistant: _Optional[_Union[AssistantDefinition, _Mapping]] = ..., source: _Optional[_Union[_common_pb2.Source, str]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ..., params: _Optional[_Iterable[_Union[_struct_pb2.Struct, _Mapping]]] = ...) -> None: ...
+    params: _containers.RepeatedCompositeFieldContainer[InitiateAssistantTalkParameter]
+    def __init__(self, assistant: _Optional[_Union[AssistantDefinition, _Mapping]] = ..., source: _Optional[_Union[_common_pb2.Source, str]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ..., params: _Optional[_Iterable[_Union[InitiateAssistantTalkParameter, _Mapping]]] = ...) -> None: ...
 
 class InitiateBulkAssistantTalkResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")
@@ -210,6 +222,6 @@ class InitiateBulkAssistantTalkResponse(_message.Message):
     ERROR_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    data: _containers.RepeatedCompositeFieldContainer[_struct_pb2.Struct]
+    data: _containers.RepeatedCompositeFieldContainer[InitiateAssistantTalkParameter]
     error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[_struct_pb2.Struct, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[InitiateAssistantTalkParameter, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...

@@ -22,6 +22,8 @@
 
 import warnings
 from typing import AsyncIterator, Dict, List, Union, Optional, Tuple, Mapping
+
+from rapida.rapida_source import RapidaSource
 from rapida.client.rapida_bridge import RapidaBridge
 from rapida.client.response_wrapper import (
     ToolDefinition,
@@ -85,8 +87,8 @@ class RapidaEndpointClient(RapidaClient):
         )
 
     def _endpoint_params(
-        self,
-        endpoint: Tuple[int, Union[str, None]],
+            self,
+            endpoint: Tuple[int, Union[str, None]],
     ) -> Tuple[int, str]:
         rapida_endpoint, rapida_endpoint_version = endpoint
         if rapida_endpoint is None:
@@ -122,17 +124,17 @@ class RapidaEndpointClient(RapidaClient):
         return _extras
 
     async def invoke(
-        self,
-        endpoint: Tuple[int, Union[str, None]],
-        inputs: Mapping[str, Any],
-        metadata: Optional[Dict[str, str]] = None,
-        options: Optional[Dict[str, Any]] = None,
-    ) -> InvokeResponseWrapper:
+            self,
+            endpoint: Tuple[int, Union[str, None]],
+            arguments: Mapping[str, Any],
+            metadata: Optional[Dict[str, str]] = None,
+            options: Optional[Dict[str, Any]] = None,
+    ) -> InvokeResponseWrapper | None:
         """
         Invokes a deployment with the specified key.
 
         Args:
-            inputs: Dictionary of input parameters for the prompts
+            arguments: Dictionary of input parameters for the prompts
             metadata: Dictionary of metadata for the current execution
             options: Dictionary of options for the override parameters for the model
             endpoint (int, str): The endpoint key.
@@ -147,15 +149,15 @@ class RapidaEndpointClient(RapidaClient):
         response = await self.rapida_bridge.make_invoke_call(
             endpoint_id,
             endpoint_version,
-            inputs,
+            arguments,
             metadata,
             options,
         )
 
         if response.is_success():
             return response
-
         self.handle_deployment_exception(response.error)
+        return None
 
     async def update_metadata(self, rapida_audit_id: int, rapida_metadata: Dict):
         """
@@ -178,18 +180,20 @@ class RapidaEndpointClient(RapidaClient):
         if response.success:
             return response
         self.handle_deployment_exception(response.error)
+        return None
 
     async def probe(self, rapida_audit_id: int):
         """
         Probe request for given endpoint audit id
         Args:
-            audit_id: request id for probe
+            rapida_audit_id: request id for probe
 
         """
         response = await self.rapida_bridge.make_probe_call(rapida_audit_id)
         if response.success:
             return response
         self.handle_deployment_exception(response.error)
+        return None
 
     def handle_deployment_exception(self, error: Union[None, InvokerError]):
         """
@@ -227,14 +231,14 @@ class RapidaGatewayClient(RapidaClient):
         )
 
     async def chat(
-        self,
-        credentials: Dict,
-        provider: str,
-        model: str,
-        conversations: List[Message],
-        tools: List[ToolDefinition] = None,
-        model_parameters: Mapping[str, Any] = None,
-        meta: Mapping[str, str] = None,
+            self,
+            credentials: Dict,
+            provider: str,
+            model: str,
+            conversations: List[Message],
+            tools: List[ToolDefinition] = None,
+            model_parameters: Mapping[str, Any] = None,
+            meta: Mapping[str, str] = None,
     ) -> integration_api_pb2.ChatResponse:
 
         conv: List[common_pb2.Message] = []
@@ -266,14 +270,14 @@ class RapidaGatewayClient(RapidaClient):
         )
 
     async def chat_stream(
-        self,
-        credentials: Dict,
-        provider: str,
-        model: str,
-        conversations: List[Message],
-        tools: List[ToolDefinition] = None,
-        model_parameters: Mapping[str, Any] = None,
-        meta: Mapping[str, str] = None,
+            self,
+            credentials: Dict,
+            provider: str,
+            model: str,
+            conversations: List[Message],
+            tools: List[ToolDefinition] = None,
+            model_parameters: Mapping[str, Any] = None,
+            meta: Mapping[str, str] = None,
     ) -> AsyncIterator[integration_api_pb2.ChatResponse]:
 
         conv: List[common_pb2.Message] = []
@@ -295,25 +299,25 @@ class RapidaGatewayClient(RapidaClient):
             tool_definitions.append(v.to_tool_definition())
 
         async for response in self.rapida_bridge.make_chat_stream(
-            cred=credentials,
-            provider=provider,
-            model=model,
-            conversations=conv,
-            tool_definitions=tool_definitions,
-            model_parameters=args,
-            meta=meta,
+                cred=credentials,
+                provider=provider,
+                model=model,
+                conversations=conv,
+                tool_definitions=tool_definitions,
+                model_parameters=args,
+                meta=meta,
         ):
             yield response
 
     async def generate(
-        self,
-        cred: Dict,
-        provider: str,
-        model: str,
-        system_prompt: str,
-        prompt: str,
-        model_parameters: Mapping[str, str],
-        meta: Mapping[str, str],
+            self,
+            cred: Dict,
+            provider: str,
+            model: str,
+            system_prompt: str,
+            prompt: str,
+            model_parameters: Mapping[str, str],
+            meta: Mapping[str, str],
     ):
 
         return await self.rapida_bridge.make_generate_call(
@@ -327,13 +331,13 @@ class RapidaGatewayClient(RapidaClient):
         )
 
     async def embedding(
-        self,
-        cred: Dict,
-        provider: str,
-        model: str,
-        contents: List[str],
-        model_parameters: Mapping[str, str],
-        meta: Mapping[str, str],
+            self,
+            cred: Dict,
+            provider: str,
+            model: str,
+            contents: List[str],
+            model_parameters: Mapping[str, str],
+            meta: Mapping[str, str],
     ):
         return await self.rapida_bridge.make_embedding_call(
             cred=cred,
@@ -381,8 +385,63 @@ class RapidaAssistantClient(RapidaClient):
         return assistant_id, assistant_version
 
     async def initiate_assistant_deployment(self,
-                                            arguments: Optional[Dict[str, Any]] = None,
-                                            metadata: Optional[Dict[str, Any]] = None,
-                                            options: Optional[Dict[str, Any]] = None):
-        pass
+                                            assistant: Tuple[int, Union[str, None]],
+                                            source: RapidaSource,
+                                            params: Mapping[str, Any],
+                                            arguments: Optional[Mapping[str, Any]] = None,
+                                            metadata: Optional[Mapping[str, Any]] = None,
+                                            options: Optional[Mapping[str, Any]] = None):
+        assistant_id, version = self._assistant_params(assistant)
+        response = await self.rapida_bridge.make_initiate_assistant_talk(
+            assistant_id,
+            version,
+            source.source(),
+            params,
+            arguments,
+            metadata,
+            options,
 
+        )
+
+        if response.success:
+            return response
+
+        return None
+
+
+async def initiate_bulk_assistant_deployment(self,
+                                             assistant: Tuple[int, Union[str, None]],
+                                             source: RapidaSource,
+                                             params: List[Dict[str, Any]],
+                                             arguments: Optional[Dict[str, Any]] = None,
+                                             metadata: Optional[Dict[str, Any]] = None,
+                                             options: Optional[Dict[str, Any]] = None):
+    assistant_id, version = self._assistant_params(assistant)
+    response = await self.rapida_bridge.make_initiate_bulk_assistant_talk(
+        assistant_id,
+        version,
+        source.source(),
+        params,
+        arguments,
+        metadata,
+        options,
+    )
+
+    if response.success:
+        return response
+    self.handle_assistant_exception(response.error)
+    return None
+
+
+def handle_assistant_exception(self, error: Union[None, common_pb2.Error]):
+    """
+        Handling exception for all the common endpoint error
+        Args:
+            error: An instance of invokeError if found in response
+
+        """
+    raise RapidaException(
+        code=500,
+        message=error.errorMessage,
+        source=error.humanMessage,
+    )

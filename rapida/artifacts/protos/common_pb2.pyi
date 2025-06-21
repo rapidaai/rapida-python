@@ -20,6 +20,8 @@ class Source(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     JAVA_SDK: _ClassVar[Source]
     PHP_SDK: _ClassVar[Source]
     RUST_SDK: _ClassVar[Source]
+    REACT_SDK: _ClassVar[Source]
+    TWILIO_CALL: _ClassVar[Source]
 WEB_PLUGIN: Source
 RAPIDA_APP: Source
 PYTHON_SDK: Source
@@ -29,6 +31,8 @@ TYPESCRIPT_SDK: Source
 JAVA_SDK: Source
 PHP_SDK: Source
 RUST_SDK: Source
+REACT_SDK: Source
+TWILIO_CALL: Source
 
 class Criteria(_message.Message):
     __slots__ = ("key", "value", "logic")

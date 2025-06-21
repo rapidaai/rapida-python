@@ -22,32 +22,35 @@
 
 
 import logging
-from typing import AsyncIterator, Dict, List, Optional, Mapping
+from typing import AsyncIterator, Dict, List, Optional, Mapping, Iterable
 from google.protobuf.json_format import ParseDict
 from google.protobuf.any_pb2 import Any
 from google.protobuf.struct_pb2 import Struct
+
 from rapida.client.response_wrapper import InvokeResponseWrapper
 from rapida.artifacts.protos import (
     common_pb2,
     integration_api_pb2,
     integration_api_pb2_grpc,
     invoker_api_pb2,
-    invoker_api_pb2_grpc,
+    invoker_api_pb2_grpc, talk_api_pb2_grpc,
+    talk_api_pb2
 )
 from rapida.client.grpc_bridge import GRPCBridge
+from rapida.values import StringValue
 
 _log = logging.getLogger("rapida.client.rapida_bridge")
 
 
 class RapidaBridge(GRPCBridge):
     def __init__(
-        self,
-        service_url: str,
-        rapida_api_key: str,
-        rapida_region: str,
-        rapida_environment: str,
-        rapida_source: str,
-        rapida_is_secure: bool,
+            self,
+            service_url: str,
+            rapida_api_key: str,
+            rapida_region: str,
+            rapida_environment: str,
+            rapida_source: str,
+            rapida_is_secure: bool,
     ):
         """
 
@@ -67,12 +70,12 @@ class RapidaBridge(GRPCBridge):
         )
 
     async def make_invoke_call(
-        self,
-        endpoint_id: int,
-        version: str,
-        body_params: Mapping[str, Any],
-        metadata: Optional[Dict[str, str]],
-        override_options: Optional[Dict[str, str]],
+            self,
+            endpoint_id: int,
+            version: str,
+            body_params: Mapping[str, Any],
+            metadata: Optional[Dict[str, str]],
+            override_options: Optional[Dict[str, str]],
     ) -> InvokeResponseWrapper:
         """
         Endpoint request to the rapida api endpoint servers
@@ -105,7 +108,7 @@ class RapidaBridge(GRPCBridge):
         )
 
     async def make_probe_call(
-        self, rapida_audit_id: int
+            self, rapida_audit_id: int
     ) -> invoker_api_pb2.ProbeResponse:
         """
         To get details about the request for given request id
@@ -126,7 +129,7 @@ class RapidaBridge(GRPCBridge):
         )
 
     async def make_update_call(
-        self, rapida_audit_id: int, rapida_metadata: Optional[Dict[str, str]]
+            self, rapida_audit_id: int, rapida_metadata: Optional[Dict[str, str]]
     ) -> invoker_api_pb2.UpdateResponse:
         """
         Provide an interface to update the metadata for executed request
@@ -153,14 +156,14 @@ class RapidaBridge(GRPCBridge):
         )
 
     async def make_chat_call(
-        self,
-        cred: Dict,
-        provider: str,
-        model: str,
-        conversations: List[common_pb2.Message],
-        tool_definitions: List[integration_api_pb2.ToolDefinition],
-        model_parameters: List[integration_api_pb2.ModelParameter],
-        meta: Mapping[str, str] = None,
+            self,
+            cred: Dict,
+            provider: str,
+            model: str,
+            conversations: List[common_pb2.Message],
+            tool_definitions: List[integration_api_pb2.ToolDefinition],
+            model_parameters: List[integration_api_pb2.ModelParameter],
+            meta: Mapping[str, str] = None,
     ) -> integration_api_pb2.ChatResponse:
         """
         Asynchronously initiates a chat interaction with the Rapida service.
@@ -217,14 +220,14 @@ class RapidaBridge(GRPCBridge):
         )
 
     async def make_generate_call(
-        self,
-        cred: Dict,
-        provider: str,
-        model: str,
-        system_prompt: str,
-        prompt: str,
-        model_parameters: Mapping[str, str] = None,
-        meta: Mapping[str, str] = None,
+            self,
+            cred: Dict,
+            provider: str,
+            model: str,
+            system_prompt: str,
+            prompt: str,
+            model_parameters: Mapping[str, str] = None,
+            meta: Mapping[str, str] = None,
     ) -> integration_api_pb2.GenerateResponse:
         """
         Prepares and sends a generation request to the Rapida service.
@@ -279,13 +282,13 @@ class RapidaBridge(GRPCBridge):
         )
 
     async def make_embedding_call(
-        self,
-        cred: Dict,
-        provider: str,
-        model: str,
-        contents: List[str],
-        model_parameters: Mapping[str, str] = None,
-        meta: Mapping[str, str] = None,
+            self,
+            cred: Dict,
+            provider: str,
+            model: str,
+            contents: List[str],
+            model_parameters: Mapping[str, str] = None,
+            meta: Mapping[str, str] = None,
     ) -> integration_api_pb2.EmbeddingResponse:
 
         credentials = Struct()
@@ -297,7 +300,7 @@ class RapidaBridge(GRPCBridge):
             args.append(
                 integration_api_pb2.ModelParameter(
                     key=k,
-                    value=v,
+                    value=StringValue(v),
                 )
             )
 
@@ -325,14 +328,14 @@ class RapidaBridge(GRPCBridge):
         )
 
     async def make_chat_stream(
-        self,
-        cred: Dict,
-        provider: str,
-        model: str,
-        conversations: List[common_pb2.Message],
-        tool_definitions: List[integration_api_pb2.ToolDefinition],
-        model_parameters: List[integration_api_pb2.ModelParameter],
-        meta: Mapping[str, str] = None,
+            self,
+            cred: Dict,
+            provider: str,
+            model: str,
+            conversations: List[common_pb2.Message],
+            tool_definitions: List[integration_api_pb2.ToolDefinition],
+            model_parameters: List[integration_api_pb2.ModelParameter],
+            meta: Mapping[str, str] = None,
     ) -> AsyncIterator[integration_api_pb2.ChatResponse]:
         """
         Asynchronously initiates a chat interaction with the Rapida service and streams the responses.
@@ -372,18 +375,77 @@ class RapidaBridge(GRPCBridge):
 
         # Stream the chat response from the gRPC server
         async for response in self.fetch_stream(
-            stub=integration_api_pb2_grpc.RapidaServiceStub,
-            attr="StreamChat",
-            message_type=integration_api_pb2.ChatRequest(
-                credential=integration_api_pb2.Credential(value=credentials),
-                model=f"{provider}/{model}",
-                conversations=conversations,
-                toolDefinitions=tool_definitions,
-                modelParameters=model_parameters,
-                additionalData=meta,
-            ),
-            preserving_proto_field_name=True,
+                stub=integration_api_pb2_grpc.RapidaServiceStub,
+                attr="StreamChat",
+                message_type=integration_api_pb2.ChatRequest(
+                    credential=integration_api_pb2.Credential(value=credentials),
+                    model=f"{provider}/{model}",
+                    conversations=conversations,
+                    toolDefinitions=tool_definitions,
+                    modelParameters=model_parameters,
+                    additionalData=meta,
+                ),
+                preserving_proto_field_name=True,
         ):
             yield ParseDict(
                 response, integration_api_pb2.ChatResponse(), ignore_unknown_fields=True
             )
+
+    async def make_initiate_assistant_talk(self,
+                                           assistant_id: int, version: str,
+                                           source: common_pb2.Source,
+                                           params: Mapping[str, Any],
+                                           args: Mapping[str, Any],
+                                           metadata: Optional[Dict[str, Any]] = None,
+                                           options: Optional[Dict[str, str]] = None
+                                           ) -> talk_api_pb2.InitiateAssistantTalkResponse:
+        response = await self.fetch(
+            stub=talk_api_pb2_grpc.TalkServiceStub,
+            attr="InitiateAssistantTalk",
+            message_type=talk_api_pb2.InitiateAssistantTalkRequest(
+                assistant=talk_api_pb2.AssistantDefinition(
+                    assistantId=assistant_id, version=version
+                ),
+                source=source,
+                params=talk_api_pb2.InitiateAssistantTalkParameter(items=params),
+                args=args,
+                metadata=metadata,
+                options=options,
+            ),
+            preserving_proto_field_name=True,
+        )
+
+        return ParseDict(
+            response,
+            talk_api_pb2.InitiateAssistantTalkResponse(),
+            ignore_unknown_fields=True,
+        )
+
+    async def make_initiate_bulk_assistant_talk(self,
+                                                assistant_id: int, version: str,
+                                                source: common_pb2.Source,
+                                                params: Iterable[Mapping[str, Any]],
+                                                args: Mapping[str, Any],
+                                                metadata: Optional[Dict[str, Any]] = None,
+                                                options: Optional[Dict[str, str]] = None
+                                                ) -> talk_api_pb2.InitiateBulkAssistantTalkResponse:
+        response = await self.fetch(
+            stub=talk_api_pb2_grpc.TalkServiceStub,
+            attr="InitiateBulkAssistantTalk",
+            message_type=talk_api_pb2.InitiateBulkAssistantTalkRequest(
+                assistant=talk_api_pb2.AssistantDefinition(
+                    assistantId=assistant_id, version=version
+                ),
+                source=source,
+                params=[talk_api_pb2.InitiateAssistantTalkParameter(items=p) for p in params],
+                args=args,
+                metadata=metadata,
+                options=options,
+            ),
+            preserving_proto_field_name=True,
+        )
+        return ParseDict(
+            response,
+            talk_api_pb2.InitiateBulkAssistantTalkResponse(),
+            ignore_unknown_fields=True,
+        )
