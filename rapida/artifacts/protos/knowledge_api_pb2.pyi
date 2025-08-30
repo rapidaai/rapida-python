@@ -11,20 +11,22 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CreateKnowledgeRequest(_message.Message):
-    __slots__ = ("name", "description", "embeddingProviderModelId", "tags", "visibility", "embeddingProviderId")
+    __slots__ = ("name", "description", "tags", "visibility", "embeddingModelProviderId", "embeddingModelProviderName", "knowledgeEmbeddingModelOptions")
     NAME_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
-    EMBEDDINGPROVIDERMODELID_FIELD_NUMBER: _ClassVar[int]
     TAGS_FIELD_NUMBER: _ClassVar[int]
     VISIBILITY_FIELD_NUMBER: _ClassVar[int]
-    EMBEDDINGPROVIDERID_FIELD_NUMBER: _ClassVar[int]
+    EMBEDDINGMODELPROVIDERID_FIELD_NUMBER: _ClassVar[int]
+    EMBEDDINGMODELPROVIDERNAME_FIELD_NUMBER: _ClassVar[int]
+    KNOWLEDGEEMBEDDINGMODELOPTIONS_FIELD_NUMBER: _ClassVar[int]
     name: str
     description: str
-    embeddingProviderModelId: int
     tags: _containers.RepeatedScalarFieldContainer[str]
     visibility: str
-    embeddingProviderId: int
-    def __init__(self, name: _Optional[str] = ..., description: _Optional[str] = ..., embeddingProviderModelId: _Optional[int] = ..., tags: _Optional[_Iterable[str]] = ..., visibility: _Optional[str] = ..., embeddingProviderId: _Optional[int] = ...) -> None: ...
+    embeddingModelProviderId: int
+    embeddingModelProviderName: str
+    knowledgeEmbeddingModelOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
+    def __init__(self, name: _Optional[str] = ..., description: _Optional[str] = ..., tags: _Optional[_Iterable[str]] = ..., visibility: _Optional[str] = ..., embeddingModelProviderId: _Optional[int] = ..., embeddingModelProviderName: _Optional[str] = ..., knowledgeEmbeddingModelOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ...) -> None: ...
 
 class CreateKnowledgeResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")

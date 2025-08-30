@@ -9,16 +9,6 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
-class InvokerError(_message.Message):
-    __slots__ = ("errorCode", "errorMessage", "humanMessage")
-    ERRORCODE_FIELD_NUMBER: _ClassVar[int]
-    ERRORMESSAGE_FIELD_NUMBER: _ClassVar[int]
-    HUMANMESSAGE_FIELD_NUMBER: _ClassVar[int]
-    errorCode: int
-    errorMessage: str
-    humanMessage: str
-    def __init__(self, errorCode: _Optional[int] = ..., errorMessage: _Optional[str] = ..., humanMessage: _Optional[str] = ...) -> None: ...
-
 class EndpointDefinition(_message.Message):
     __slots__ = ("endpointId", "version")
     ENDPOINTID_FIELD_NUMBER: _ClassVar[int]
@@ -28,28 +18,7 @@ class EndpointDefinition(_message.Message):
     def __init__(self, endpointId: _Optional[int] = ..., version: _Optional[str] = ...) -> None: ...
 
 class InvokeRequest(_message.Message):
-    __slots__ = ("endpoint", "argsV1", "metadataV1", "optionsV1", "args", "metadata", "options", "source")
-    class ArgsV1Entry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
-    class MetadataV1Entry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
-    class OptionsV1Entry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+    __slots__ = ("endpoint", "args", "metadata", "options")
     class ArgsEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -72,52 +41,34 @@ class InvokeRequest(_message.Message):
         value: _any_pb2.Any
         def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
     ENDPOINT_FIELD_NUMBER: _ClassVar[int]
-    ARGSV1_FIELD_NUMBER: _ClassVar[int]
-    METADATAV1_FIELD_NUMBER: _ClassVar[int]
-    OPTIONSV1_FIELD_NUMBER: _ClassVar[int]
     ARGS_FIELD_NUMBER: _ClassVar[int]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     OPTIONS_FIELD_NUMBER: _ClassVar[int]
-    SOURCE_FIELD_NUMBER: _ClassVar[int]
     endpoint: EndpointDefinition
-    argsV1: _containers.ScalarMap[str, str]
-    metadataV1: _containers.ScalarMap[str, str]
-    optionsV1: _containers.ScalarMap[str, str]
     args: _containers.MessageMap[str, _any_pb2.Any]
     metadata: _containers.MessageMap[str, _any_pb2.Any]
     options: _containers.MessageMap[str, _any_pb2.Any]
-    source: _common_pb2.Source
-    def __init__(self, endpoint: _Optional[_Union[EndpointDefinition, _Mapping]] = ..., argsV1: _Optional[_Mapping[str, str]] = ..., metadataV1: _Optional[_Mapping[str, str]] = ..., optionsV1: _Optional[_Mapping[str, str]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ..., source: _Optional[_Union[_common_pb2.Source, str]] = ...) -> None: ...
-
-class CallerResponse(_message.Message):
-    __slots__ = ("requestId", "response", "timeTaken", "responses", "error", "metrics", "meta")
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    RESPONSE_FIELD_NUMBER: _ClassVar[int]
-    TIMETAKEN_FIELD_NUMBER: _ClassVar[int]
-    RESPONSES_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    METRICS_FIELD_NUMBER: _ClassVar[int]
-    META_FIELD_NUMBER: _ClassVar[int]
-    requestId: int
-    response: str
-    timeTaken: int
-    responses: _containers.RepeatedCompositeFieldContainer[_common_pb2.Content]
-    error: InvokerError
-    metrics: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metric]
-    meta: _struct_pb2.Struct
-    def __init__(self, requestId: _Optional[int] = ..., response: _Optional[str] = ..., timeTaken: _Optional[int] = ..., responses: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., error: _Optional[_Union[InvokerError, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ..., meta: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ...) -> None: ...
+    def __init__(self, endpoint: _Optional[_Union[EndpointDefinition, _Mapping]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
 
 class InvokeResponse(_message.Message):
-    __slots__ = ("code", "success", "data", "error")
+    __slots__ = ("code", "success", "data", "error", "requestId", "timeTaken", "metrics", "meta")
     CODE_FIELD_NUMBER: _ClassVar[int]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     DATA_FIELD_NUMBER: _ClassVar[int]
     ERROR_FIELD_NUMBER: _ClassVar[int]
+    REQUESTID_FIELD_NUMBER: _ClassVar[int]
+    TIMETAKEN_FIELD_NUMBER: _ClassVar[int]
+    METRICS_FIELD_NUMBER: _ClassVar[int]
+    META_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    data: CallerResponse
-    error: InvokerError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[CallerResponse, _Mapping]] = ..., error: _Optional[_Union[InvokerError, _Mapping]] = ...) -> None: ...
+    data: _containers.RepeatedCompositeFieldContainer[_common_pb2.Content]
+    error: _common_pb2.Error
+    requestId: int
+    timeTaken: int
+    metrics: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metric]
+    meta: _struct_pb2.Struct
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., requestId: _Optional[int] = ..., timeTaken: _Optional[int] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ..., meta: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ...) -> None: ...
 
 class UpdateRequest(_message.Message):
     __slots__ = ("requestId", "metadata")
@@ -134,8 +85,8 @@ class UpdateResponse(_message.Message):
     ERROR_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    error: InvokerError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[InvokerError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class ProbeRequest(_message.Message):
     __slots__ = ("requestId",)
@@ -152,5 +103,5 @@ class ProbeResponse(_message.Message):
     code: int
     success: bool
     data: _struct_pb2.Struct
-    error: InvokerError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., error: _Optional[_Union[InvokerError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...

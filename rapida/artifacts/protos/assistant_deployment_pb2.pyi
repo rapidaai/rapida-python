@@ -9,38 +9,38 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class DeploymentAudioProvider(_message.Message):
-    __slots__ = ("id", "providerName", "options", "providerId", "status", "type")
+    __slots__ = ("id", "audioProvider", "audioOptions", "audioProviderId", "status", "audioType")
     ID_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERNAME_FIELD_NUMBER: _ClassVar[int]
-    OPTIONS_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERID_FIELD_NUMBER: _ClassVar[int]
+    AUDIOPROVIDER_FIELD_NUMBER: _ClassVar[int]
+    AUDIOOPTIONS_FIELD_NUMBER: _ClassVar[int]
+    AUDIOPROVIDERID_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
-    TYPE_FIELD_NUMBER: _ClassVar[int]
+    AUDIOTYPE_FIELD_NUMBER: _ClassVar[int]
     id: int
-    providerName: str
-    options: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
-    providerId: int
+    audioProvider: str
+    audioOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
+    audioProviderId: int
     status: str
-    type: str
-    def __init__(self, id: _Optional[int] = ..., providerName: _Optional[str] = ..., options: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., providerId: _Optional[int] = ..., status: _Optional[str] = ..., type: _Optional[str] = ...) -> None: ...
+    audioType: str
+    def __init__(self, id: _Optional[int] = ..., audioProvider: _Optional[str] = ..., audioOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., audioProviderId: _Optional[int] = ..., status: _Optional[str] = ..., audioType: _Optional[str] = ...) -> None: ...
 
 class AssistantDeploymentCapturer(_message.Message):
-    __slots__ = ("id", "assistantDeploymentId", "type", "providerId", "providerName", "options", "status")
+    __slots__ = ("id", "assistantDeploymentId", "capturerType", "capturerProviderId", "capturerProvider", "capturerOptions", "status")
     ID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTDEPLOYMENTID_FIELD_NUMBER: _ClassVar[int]
-    TYPE_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERID_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERNAME_FIELD_NUMBER: _ClassVar[int]
-    OPTIONS_FIELD_NUMBER: _ClassVar[int]
+    CAPTURERTYPE_FIELD_NUMBER: _ClassVar[int]
+    CAPTURERPROVIDERID_FIELD_NUMBER: _ClassVar[int]
+    CAPTURERPROVIDER_FIELD_NUMBER: _ClassVar[int]
+    CAPTUREROPTIONS_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
     id: int
     assistantDeploymentId: int
-    type: str
-    providerId: int
-    providerName: str
-    options: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
+    capturerType: str
+    capturerProviderId: int
+    capturerProvider: str
+    capturerOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantDeploymentId: _Optional[int] = ..., type: _Optional[str] = ..., providerId: _Optional[int] = ..., providerName: _Optional[str] = ..., options: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., status: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., assistantDeploymentId: _Optional[int] = ..., capturerType: _Optional[str] = ..., capturerProviderId: _Optional[int] = ..., capturerProvider: _Optional[str] = ..., capturerOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., status: _Optional[str] = ...) -> None: ...
 
 class AssistantWebpluginDeployment(_message.Message):
     __slots__ = ("id", "assistantId", "name", "role", "tone", "experties", "greeting", "mistake", "ending", "inputAudio", "outputAudio", "capturers", "url", "raw", "suggestion", "helpCenterEnabled", "productCatalogEnabled", "articleCatalogEnabled", "uploadFileEnabled", "createdDate", "updatedDate", "status")
@@ -75,8 +75,8 @@ class AssistantWebpluginDeployment(_message.Message):
     greeting: str
     mistake: str
     ending: str
-    inputAudio: _containers.RepeatedCompositeFieldContainer[DeploymentAudioProvider]
-    outputAudio: _containers.RepeatedCompositeFieldContainer[DeploymentAudioProvider]
+    inputAudio: DeploymentAudioProvider
+    outputAudio: DeploymentAudioProvider
     capturers: _containers.RepeatedCompositeFieldContainer[AssistantDeploymentCapturer]
     url: str
     raw: _common_pb2.Content
@@ -88,7 +88,7 @@ class AssistantWebpluginDeployment(_message.Message):
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., role: _Optional[str] = ..., tone: _Optional[str] = ..., experties: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Iterable[_Union[DeploymentAudioProvider, _Mapping]]] = ..., outputAudio: _Optional[_Iterable[_Union[DeploymentAudioProvider, _Mapping]]] = ..., capturers: _Optional[_Iterable[_Union[AssistantDeploymentCapturer, _Mapping]]] = ..., url: _Optional[str] = ..., raw: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., suggestion: _Optional[_Iterable[str]] = ..., helpCenterEnabled: bool = ..., productCatalogEnabled: bool = ..., articleCatalogEnabled: bool = ..., uploadFileEnabled: bool = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., role: _Optional[str] = ..., tone: _Optional[str] = ..., experties: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., capturers: _Optional[_Iterable[_Union[AssistantDeploymentCapturer, _Mapping]]] = ..., url: _Optional[str] = ..., raw: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., suggestion: _Optional[_Iterable[str]] = ..., helpCenterEnabled: bool = ..., productCatalogEnabled: bool = ..., articleCatalogEnabled: bool = ..., uploadFileEnabled: bool = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
 
 class AssistantPhoneDeployment(_message.Message):
     __slots__ = ("id", "assistantId", "name", "role", "tone", "experties", "greeting", "mistake", "ending", "inputAudio", "outputAudio", "phoneProviderName", "phoneProviderId", "phoneOptions", "capturers", "createdDate", "updatedDate", "status")
@@ -119,8 +119,8 @@ class AssistantPhoneDeployment(_message.Message):
     greeting: str
     mistake: str
     ending: str
-    inputAudio: _containers.RepeatedCompositeFieldContainer[DeploymentAudioProvider]
-    outputAudio: _containers.RepeatedCompositeFieldContainer[DeploymentAudioProvider]
+    inputAudio: DeploymentAudioProvider
+    outputAudio: DeploymentAudioProvider
     phoneProviderName: str
     phoneProviderId: int
     phoneOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
@@ -128,7 +128,7 @@ class AssistantPhoneDeployment(_message.Message):
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., role: _Optional[str] = ..., tone: _Optional[str] = ..., experties: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Iterable[_Union[DeploymentAudioProvider, _Mapping]]] = ..., outputAudio: _Optional[_Iterable[_Union[DeploymentAudioProvider, _Mapping]]] = ..., phoneProviderName: _Optional[str] = ..., phoneProviderId: _Optional[int] = ..., phoneOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., capturers: _Optional[_Iterable[_Union[AssistantDeploymentCapturer, _Mapping]]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., role: _Optional[str] = ..., tone: _Optional[str] = ..., experties: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., phoneProviderName: _Optional[str] = ..., phoneProviderId: _Optional[int] = ..., phoneOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., capturers: _Optional[_Iterable[_Union[AssistantDeploymentCapturer, _Mapping]]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
 
 class AssistantWhatsappDeployment(_message.Message):
     __slots__ = ("id", "assistantId", "name", "role", "tone", "experties", "greeting", "mistake", "ending", "whatsappProviderName", "whatsappProviderId", "whatsappOptions", "createdDate", "updatedDate", "status")
@@ -193,8 +193,8 @@ class AssistantDebuggerDeployment(_message.Message):
     greeting: str
     mistake: str
     ending: str
-    inputAudio: _containers.RepeatedCompositeFieldContainer[DeploymentAudioProvider]
-    outputAudio: _containers.RepeatedCompositeFieldContainer[DeploymentAudioProvider]
+    inputAudio: DeploymentAudioProvider
+    outputAudio: DeploymentAudioProvider
     capturers: _containers.RepeatedCompositeFieldContainer[AssistantDeploymentCapturer]
     url: str
     raw: _common_pb2.Content
@@ -202,7 +202,7 @@ class AssistantDebuggerDeployment(_message.Message):
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., role: _Optional[str] = ..., tone: _Optional[str] = ..., experties: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Iterable[_Union[DeploymentAudioProvider, _Mapping]]] = ..., outputAudio: _Optional[_Iterable[_Union[DeploymentAudioProvider, _Mapping]]] = ..., capturers: _Optional[_Iterable[_Union[AssistantDeploymentCapturer, _Mapping]]] = ..., url: _Optional[str] = ..., raw: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., suggestion: _Optional[_Iterable[str]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., role: _Optional[str] = ..., tone: _Optional[str] = ..., experties: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., capturers: _Optional[_Iterable[_Union[AssistantDeploymentCapturer, _Mapping]]] = ..., url: _Optional[str] = ..., raw: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., suggestion: _Optional[_Iterable[str]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
 
 class AssistantApiDeployment(_message.Message):
     __slots__ = ("id", "assistantId", "name", "role", "tone", "experties", "greeting", "mistake", "ending", "inputAudio", "outputAudio", "capturers", "createdDate", "updatedDate", "status")
@@ -230,13 +230,13 @@ class AssistantApiDeployment(_message.Message):
     greeting: str
     mistake: str
     ending: str
-    inputAudio: _containers.RepeatedCompositeFieldContainer[DeploymentAudioProvider]
-    outputAudio: _containers.RepeatedCompositeFieldContainer[DeploymentAudioProvider]
+    inputAudio: DeploymentAudioProvider
+    outputAudio: DeploymentAudioProvider
     capturers: _containers.RepeatedCompositeFieldContainer[AssistantDeploymentCapturer]
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., role: _Optional[str] = ..., tone: _Optional[str] = ..., experties: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Iterable[_Union[DeploymentAudioProvider, _Mapping]]] = ..., outputAudio: _Optional[_Iterable[_Union[DeploymentAudioProvider, _Mapping]]] = ..., capturers: _Optional[_Iterable[_Union[AssistantDeploymentCapturer, _Mapping]]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., role: _Optional[str] = ..., tone: _Optional[str] = ..., experties: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., capturers: _Optional[_Iterable[_Union[AssistantDeploymentCapturer, _Mapping]]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
 
 class CreateAssistantApiDeploymentRequest(_message.Message):
     __slots__ = ("deployment",)

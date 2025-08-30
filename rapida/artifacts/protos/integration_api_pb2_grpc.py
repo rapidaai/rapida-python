@@ -44,11 +44,6 @@ class BedrockServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.BedrockService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.BedrockService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -66,12 +61,6 @@ class BedrockServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Chat(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Generate(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -95,11 +84,6 @@ def add_BedrockServiceServicer_to_server(servicer, server):
                     servicer.Chat,
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
             ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
@@ -172,33 +156,6 @@ class BedrockService(object):
             _registered_method=True)
 
     @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.BedrockService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def VerifyCredential(request,
             target,
             options=(),
@@ -250,30 +207,10 @@ class OpenAiServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.OpenAiService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
-        self.GenerateTextToImage = channel.unary_unary(
-                '/integration_api.OpenAiService/GenerateTextToImage',
-                request_serializer=integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToImageResponse.FromString,
-                _registered_method=True)
-        self.GenerateTextToSpeech = channel.unary_unary(
-                '/integration_api.OpenAiService/GenerateTextToSpeech',
-                request_serializer=integration__api__pb2.GenerateTextToSpeechRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToSpeechResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.OpenAiService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.VerifyCredentialResponse.FromString,
-                _registered_method=True)
-        self.GenerateSpeechToText = channel.unary_unary(
-                '/integration_api.OpenAiService/GenerateSpeechToText',
-                request_serializer=integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateSpeechToTextResponse.FromString,
                 _registered_method=True)
         self.GetModeration = channel.unary_unary(
                 '/integration_api.OpenAiService/GetModeration',
@@ -303,31 +240,7 @@ class OpenAiServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Generate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateTextToImage(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateTextToSpeech(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def VerifyCredential(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateSpeechToText(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -357,30 +270,10 @@ def add_OpenAiServiceServicer_to_server(servicer, server):
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
             ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
-            ),
-            'GenerateTextToImage': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToImage,
-                    request_deserializer=integration__api__pb2.GenerateTextToImageRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToImageResponse.SerializeToString,
-            ),
-            'GenerateTextToSpeech': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToSpeech,
-                    request_deserializer=integration__api__pb2.GenerateTextToSpeechRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToSpeechResponse.SerializeToString,
-            ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
                     request_deserializer=integration__api__pb2.VerifyCredentialRequest.FromString,
                     response_serializer=integration__api__pb2.VerifyCredentialResponse.SerializeToString,
-            ),
-            'GenerateSpeechToText': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateSpeechToText,
-                    request_deserializer=integration__api__pb2.GenerateSpeechToTextRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateSpeechToTextResponse.SerializeToString,
             ),
             'GetModeration': grpc.unary_unary_rpc_method_handler(
                     servicer.GetModeration,
@@ -480,87 +373,6 @@ class OpenAiService(object):
             _registered_method=True)
 
     @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.OpenAiService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateTextToImage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.OpenAiService/GenerateTextToImage',
-            integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToImageResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateTextToSpeech(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.OpenAiService/GenerateTextToSpeech',
-            integration__api__pb2.GenerateTextToSpeechRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToSpeechResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def VerifyCredential(request,
             target,
             options=(),
@@ -577,33 +389,6 @@ class OpenAiService(object):
             '/integration_api.OpenAiService/VerifyCredential',
             integration__api__pb2.VerifyCredentialRequest.SerializeToString,
             integration__api__pb2.VerifyCredentialResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateSpeechToText(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.OpenAiService/GenerateSpeechToText',
-            integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-            integration__api__pb2.GenerateSpeechToTextResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -666,30 +451,10 @@ class AzureServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.AzureService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
-        self.GenerateTextToImage = channel.unary_unary(
-                '/integration_api.AzureService/GenerateTextToImage',
-                request_serializer=integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToImageResponse.FromString,
-                _registered_method=True)
-        self.GenerateTextToSpeech = channel.unary_unary(
-                '/integration_api.AzureService/GenerateTextToSpeech',
-                request_serializer=integration__api__pb2.GenerateTextToSpeechRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToSpeechResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.AzureService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.VerifyCredentialResponse.FromString,
-                _registered_method=True)
-        self.GenerateSpeechToText = channel.unary_unary(
-                '/integration_api.AzureService/GenerateSpeechToText',
-                request_serializer=integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateSpeechToTextResponse.FromString,
                 _registered_method=True)
         self.GetModeration = channel.unary_unary(
                 '/integration_api.AzureService/GetModeration',
@@ -719,31 +484,7 @@ class AzureServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Generate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateTextToImage(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateTextToSpeech(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def VerifyCredential(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateSpeechToText(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -773,30 +514,10 @@ def add_AzureServiceServicer_to_server(servicer, server):
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
             ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
-            ),
-            'GenerateTextToImage': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToImage,
-                    request_deserializer=integration__api__pb2.GenerateTextToImageRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToImageResponse.SerializeToString,
-            ),
-            'GenerateTextToSpeech': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToSpeech,
-                    request_deserializer=integration__api__pb2.GenerateTextToSpeechRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToSpeechResponse.SerializeToString,
-            ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
                     request_deserializer=integration__api__pb2.VerifyCredentialRequest.FromString,
                     response_serializer=integration__api__pb2.VerifyCredentialResponse.SerializeToString,
-            ),
-            'GenerateSpeechToText': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateSpeechToText,
-                    request_deserializer=integration__api__pb2.GenerateSpeechToTextRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateSpeechToTextResponse.SerializeToString,
             ),
             'GetModeration': grpc.unary_unary_rpc_method_handler(
                     servicer.GetModeration,
@@ -896,87 +617,6 @@ class AzureService(object):
             _registered_method=True)
 
     @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.AzureService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateTextToImage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.AzureService/GenerateTextToImage',
-            integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToImageResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateTextToSpeech(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.AzureService/GenerateTextToSpeech',
-            integration__api__pb2.GenerateTextToSpeechRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToSpeechResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def VerifyCredential(request,
             target,
             options=(),
@@ -993,33 +633,6 @@ class AzureService(object):
             '/integration_api.AzureService/VerifyCredential',
             integration__api__pb2.VerifyCredentialRequest.SerializeToString,
             integration__api__pb2.VerifyCredentialResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateSpeechToText(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.AzureService/GenerateSpeechToText',
-            integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-            integration__api__pb2.GenerateSpeechToTextResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -1082,11 +695,6 @@ class GoogleServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.GoogleService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.GoogleService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -1115,12 +723,6 @@ class GoogleServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Generate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def VerifyCredential(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1144,11 +746,6 @@ def add_GoogleServiceServicer_to_server(servicer, server):
                     servicer.StreamChat,
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
             ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
@@ -1248,33 +845,6 @@ class GoogleService(object):
             _registered_method=True)
 
     @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.GoogleService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def VerifyCredential(request,
             target,
             options=(),
@@ -1321,11 +891,6 @@ class ReplicateServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.ReplicateService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.ReplicateService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -1343,12 +908,6 @@ class ReplicateServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def StreamChat(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Generate(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -1372,11 +931,6 @@ def add_ReplicateServiceServicer_to_server(servicer, server):
                     servicer.StreamChat,
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
             ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
@@ -1449,33 +1003,6 @@ class ReplicateService(object):
             _registered_method=True)
 
     @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.ReplicateService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def VerifyCredential(request,
             target,
             options=(),
@@ -1522,11 +1049,6 @@ class AnthropicServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.AnthropicService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.AnthropicService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -1544,12 +1066,6 @@ class AnthropicServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def StreamChat(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Generate(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -1573,11 +1089,6 @@ def add_AnthropicServiceServicer_to_server(servicer, server):
                     servicer.StreamChat,
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
             ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
@@ -1650,33 +1161,6 @@ class AnthropicService(object):
             _registered_method=True)
 
     @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.AnthropicService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def VerifyCredential(request,
             target,
             options=(),
@@ -1733,11 +1217,6 @@ class CohereServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.CohereService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.CohereService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -1772,12 +1251,6 @@ class CohereServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Generate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def VerifyCredential(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1806,11 +1279,6 @@ def add_CohereServiceServicer_to_server(servicer, server):
                     servicer.StreamChat,
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
             ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
@@ -1937,33 +1405,6 @@ class CohereService(object):
             _registered_method=True)
 
     @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.CohereService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def VerifyCredential(request,
             target,
             options=(),
@@ -2005,11 +1446,6 @@ class HuggingfaceServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.HuggingfaceService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.HuggingfaceService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -2021,12 +1457,6 @@ class HuggingfaceServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Chat(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Generate(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -2045,11 +1475,6 @@ def add_HuggingfaceServiceServicer_to_server(servicer, server):
                     servicer.Chat,
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
             ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
@@ -2084,33 +1509,6 @@ class HuggingfaceService(object):
             '/integration_api.HuggingfaceService/Chat',
             integration__api__pb2.ChatRequest.SerializeToString,
             integration__api__pb2.ChatResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.HuggingfaceService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -2168,11 +1566,6 @@ class MistralServiceStub(object):
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
                 response_deserializer=integration__api__pb2.ChatResponse.FromString,
                 _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.MistralService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.MistralService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -2190,12 +1583,6 @@ class MistralServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def StreamChat(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Generate(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -2219,11 +1606,6 @@ def add_MistralServiceServicer_to_server(servicer, server):
                     servicer.StreamChat,
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
                     response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
             ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
@@ -2296,33 +1678,6 @@ class MistralService(object):
             _registered_method=True)
 
     @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.MistralService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def VerifyCredential(request,
             target,
             options=(),
@@ -2359,11 +1714,6 @@ class StabilityAiServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GenerateTextToImage = channel.unary_unary(
-                '/integration_api.StabilityAiService/GenerateTextToImage',
-                request_serializer=integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToImageResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.StabilityAiService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -2374,12 +1724,6 @@ class StabilityAiServiceStub(object):
 class StabilityAiServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GenerateTextToImage(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def VerifyCredential(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -2389,11 +1733,6 @@ class StabilityAiServiceServicer(object):
 
 def add_StabilityAiServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GenerateTextToImage': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToImage,
-                    request_deserializer=integration__api__pb2.GenerateTextToImageRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToImageResponse.SerializeToString,
-            ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
                     request_deserializer=integration__api__pb2.VerifyCredentialRequest.FromString,
@@ -2409,33 +1748,6 @@ def add_StabilityAiServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class StabilityAiService(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def GenerateTextToImage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.StabilityAiService/GenerateTextToImage',
-            integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToImageResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def VerifyCredential(request,
@@ -2474,16 +1786,6 @@ class TogetherAiServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GenerateTextToImage = channel.unary_unary(
-                '/integration_api.TogetherAiService/GenerateTextToImage',
-                request_serializer=integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToImageResponse.FromString,
-                _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.TogetherAiService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
         self.Chat = channel.unary_unary(
                 '/integration_api.TogetherAiService/Chat',
                 request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
@@ -2498,18 +1800,6 @@ class TogetherAiServiceStub(object):
 
 class TogetherAiServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
-
-    def GenerateTextToImage(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Generate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
 
     def Chat(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -2526,16 +1816,6 @@ class TogetherAiServiceServicer(object):
 
 def add_TogetherAiServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GenerateTextToImage': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToImage,
-                    request_deserializer=integration__api__pb2.GenerateTextToImageRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToImageResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
-            ),
             'Chat': grpc.unary_unary_rpc_method_handler(
                     servicer.Chat,
                     request_deserializer=integration__api__pb2.ChatRequest.FromString,
@@ -2556,60 +1836,6 @@ def add_TogetherAiServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class TogetherAiService(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def GenerateTextToImage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.TogetherAiService/GenerateTextToImage',
-            integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToImageResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.TogetherAiService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def Chat(request,
@@ -2675,11 +1901,6 @@ class DeepInfraServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GenerateTextToImage = channel.unary_unary(
-                '/integration_api.DeepInfraService/GenerateTextToImage',
-                request_serializer=integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToImageResponse.FromString,
-                _registered_method=True)
         self.VerifyCredential = channel.unary_unary(
                 '/integration_api.DeepInfraService/VerifyCredential',
                 request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
@@ -2690,12 +1911,6 @@ class DeepInfraServiceStub(object):
 class DeepInfraServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GenerateTextToImage(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def VerifyCredential(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -2705,11 +1920,6 @@ class DeepInfraServiceServicer(object):
 
 def add_DeepInfraServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GenerateTextToImage': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToImage,
-                    request_deserializer=integration__api__pb2.GenerateTextToImageRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToImageResponse.SerializeToString,
-            ),
             'VerifyCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.VerifyCredential,
                     request_deserializer=integration__api__pb2.VerifyCredentialRequest.FromString,
@@ -2725,33 +1935,6 @@ def add_DeepInfraServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class DeepInfraService(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def GenerateTextToImage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.DeepInfraService/GenerateTextToImage',
-            integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToImageResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def VerifyCredential(request,
@@ -2928,666 +2111,6 @@ class VoyageAiService(object):
             '/integration_api.VoyageAiService/VerifyCredential',
             integration__api__pb2.VerifyCredentialRequest.SerializeToString,
             integration__api__pb2.VerifyCredentialResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-
-class DeepgramServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
-
-    def __init__(self, channel):
-        """Constructor.
-
-        Args:
-            channel: A grpc.Channel.
-        """
-        self.GenerateSpeechToText = channel.unary_unary(
-                '/integration_api.DeepgramService/GenerateSpeechToText',
-                request_serializer=integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateSpeechToTextResponse.FromString,
-                _registered_method=True)
-        self.GenerateTextToSpeech = channel.unary_unary(
-                '/integration_api.DeepgramService/GenerateTextToSpeech',
-                request_serializer=integration__api__pb2.GenerateTextToSpeechRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToSpeechResponse.FromString,
-                _registered_method=True)
-        self.VerifyCredential = channel.unary_unary(
-                '/integration_api.DeepgramService/VerifyCredential',
-                request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.VerifyCredentialResponse.FromString,
-                _registered_method=True)
-        self.LiveSpeechToText = channel.stream_stream(
-                '/integration_api.DeepgramService/LiveSpeechToText',
-                request_serializer=integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateSpeechToTextResponse.FromString,
-                _registered_method=True)
-
-
-class DeepgramServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
-
-    def GenerateSpeechToText(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateTextToSpeech(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def VerifyCredential(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def LiveSpeechToText(self, request_iterator, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-
-def add_DeepgramServiceServicer_to_server(servicer, server):
-    rpc_method_handlers = {
-            'GenerateSpeechToText': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateSpeechToText,
-                    request_deserializer=integration__api__pb2.GenerateSpeechToTextRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateSpeechToTextResponse.SerializeToString,
-            ),
-            'GenerateTextToSpeech': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToSpeech,
-                    request_deserializer=integration__api__pb2.GenerateTextToSpeechRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToSpeechResponse.SerializeToString,
-            ),
-            'VerifyCredential': grpc.unary_unary_rpc_method_handler(
-                    servicer.VerifyCredential,
-                    request_deserializer=integration__api__pb2.VerifyCredentialRequest.FromString,
-                    response_serializer=integration__api__pb2.VerifyCredentialResponse.SerializeToString,
-            ),
-            'LiveSpeechToText': grpc.stream_stream_rpc_method_handler(
-                    servicer.LiveSpeechToText,
-                    request_deserializer=integration__api__pb2.GenerateSpeechToTextRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateSpeechToTextResponse.SerializeToString,
-            ),
-    }
-    generic_handler = grpc.method_handlers_generic_handler(
-            'integration_api.DeepgramService', rpc_method_handlers)
-    server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('integration_api.DeepgramService', rpc_method_handlers)
-
-
- # This class is part of an EXPERIMENTAL API.
-class DeepgramService(object):
-    """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def GenerateSpeechToText(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.DeepgramService/GenerateSpeechToText',
-            integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-            integration__api__pb2.GenerateSpeechToTextResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateTextToSpeech(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.DeepgramService/GenerateTextToSpeech',
-            integration__api__pb2.GenerateTextToSpeechRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToSpeechResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def VerifyCredential(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.DeepgramService/VerifyCredential',
-            integration__api__pb2.VerifyCredentialRequest.SerializeToString,
-            integration__api__pb2.VerifyCredentialResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def LiveSpeechToText(request_iterator,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.stream_stream(
-            request_iterator,
-            target,
-            '/integration_api.DeepgramService/LiveSpeechToText',
-            integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-            integration__api__pb2.GenerateSpeechToTextResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-
-class RapidaServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
-
-    def __init__(self, channel):
-        """Constructor.
-
-        Args:
-            channel: A grpc.Channel.
-        """
-        self.Embedding = channel.unary_unary(
-                '/integration_api.RapidaService/Embedding',
-                request_serializer=integration__api__pb2.EmbeddingRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.EmbeddingResponse.FromString,
-                _registered_method=True)
-        self.Chat = channel.unary_unary(
-                '/integration_api.RapidaService/Chat',
-                request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.ChatResponse.FromString,
-                _registered_method=True)
-        self.StreamChat = channel.unary_stream(
-                '/integration_api.RapidaService/StreamChat',
-                request_serializer=integration__api__pb2.ChatRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.ChatResponse.FromString,
-                _registered_method=True)
-        self.Generate = channel.unary_unary(
-                '/integration_api.RapidaService/Generate',
-                request_serializer=integration__api__pb2.GenerateRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateResponse.FromString,
-                _registered_method=True)
-        self.GenerateTextToImage = channel.unary_unary(
-                '/integration_api.RapidaService/GenerateTextToImage',
-                request_serializer=integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToImageResponse.FromString,
-                _registered_method=True)
-        self.GenerateTextToSpeech = channel.unary_unary(
-                '/integration_api.RapidaService/GenerateTextToSpeech',
-                request_serializer=integration__api__pb2.GenerateTextToSpeechRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateTextToSpeechResponse.FromString,
-                _registered_method=True)
-        self.VerifyCredential = channel.unary_unary(
-                '/integration_api.RapidaService/VerifyCredential',
-                request_serializer=integration__api__pb2.VerifyCredentialRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.VerifyCredentialResponse.FromString,
-                _registered_method=True)
-        self.GetModeration = channel.unary_unary(
-                '/integration_api.RapidaService/GetModeration',
-                request_serializer=integration__api__pb2.GetModerationRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GetModerationResponse.FromString,
-                _registered_method=True)
-        self.Reranking = channel.unary_unary(
-                '/integration_api.RapidaService/Reranking',
-                request_serializer=integration__api__pb2.RerankingRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.RerankingResponse.FromString,
-                _registered_method=True)
-        self.LiveSpeechToText = channel.stream_stream(
-                '/integration_api.RapidaService/LiveSpeechToText',
-                request_serializer=integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-                response_deserializer=integration__api__pb2.GenerateSpeechToTextResponse.FromString,
-                _registered_method=True)
-
-
-class RapidaServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
-
-    def Embedding(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Chat(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def StreamChat(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Generate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateTextToImage(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GenerateTextToSpeech(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def VerifyCredential(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetModeration(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Reranking(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def LiveSpeechToText(self, request_iterator, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-
-def add_RapidaServiceServicer_to_server(servicer, server):
-    rpc_method_handlers = {
-            'Embedding': grpc.unary_unary_rpc_method_handler(
-                    servicer.Embedding,
-                    request_deserializer=integration__api__pb2.EmbeddingRequest.FromString,
-                    response_serializer=integration__api__pb2.EmbeddingResponse.SerializeToString,
-            ),
-            'Chat': grpc.unary_unary_rpc_method_handler(
-                    servicer.Chat,
-                    request_deserializer=integration__api__pb2.ChatRequest.FromString,
-                    response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'StreamChat': grpc.unary_stream_rpc_method_handler(
-                    servicer.StreamChat,
-                    request_deserializer=integration__api__pb2.ChatRequest.FromString,
-                    response_serializer=integration__api__pb2.ChatResponse.SerializeToString,
-            ),
-            'Generate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Generate,
-                    request_deserializer=integration__api__pb2.GenerateRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateResponse.SerializeToString,
-            ),
-            'GenerateTextToImage': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToImage,
-                    request_deserializer=integration__api__pb2.GenerateTextToImageRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToImageResponse.SerializeToString,
-            ),
-            'GenerateTextToSpeech': grpc.unary_unary_rpc_method_handler(
-                    servicer.GenerateTextToSpeech,
-                    request_deserializer=integration__api__pb2.GenerateTextToSpeechRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateTextToSpeechResponse.SerializeToString,
-            ),
-            'VerifyCredential': grpc.unary_unary_rpc_method_handler(
-                    servicer.VerifyCredential,
-                    request_deserializer=integration__api__pb2.VerifyCredentialRequest.FromString,
-                    response_serializer=integration__api__pb2.VerifyCredentialResponse.SerializeToString,
-            ),
-            'GetModeration': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetModeration,
-                    request_deserializer=integration__api__pb2.GetModerationRequest.FromString,
-                    response_serializer=integration__api__pb2.GetModerationResponse.SerializeToString,
-            ),
-            'Reranking': grpc.unary_unary_rpc_method_handler(
-                    servicer.Reranking,
-                    request_deserializer=integration__api__pb2.RerankingRequest.FromString,
-                    response_serializer=integration__api__pb2.RerankingResponse.SerializeToString,
-            ),
-            'LiveSpeechToText': grpc.stream_stream_rpc_method_handler(
-                    servicer.LiveSpeechToText,
-                    request_deserializer=integration__api__pb2.GenerateSpeechToTextRequest.FromString,
-                    response_serializer=integration__api__pb2.GenerateSpeechToTextResponse.SerializeToString,
-            ),
-    }
-    generic_handler = grpc.method_handlers_generic_handler(
-            'integration_api.RapidaService', rpc_method_handlers)
-    server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('integration_api.RapidaService', rpc_method_handlers)
-
-
- # This class is part of an EXPERIMENTAL API.
-class RapidaService(object):
-    """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def Embedding(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.RapidaService/Embedding',
-            integration__api__pb2.EmbeddingRequest.SerializeToString,
-            integration__api__pb2.EmbeddingResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def Chat(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.RapidaService/Chat',
-            integration__api__pb2.ChatRequest.SerializeToString,
-            integration__api__pb2.ChatResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def StreamChat(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(
-            request,
-            target,
-            '/integration_api.RapidaService/StreamChat',
-            integration__api__pb2.ChatRequest.SerializeToString,
-            integration__api__pb2.ChatResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def Generate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.RapidaService/Generate',
-            integration__api__pb2.GenerateRequest.SerializeToString,
-            integration__api__pb2.GenerateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateTextToImage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.RapidaService/GenerateTextToImage',
-            integration__api__pb2.GenerateTextToImageRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToImageResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GenerateTextToSpeech(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.RapidaService/GenerateTextToSpeech',
-            integration__api__pb2.GenerateTextToSpeechRequest.SerializeToString,
-            integration__api__pb2.GenerateTextToSpeechResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def VerifyCredential(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.RapidaService/VerifyCredential',
-            integration__api__pb2.VerifyCredentialRequest.SerializeToString,
-            integration__api__pb2.VerifyCredentialResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GetModeration(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.RapidaService/GetModeration',
-            integration__api__pb2.GetModerationRequest.SerializeToString,
-            integration__api__pb2.GetModerationResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def Reranking(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/integration_api.RapidaService/Reranking',
-            integration__api__pb2.RerankingRequest.SerializeToString,
-            integration__api__pb2.RerankingResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def LiveSpeechToText(request_iterator,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.stream_stream(
-            request_iterator,
-            target,
-            '/integration_api.RapidaService/LiveSpeechToText',
-            integration__api__pb2.GenerateSpeechToTextRequest.SerializeToString,
-            integration__api__pb2.GenerateSpeechToTextResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -37,32 +37,37 @@ class VaultServiceStub(object):
         self.CreateProviderCredential = channel.unary_unary(
                 '/vault_api.VaultService/CreateProviderCredential',
                 request_serializer=vault__api__pb2.CreateProviderCredentialRequest.SerializeToString,
-                response_deserializer=vault__api__pb2.CreateProviderCredentialResponse.FromString,
+                response_deserializer=vault__api__pb2.GetCredentialResponse.FromString,
                 _registered_method=True)
         self.CreateToolCredential = channel.unary_unary(
                 '/vault_api.VaultService/CreateToolCredential',
                 request_serializer=vault__api__pb2.CreateToolCredentialRequest.SerializeToString,
-                response_deserializer=vault__api__pb2.CreateToolCredentialResponse.FromString,
-                _registered_method=True)
-        self.DeleteProviderCredential = channel.unary_unary(
-                '/vault_api.VaultService/DeleteProviderCredential',
-                request_serializer=vault__api__pb2.DeleteProviderCredentialRequest.SerializeToString,
-                response_deserializer=vault__api__pb2.DeleteProviderCredentialResponse.FromString,
+                response_deserializer=vault__api__pb2.GetCredentialResponse.FromString,
                 _registered_method=True)
         self.GetAllOrganizationCredential = channel.unary_unary(
                 '/vault_api.VaultService/GetAllOrganizationCredential',
                 request_serializer=vault__api__pb2.GetAllOrganizationCredentialRequest.SerializeToString,
                 response_deserializer=vault__api__pb2.GetAllOrganizationCredentialResponse.FromString,
                 _registered_method=True)
+        self.DeleteCredential = channel.unary_unary(
+                '/vault_api.VaultService/DeleteCredential',
+                request_serializer=vault__api__pb2.DeleteCredentialRequest.SerializeToString,
+                response_deserializer=vault__api__pb2.GetCredentialResponse.FromString,
+                _registered_method=True)
         self.GetProviderCredential = channel.unary_unary(
                 '/vault_api.VaultService/GetProviderCredential',
                 request_serializer=vault__api__pb2.GetProviderCredentialRequest.SerializeToString,
-                response_deserializer=vault__api__pb2.GetProviderCredentialResponse.FromString,
+                response_deserializer=vault__api__pb2.GetCredentialResponse.FromString,
                 _registered_method=True)
-        self.GetOauth2VaultCredential = channel.unary_unary(
-                '/vault_api.VaultService/GetOauth2VaultCredential',
-                request_serializer=vault__api__pb2.GetOauth2VaultCredentialRequest.SerializeToString,
-                response_deserializer=vault__api__pb2.GetOauth2VaultCredentialResponse.FromString,
+        self.GetCredential = channel.unary_unary(
+                '/vault_api.VaultService/GetCredential',
+                request_serializer=vault__api__pb2.GetCredentialRequest.SerializeToString,
+                response_deserializer=vault__api__pb2.GetCredentialResponse.FromString,
+                _registered_method=True)
+        self.GetOauth2Credential = channel.unary_unary(
+                '/vault_api.VaultService/GetOauth2Credential',
+                request_serializer=vault__api__pb2.GetCredentialRequest.SerializeToString,
+                response_deserializer=vault__api__pb2.GetCredentialResponse.FromString,
                 _registered_method=True)
 
 
@@ -81,13 +86,13 @@ class VaultServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def DeleteProviderCredential(self, request, context):
+    def GetAllOrganizationCredential(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetAllOrganizationCredential(self, request, context):
+    def DeleteCredential(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -99,7 +104,13 @@ class VaultServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetOauth2VaultCredential(self, request, context):
+    def GetCredential(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetOauth2Credential(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -111,32 +122,37 @@ def add_VaultServiceServicer_to_server(servicer, server):
             'CreateProviderCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateProviderCredential,
                     request_deserializer=vault__api__pb2.CreateProviderCredentialRequest.FromString,
-                    response_serializer=vault__api__pb2.CreateProviderCredentialResponse.SerializeToString,
+                    response_serializer=vault__api__pb2.GetCredentialResponse.SerializeToString,
             ),
             'CreateToolCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateToolCredential,
                     request_deserializer=vault__api__pb2.CreateToolCredentialRequest.FromString,
-                    response_serializer=vault__api__pb2.CreateToolCredentialResponse.SerializeToString,
-            ),
-            'DeleteProviderCredential': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeleteProviderCredential,
-                    request_deserializer=vault__api__pb2.DeleteProviderCredentialRequest.FromString,
-                    response_serializer=vault__api__pb2.DeleteProviderCredentialResponse.SerializeToString,
+                    response_serializer=vault__api__pb2.GetCredentialResponse.SerializeToString,
             ),
             'GetAllOrganizationCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllOrganizationCredential,
                     request_deserializer=vault__api__pb2.GetAllOrganizationCredentialRequest.FromString,
                     response_serializer=vault__api__pb2.GetAllOrganizationCredentialResponse.SerializeToString,
             ),
+            'DeleteCredential': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteCredential,
+                    request_deserializer=vault__api__pb2.DeleteCredentialRequest.FromString,
+                    response_serializer=vault__api__pb2.GetCredentialResponse.SerializeToString,
+            ),
             'GetProviderCredential': grpc.unary_unary_rpc_method_handler(
                     servicer.GetProviderCredential,
                     request_deserializer=vault__api__pb2.GetProviderCredentialRequest.FromString,
-                    response_serializer=vault__api__pb2.GetProviderCredentialResponse.SerializeToString,
+                    response_serializer=vault__api__pb2.GetCredentialResponse.SerializeToString,
             ),
-            'GetOauth2VaultCredential': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetOauth2VaultCredential,
-                    request_deserializer=vault__api__pb2.GetOauth2VaultCredentialRequest.FromString,
-                    response_serializer=vault__api__pb2.GetOauth2VaultCredentialResponse.SerializeToString,
+            'GetCredential': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetCredential,
+                    request_deserializer=vault__api__pb2.GetCredentialRequest.FromString,
+                    response_serializer=vault__api__pb2.GetCredentialResponse.SerializeToString,
+            ),
+            'GetOauth2Credential': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetOauth2Credential,
+                    request_deserializer=vault__api__pb2.GetCredentialRequest.FromString,
+                    response_serializer=vault__api__pb2.GetCredentialResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -165,7 +181,7 @@ class VaultService(object):
             target,
             '/vault_api.VaultService/CreateProviderCredential',
             vault__api__pb2.CreateProviderCredentialRequest.SerializeToString,
-            vault__api__pb2.CreateProviderCredentialResponse.FromString,
+            vault__api__pb2.GetCredentialResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -192,34 +208,7 @@ class VaultService(object):
             target,
             '/vault_api.VaultService/CreateToolCredential',
             vault__api__pb2.CreateToolCredentialRequest.SerializeToString,
-            vault__api__pb2.CreateToolCredentialResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def DeleteProviderCredential(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/vault_api.VaultService/DeleteProviderCredential',
-            vault__api__pb2.DeleteProviderCredentialRequest.SerializeToString,
-            vault__api__pb2.DeleteProviderCredentialResponse.FromString,
+            vault__api__pb2.GetCredentialResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -258,6 +247,33 @@ class VaultService(object):
             _registered_method=True)
 
     @staticmethod
+    def DeleteCredential(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/vault_api.VaultService/DeleteCredential',
+            vault__api__pb2.DeleteCredentialRequest.SerializeToString,
+            vault__api__pb2.GetCredentialResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
     def GetProviderCredential(request,
             target,
             options=(),
@@ -273,7 +289,7 @@ class VaultService(object):
             target,
             '/vault_api.VaultService/GetProviderCredential',
             vault__api__pb2.GetProviderCredentialRequest.SerializeToString,
-            vault__api__pb2.GetProviderCredentialResponse.FromString,
+            vault__api__pb2.GetCredentialResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -285,7 +301,7 @@ class VaultService(object):
             _registered_method=True)
 
     @staticmethod
-    def GetOauth2VaultCredential(request,
+    def GetCredential(request,
             target,
             options=(),
             channel_credentials=None,
@@ -298,9 +314,36 @@ class VaultService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/vault_api.VaultService/GetOauth2VaultCredential',
-            vault__api__pb2.GetOauth2VaultCredentialRequest.SerializeToString,
-            vault__api__pb2.GetOauth2VaultCredentialResponse.FromString,
+            '/vault_api.VaultService/GetCredential',
+            vault__api__pb2.GetCredentialRequest.SerializeToString,
+            vault__api__pb2.GetCredentialResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetOauth2Credential(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/vault_api.VaultService/GetOauth2Credential',
+            vault__api__pb2.GetCredentialRequest.SerializeToString,
+            vault__api__pb2.GetCredentialResponse.FromString,
             options,
             channel_credentials,
             insecure,

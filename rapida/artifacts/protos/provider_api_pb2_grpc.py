@@ -44,16 +44,6 @@ class ProviderServiceStub(object):
                 request_serializer=provider__api__pb2.GetAllModelProviderRequest.SerializeToString,
                 response_deserializer=provider__api__pb2.GetAllModelProviderResponse.FromString,
                 _registered_method=True)
-        self.GetModel = channel.unary_unary(
-                '/provider_api.ProviderService/GetModel',
-                request_serializer=provider__api__pb2.GetModelRequest.SerializeToString,
-                response_deserializer=provider__api__pb2.GetModelResponse.FromString,
-                _registered_method=True)
-        self.GetAllModel = channel.unary_unary(
-                '/provider_api.ProviderService/GetAllModel',
-                request_serializer=provider__api__pb2.GetAllModelRequest.SerializeToString,
-                response_deserializer=provider__api__pb2.GetAllModelResponse.FromString,
-                _registered_method=True)
 
 
 class ProviderServiceServicer(object):
@@ -71,18 +61,6 @@ class ProviderServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetModel(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetAllModel(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
 
 def add_ProviderServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -95,16 +73,6 @@ def add_ProviderServiceServicer_to_server(servicer, server):
                     servicer.GetAllModelProvider,
                     request_deserializer=provider__api__pb2.GetAllModelProviderRequest.FromString,
                     response_serializer=provider__api__pb2.GetAllModelProviderResponse.SerializeToString,
-            ),
-            'GetModel': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetModel,
-                    request_deserializer=provider__api__pb2.GetModelRequest.FromString,
-                    response_serializer=provider__api__pb2.GetModelResponse.SerializeToString,
-            ),
-            'GetAllModel': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAllModel,
-                    request_deserializer=provider__api__pb2.GetAllModelRequest.FromString,
-                    response_serializer=provider__api__pb2.GetAllModelResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -161,60 +129,6 @@ class ProviderService(object):
             '/provider_api.ProviderService/GetAllModelProvider',
             provider__api__pb2.GetAllModelProviderRequest.SerializeToString,
             provider__api__pb2.GetAllModelProviderResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GetModel(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/provider_api.ProviderService/GetModel',
-            provider__api__pb2.GetModelRequest.SerializeToString,
-            provider__api__pb2.GetModelResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GetAllModel(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/provider_api.ProviderService/GetAllModel',
-            provider__api__pb2.GetAllModelRequest.SerializeToString,
-            provider__api__pb2.GetAllModelResponse.FromString,
             options,
             channel_credentials,
             insecure,

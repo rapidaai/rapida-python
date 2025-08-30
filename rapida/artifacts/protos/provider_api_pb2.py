@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 import rapida.artifacts.protos.common_pb2 as common__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12provider-api.proto\x12\x0cprovider_api\x1a\x0c\x63ommon.proto\"2\n\x12GetAllModelRequest\x12\x1c\n\tcriterias\x18\x01 \x03(\x0b\x32\t.Criteria\"R\n\x13GetAllModelResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x1c\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x0e.ProviderModel\"&\n\x0fGetModelRequest\x12\x13\n\x07modelId\x18\x01 \x01(\x04\x42\x02\x30\x01\"O\n\x10GetModelResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x1c\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x0e.ProviderModel\"W\n\x1aGetAllModelProviderRequest\x12\x1b\n\x08paginate\x18\x01 \x01(\x0b\x32\t.Paginate\x12\x1c\n\tcriterias\x18\x02 \x03(\x0b\x32\t.Criteria\"U\n\x1bGetAllModelProviderResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x17\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\t.Provider\"\xf2\x01\n\x0cToolProvider\x12\x0e\n\x02id\x18\x01 \x01(\x04\x42\x02\x30\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\r\n\x05image\x18\x04 \x01(\t\x12\x0f\n\x07\x66\x65\x61ture\x18\x05 \x03(\t\x12R\n\x14\x63onnectConfiguration\x18\x06 \x03(\x0b\x32\x34.provider_api.ToolProvider.ConnectConfigurationEntry\x1a;\n\x19\x43onnectConfigurationEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"V\n\x19GetAllToolProviderRequest\x12\x1b\n\x08paginate\x18\x01 \x01(\x0b\x32\t.Paginate\x12\x1c\n\tcriterias\x18\x02 \x03(\x0b\x32\t.Criteria\"\x9b\x01\n\x1aGetAllToolProviderResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x1a.provider_api.ToolProvider\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\x12\x1d\n\tpaginated\x18\x05 \x01(\x0b\x32\n.Paginated2\x85\x03\n\x0fProviderService\x12g\n\x12GetAllToolProvider\x12\'.provider_api.GetAllToolProviderRequest\x1a(.provider_api.GetAllToolProviderResponse\x12j\n\x13GetAllModelProvider\x12(.provider_api.GetAllModelProviderRequest\x1a).provider_api.GetAllModelProviderResponse\x12I\n\x08GetModel\x12\x1d.provider_api.GetModelRequest\x1a\x1e.provider_api.GetModelResponse\x12R\n\x0bGetAllModel\x12 .provider_api.GetAllModelRequest\x1a!.provider_api.GetAllModelResponseB7Z5github.com/lexatic/web-backend/protos/lexatic-backendb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12provider-api.proto\x12\x0cprovider_api\x1a\x0c\x63ommon.proto\"W\n\x1aGetAllModelProviderRequest\x12\x1b\n\x08paginate\x18\x01 \x01(\x0b\x32\t.Paginate\x12\x1c\n\tcriterias\x18\x02 \x03(\x0b\x32\t.Criteria\"U\n\x1bGetAllModelProviderResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x17\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\t.Provider\"\xf2\x01\n\x0cToolProvider\x12\x0e\n\x02id\x18\x01 \x01(\x04\x42\x02\x30\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\r\n\x05image\x18\x04 \x01(\t\x12\x0f\n\x07\x66\x65\x61ture\x18\x05 \x03(\t\x12R\n\x14\x63onnectConfiguration\x18\x06 \x03(\x0b\x32\x34.provider_api.ToolProvider.ConnectConfigurationEntry\x1a;\n\x19\x43onnectConfigurationEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"V\n\x19GetAllToolProviderRequest\x12\x1b\n\x08paginate\x18\x01 \x01(\x0b\x32\t.Paginate\x12\x1c\n\tcriterias\x18\x02 \x03(\x0b\x32\t.Criteria\"\x9b\x01\n\x1aGetAllToolProviderResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x1a.provider_api.ToolProvider\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\x12\x1d\n\tpaginated\x18\x05 \x01(\x0b\x32\n.Paginated2\xe6\x01\n\x0fProviderService\x12g\n\x12GetAllToolProvider\x12\'.provider_api.GetAllToolProviderRequest\x1a(.provider_api.GetAllToolProviderResponse\x12j\n\x13GetAllModelProvider\x12(.provider_api.GetAllModelProviderRequest\x1a).provider_api.GetAllModelProviderResponseB7Z5github.com/lexatic/web-backend/protos/lexatic-backendb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,32 +33,22 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'provider_api_pb2', _globals
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z5github.com/lexatic/web-backend/protos/lexatic-backend'
-  _globals['_GETMODELREQUEST'].fields_by_name['modelId']._loaded_options = None
-  _globals['_GETMODELREQUEST'].fields_by_name['modelId']._serialized_options = b'0\001'
   _globals['_TOOLPROVIDER_CONNECTCONFIGURATIONENTRY']._loaded_options = None
   _globals['_TOOLPROVIDER_CONNECTCONFIGURATIONENTRY']._serialized_options = b'8\001'
   _globals['_TOOLPROVIDER'].fields_by_name['id']._loaded_options = None
   _globals['_TOOLPROVIDER'].fields_by_name['id']._serialized_options = b'0\001'
-  _globals['_GETALLMODELREQUEST']._serialized_start=50
-  _globals['_GETALLMODELREQUEST']._serialized_end=100
-  _globals['_GETALLMODELRESPONSE']._serialized_start=102
-  _globals['_GETALLMODELRESPONSE']._serialized_end=184
-  _globals['_GETMODELREQUEST']._serialized_start=186
-  _globals['_GETMODELREQUEST']._serialized_end=224
-  _globals['_GETMODELRESPONSE']._serialized_start=226
-  _globals['_GETMODELRESPONSE']._serialized_end=305
-  _globals['_GETALLMODELPROVIDERREQUEST']._serialized_start=307
-  _globals['_GETALLMODELPROVIDERREQUEST']._serialized_end=394
-  _globals['_GETALLMODELPROVIDERRESPONSE']._serialized_start=396
-  _globals['_GETALLMODELPROVIDERRESPONSE']._serialized_end=481
-  _globals['_TOOLPROVIDER']._serialized_start=484
-  _globals['_TOOLPROVIDER']._serialized_end=726
-  _globals['_TOOLPROVIDER_CONNECTCONFIGURATIONENTRY']._serialized_start=667
-  _globals['_TOOLPROVIDER_CONNECTCONFIGURATIONENTRY']._serialized_end=726
-  _globals['_GETALLTOOLPROVIDERREQUEST']._serialized_start=728
-  _globals['_GETALLTOOLPROVIDERREQUEST']._serialized_end=814
-  _globals['_GETALLTOOLPROVIDERRESPONSE']._serialized_start=817
-  _globals['_GETALLTOOLPROVIDERRESPONSE']._serialized_end=972
-  _globals['_PROVIDERSERVICE']._serialized_start=975
-  _globals['_PROVIDERSERVICE']._serialized_end=1364
+  _globals['_GETALLMODELPROVIDERREQUEST']._serialized_start=50
+  _globals['_GETALLMODELPROVIDERREQUEST']._serialized_end=137
+  _globals['_GETALLMODELPROVIDERRESPONSE']._serialized_start=139
+  _globals['_GETALLMODELPROVIDERRESPONSE']._serialized_end=224
+  _globals['_TOOLPROVIDER']._serialized_start=227
+  _globals['_TOOLPROVIDER']._serialized_end=469
+  _globals['_TOOLPROVIDER_CONNECTCONFIGURATIONENTRY']._serialized_start=410
+  _globals['_TOOLPROVIDER_CONNECTCONFIGURATIONENTRY']._serialized_end=469
+  _globals['_GETALLTOOLPROVIDERREQUEST']._serialized_start=471
+  _globals['_GETALLTOOLPROVIDERREQUEST']._serialized_end=557
+  _globals['_GETALLTOOLPROVIDERRESPONSE']._serialized_start=560
+  _globals['_GETALLTOOLPROVIDERRESPONSE']._serialized_end=715
+  _globals['_PROVIDERSERVICE']._serialized_start=718
+  _globals['_PROVIDERSERVICE']._serialized_end=948
 # @@protoc_insertion_point(module_scope)

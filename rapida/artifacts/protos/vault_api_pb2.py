@@ -27,7 +27,7 @@ from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 import rapida.artifacts.protos.common_pb2 as common__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fvault-api.proto\x12\tvault_api\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x0c\x63ommon.proto\"\xd5\x02\n\x0fVaultCredential\x12\x0e\n\x02id\x18\x01 \x01(\x04\x42\x02\x30\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12&\n\x05value\x18\x03 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x12\n\nvaultLevel\x18\x05 \x01(\t\x12\x18\n\x0cvaultLevelId\x18\x06 \x01(\x04\x42\x02\x30\x01\x12\x11\n\tvaultType\x18\x07 \x01(\t\x12\x17\n\x0bvaultTypeId\x18\x08 \x01(\x04\x42\x02\x30\x01\x12/\n\x0b\x63reatedDate\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0bupdatedDate\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x30\n\x0clastUsedDate\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x8a\x01\n\x1f\x43reateProviderCredentialRequest\x12\x16\n\nproviderId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12+\n\ncredential\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x14\n\x0cproviderName\x18\x04 \x01(\t\"\x82\x01\n CreateProviderCredentialResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1a.vault_api.VaultCredential\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"~\n\x1b\x43reateToolCredentialRequest\x12\x12\n\x06toolId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12+\n\ncredential\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08toolName\x18\x04 \x01(\t\"~\n\x1c\x43reateToolCredentialResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1a.vault_api.VaultCredential\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"<\n\x1f\x44\x65leteProviderCredentialRequest\x12\x19\n\rproviderKeyId\x18\x01 \x01(\x04\x42\x02\x30\x01\"h\n DeleteProviderCredentialResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12\x0e\n\x02id\x18\x03 \x01(\x04\x42\x02\x30\x01\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"\xa5\x01\n$GetAllOrganizationCredentialResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x1a.vault_api.VaultCredential\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\x12\x1d\n\tpaginated\x18\x05 \x01(\x0b\x32\n.Paginated\"R\n\x1cGetProviderCredentialRequest\x12\x16\n\nproviderId\x18\x03 \x01(\x04\x42\x02\x30\x01\x12\x1a\n\x0eorganizationId\x18\x04 \x01(\x04\x42\x02\x30\x01\"\x7f\n\x1dGetProviderCredentialResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1a.vault_api.VaultCredential\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"`\n#GetAllOrganizationCredentialRequest\x12\x1b\n\x08paginate\x18\x01 \x01(\x0b\x32\t.Paginate\x12\x1c\n\tcriterias\x18\x02 \x03(\x0b\x32\t.Criteria\"j\n\x1fGetOauth2VaultCredentialRequest\x12\x13\n\x07vaultId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12\x16\n\nproviderId\x18\x03 \x01(\x04\x42\x02\x30\x01\x12\x1a\n\x0eorganizationId\x18\x04 \x01(\x04\x42\x02\x30\x01\"\x82\x01\n GetOauth2VaultCredentialResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1a.vault_api.VaultCredential\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error2\xc3\x05\n\x0cVaultService\x12s\n\x18\x43reateProviderCredential\x12*.vault_api.CreateProviderCredentialRequest\x1a+.vault_api.CreateProviderCredentialResponse\x12g\n\x14\x43reateToolCredential\x12&.vault_api.CreateToolCredentialRequest\x1a\'.vault_api.CreateToolCredentialResponse\x12s\n\x18\x44\x65leteProviderCredential\x12*.vault_api.DeleteProviderCredentialRequest\x1a+.vault_api.DeleteProviderCredentialResponse\x12\x7f\n\x1cGetAllOrganizationCredential\x12..vault_api.GetAllOrganizationCredentialRequest\x1a/.vault_api.GetAllOrganizationCredentialResponse\x12j\n\x15GetProviderCredential\x12\'.vault_api.GetProviderCredentialRequest\x1a(.vault_api.GetProviderCredentialResponse\x12s\n\x18GetOauth2VaultCredential\x12*.vault_api.GetOauth2VaultCredentialRequest\x1a+.vault_api.GetOauth2VaultCredentialResponseB7Z5github.com/lexatic/web-backend/protos/lexatic-backendb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fvault-api.proto\x12\tvault_api\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x0c\x63ommon.proto\"\xd5\x02\n\x0fVaultCredential\x12\x0e\n\x02id\x18\x01 \x01(\x04\x42\x02\x30\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12&\n\x05value\x18\x03 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x12\n\nvaultLevel\x18\x05 \x01(\t\x12\x18\n\x0cvaultLevelId\x18\x06 \x01(\x04\x42\x02\x30\x01\x12\x11\n\tvaultType\x18\x07 \x01(\t\x12\x17\n\x0bvaultTypeId\x18\x08 \x01(\x04\x42\x02\x30\x01\x12/\n\x0b\x63reatedDate\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0bupdatedDate\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x30\n\x0clastUsedDate\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x8a\x01\n\x1f\x43reateProviderCredentialRequest\x12\x16\n\nproviderId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12+\n\ncredential\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x14\n\x0cproviderName\x18\x04 \x01(\t\"~\n\x1b\x43reateToolCredentialRequest\x12\x12\n\x06toolId\x18\x01 \x01(\x04\x42\x02\x30\x01\x12+\n\ncredential\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08toolName\x18\x04 \x01(\t\".\n\x17\x44\x65leteCredentialRequest\x12\x13\n\x07vaultId\x18\x01 \x01(\x04\x42\x02\x30\x01\"`\n#GetAllOrganizationCredentialRequest\x12\x1b\n\x08paginate\x18\x01 \x01(\x0b\x32\t.Paginate\x12\x1c\n\tcriterias\x18\x02 \x03(\x0b\x32\t.Criteria\"\xa5\x01\n$GetAllOrganizationCredentialResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x1a.vault_api.VaultCredential\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\x12\x1d\n\tpaginated\x18\x05 \x01(\x0b\x32\n.Paginated\"R\n\x1cGetProviderCredentialRequest\x12\x16\n\nproviderId\x18\x03 \x01(\x04\x42\x02\x30\x01\x12\x1a\n\x0eorganizationId\x18\x04 \x01(\x04\x42\x02\x30\x01\"w\n\x15GetCredentialResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07success\x18\x02 \x01(\x08\x12(\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1a.vault_api.VaultCredential\x12\x15\n\x05\x65rror\x18\x04 \x01(\x0b\x32\x06.Error\"+\n\x14GetCredentialRequest\x12\x13\n\x07vaultId\x18\x01 \x01(\x04\x42\x02\x30\x01\x32\xc7\x05\n\x0cVaultService\x12h\n\x18\x43reateProviderCredential\x12*.vault_api.CreateProviderCredentialRequest\x1a .vault_api.GetCredentialResponse\x12`\n\x14\x43reateToolCredential\x12&.vault_api.CreateToolCredentialRequest\x1a .vault_api.GetCredentialResponse\x12\x7f\n\x1cGetAllOrganizationCredential\x12..vault_api.GetAllOrganizationCredentialRequest\x1a/.vault_api.GetAllOrganizationCredentialResponse\x12X\n\x10\x44\x65leteCredential\x12\".vault_api.DeleteCredentialRequest\x1a .vault_api.GetCredentialResponse\x12\x62\n\x15GetProviderCredential\x12\'.vault_api.GetProviderCredentialRequest\x1a .vault_api.GetCredentialResponse\x12R\n\rGetCredential\x12\x1f.vault_api.GetCredentialRequest\x1a .vault_api.GetCredentialResponse\x12X\n\x13GetOauth2Credential\x12\x1f.vault_api.GetCredentialRequest\x1a .vault_api.GetCredentialResponseB7Z5github.com/lexatic/web-backend/protos/lexatic-backendb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -45,46 +45,32 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_CREATEPROVIDERCREDENTIALREQUEST'].fields_by_name['providerId']._serialized_options = b'0\001'
   _globals['_CREATETOOLCREDENTIALREQUEST'].fields_by_name['toolId']._loaded_options = None
   _globals['_CREATETOOLCREDENTIALREQUEST'].fields_by_name['toolId']._serialized_options = b'0\001'
-  _globals['_DELETEPROVIDERCREDENTIALREQUEST'].fields_by_name['providerKeyId']._loaded_options = None
-  _globals['_DELETEPROVIDERCREDENTIALREQUEST'].fields_by_name['providerKeyId']._serialized_options = b'0\001'
-  _globals['_DELETEPROVIDERCREDENTIALRESPONSE'].fields_by_name['id']._loaded_options = None
-  _globals['_DELETEPROVIDERCREDENTIALRESPONSE'].fields_by_name['id']._serialized_options = b'0\001'
+  _globals['_DELETECREDENTIALREQUEST'].fields_by_name['vaultId']._loaded_options = None
+  _globals['_DELETECREDENTIALREQUEST'].fields_by_name['vaultId']._serialized_options = b'0\001'
   _globals['_GETPROVIDERCREDENTIALREQUEST'].fields_by_name['providerId']._loaded_options = None
   _globals['_GETPROVIDERCREDENTIALREQUEST'].fields_by_name['providerId']._serialized_options = b'0\001'
   _globals['_GETPROVIDERCREDENTIALREQUEST'].fields_by_name['organizationId']._loaded_options = None
   _globals['_GETPROVIDERCREDENTIALREQUEST'].fields_by_name['organizationId']._serialized_options = b'0\001'
-  _globals['_GETOAUTH2VAULTCREDENTIALREQUEST'].fields_by_name['vaultId']._loaded_options = None
-  _globals['_GETOAUTH2VAULTCREDENTIALREQUEST'].fields_by_name['vaultId']._serialized_options = b'0\001'
-  _globals['_GETOAUTH2VAULTCREDENTIALREQUEST'].fields_by_name['providerId']._loaded_options = None
-  _globals['_GETOAUTH2VAULTCREDENTIALREQUEST'].fields_by_name['providerId']._serialized_options = b'0\001'
-  _globals['_GETOAUTH2VAULTCREDENTIALREQUEST'].fields_by_name['organizationId']._loaded_options = None
-  _globals['_GETOAUTH2VAULTCREDENTIALREQUEST'].fields_by_name['organizationId']._serialized_options = b'0\001'
+  _globals['_GETCREDENTIALREQUEST'].fields_by_name['vaultId']._loaded_options = None
+  _globals['_GETCREDENTIALREQUEST'].fields_by_name['vaultId']._serialized_options = b'0\001'
   _globals['_VAULTCREDENTIAL']._serialized_start=108
   _globals['_VAULTCREDENTIAL']._serialized_end=449
   _globals['_CREATEPROVIDERCREDENTIALREQUEST']._serialized_start=452
   _globals['_CREATEPROVIDERCREDENTIALREQUEST']._serialized_end=590
-  _globals['_CREATEPROVIDERCREDENTIALRESPONSE']._serialized_start=593
-  _globals['_CREATEPROVIDERCREDENTIALRESPONSE']._serialized_end=723
-  _globals['_CREATETOOLCREDENTIALREQUEST']._serialized_start=725
-  _globals['_CREATETOOLCREDENTIALREQUEST']._serialized_end=851
-  _globals['_CREATETOOLCREDENTIALRESPONSE']._serialized_start=853
-  _globals['_CREATETOOLCREDENTIALRESPONSE']._serialized_end=979
-  _globals['_DELETEPROVIDERCREDENTIALREQUEST']._serialized_start=981
-  _globals['_DELETEPROVIDERCREDENTIALREQUEST']._serialized_end=1041
-  _globals['_DELETEPROVIDERCREDENTIALRESPONSE']._serialized_start=1043
-  _globals['_DELETEPROVIDERCREDENTIALRESPONSE']._serialized_end=1147
-  _globals['_GETALLORGANIZATIONCREDENTIALRESPONSE']._serialized_start=1150
-  _globals['_GETALLORGANIZATIONCREDENTIALRESPONSE']._serialized_end=1315
-  _globals['_GETPROVIDERCREDENTIALREQUEST']._serialized_start=1317
-  _globals['_GETPROVIDERCREDENTIALREQUEST']._serialized_end=1399
-  _globals['_GETPROVIDERCREDENTIALRESPONSE']._serialized_start=1401
-  _globals['_GETPROVIDERCREDENTIALRESPONSE']._serialized_end=1528
-  _globals['_GETALLORGANIZATIONCREDENTIALREQUEST']._serialized_start=1530
-  _globals['_GETALLORGANIZATIONCREDENTIALREQUEST']._serialized_end=1626
-  _globals['_GETOAUTH2VAULTCREDENTIALREQUEST']._serialized_start=1628
-  _globals['_GETOAUTH2VAULTCREDENTIALREQUEST']._serialized_end=1734
-  _globals['_GETOAUTH2VAULTCREDENTIALRESPONSE']._serialized_start=1737
-  _globals['_GETOAUTH2VAULTCREDENTIALRESPONSE']._serialized_end=1867
-  _globals['_VAULTSERVICE']._serialized_start=1870
-  _globals['_VAULTSERVICE']._serialized_end=2577
+  _globals['_CREATETOOLCREDENTIALREQUEST']._serialized_start=592
+  _globals['_CREATETOOLCREDENTIALREQUEST']._serialized_end=718
+  _globals['_DELETECREDENTIALREQUEST']._serialized_start=720
+  _globals['_DELETECREDENTIALREQUEST']._serialized_end=766
+  _globals['_GETALLORGANIZATIONCREDENTIALREQUEST']._serialized_start=768
+  _globals['_GETALLORGANIZATIONCREDENTIALREQUEST']._serialized_end=864
+  _globals['_GETALLORGANIZATIONCREDENTIALRESPONSE']._serialized_start=867
+  _globals['_GETALLORGANIZATIONCREDENTIALRESPONSE']._serialized_end=1032
+  _globals['_GETPROVIDERCREDENTIALREQUEST']._serialized_start=1034
+  _globals['_GETPROVIDERCREDENTIALREQUEST']._serialized_end=1116
+  _globals['_GETCREDENTIALRESPONSE']._serialized_start=1118
+  _globals['_GETCREDENTIALRESPONSE']._serialized_end=1237
+  _globals['_GETCREDENTIALREQUEST']._serialized_start=1239
+  _globals['_GETCREDENTIALREQUEST']._serialized_end=1282
+  _globals['_VAULTSERVICE']._serialized_start=1285
+  _globals['_VAULTSERVICE']._serialized_end=1996
 # @@protoc_insertion_point(module_scope)

@@ -35,11 +35,6 @@ class TalkServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.AssistantMessaging = channel.unary_stream(
-                '/talk_api.TalkService/AssistantMessaging',
-                request_serializer=talk__api__pb2.AssistantMessagingRequest.SerializeToString,
-                response_deserializer=talk__api__pb2.AssistantMessagingResponse.FromString,
-                _registered_method=True)
         self.AssistantTalk = channel.stream_stream(
                 '/talk_api.TalkService/AssistantTalk',
                 request_serializer=talk__api__pb2.AssistantMessagingRequest.SerializeToString,
@@ -65,26 +60,20 @@ class TalkServiceStub(object):
                 request_serializer=talk__api__pb2.CreateConversationMetricRequest.SerializeToString,
                 response_deserializer=talk__api__pb2.CreateConversationMetricResponse.FromString,
                 _registered_method=True)
-        self.InitiateAssistantTalk = channel.unary_unary(
-                '/talk_api.TalkService/InitiateAssistantTalk',
-                request_serializer=talk__api__pb2.InitiateAssistantTalkRequest.SerializeToString,
-                response_deserializer=talk__api__pb2.InitiateAssistantTalkResponse.FromString,
+        self.CreatePhoneCall = channel.unary_unary(
+                '/talk_api.TalkService/CreatePhoneCall',
+                request_serializer=talk__api__pb2.CreatePhoneCallRequest.SerializeToString,
+                response_deserializer=talk__api__pb2.CreatePhoneCallResponse.FromString,
                 _registered_method=True)
-        self.InitiateBulkAssistantTalk = channel.unary_unary(
-                '/talk_api.TalkService/InitiateBulkAssistantTalk',
-                request_serializer=talk__api__pb2.InitiateBulkAssistantTalkRequest.SerializeToString,
-                response_deserializer=talk__api__pb2.InitiateBulkAssistantTalkResponse.FromString,
+        self.CreateBulkPhoneCall = channel.unary_unary(
+                '/talk_api.TalkService/CreateBulkPhoneCall',
+                request_serializer=talk__api__pb2.CreateBulkPhoneCallRequest.SerializeToString,
+                response_deserializer=talk__api__pb2.CreateBulkPhoneCallResponse.FromString,
                 _registered_method=True)
 
 
 class TalkServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
-
-    def AssistantMessaging(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
 
     def AssistantTalk(self, request_iterator, context):
         """Missing associated documentation comment in .proto file."""
@@ -116,13 +105,14 @@ class TalkServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def InitiateAssistantTalk(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+    def CreatePhoneCall(self, request, context):
+        """
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def InitiateBulkAssistantTalk(self, request, context):
+    def CreateBulkPhoneCall(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -131,11 +121,6 @@ class TalkServiceServicer(object):
 
 def add_TalkServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'AssistantMessaging': grpc.unary_stream_rpc_method_handler(
-                    servicer.AssistantMessaging,
-                    request_deserializer=talk__api__pb2.AssistantMessagingRequest.FromString,
-                    response_serializer=talk__api__pb2.AssistantMessagingResponse.SerializeToString,
-            ),
             'AssistantTalk': grpc.stream_stream_rpc_method_handler(
                     servicer.AssistantTalk,
                     request_deserializer=talk__api__pb2.AssistantMessagingRequest.FromString,
@@ -161,15 +146,15 @@ def add_TalkServiceServicer_to_server(servicer, server):
                     request_deserializer=talk__api__pb2.CreateConversationMetricRequest.FromString,
                     response_serializer=talk__api__pb2.CreateConversationMetricResponse.SerializeToString,
             ),
-            'InitiateAssistantTalk': grpc.unary_unary_rpc_method_handler(
-                    servicer.InitiateAssistantTalk,
-                    request_deserializer=talk__api__pb2.InitiateAssistantTalkRequest.FromString,
-                    response_serializer=talk__api__pb2.InitiateAssistantTalkResponse.SerializeToString,
+            'CreatePhoneCall': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreatePhoneCall,
+                    request_deserializer=talk__api__pb2.CreatePhoneCallRequest.FromString,
+                    response_serializer=talk__api__pb2.CreatePhoneCallResponse.SerializeToString,
             ),
-            'InitiateBulkAssistantTalk': grpc.unary_unary_rpc_method_handler(
-                    servicer.InitiateBulkAssistantTalk,
-                    request_deserializer=talk__api__pb2.InitiateBulkAssistantTalkRequest.FromString,
-                    response_serializer=talk__api__pb2.InitiateBulkAssistantTalkResponse.SerializeToString,
+            'CreateBulkPhoneCall': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateBulkPhoneCall,
+                    request_deserializer=talk__api__pb2.CreateBulkPhoneCallRequest.FromString,
+                    response_serializer=talk__api__pb2.CreateBulkPhoneCallResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -181,33 +166,6 @@ def add_TalkServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class TalkService(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def AssistantMessaging(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(
-            request,
-            target,
-            '/talk_api.TalkService/AssistantMessaging',
-            talk__api__pb2.AssistantMessagingRequest.SerializeToString,
-            talk__api__pb2.AssistantMessagingResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def AssistantTalk(request_iterator,
@@ -345,7 +303,7 @@ class TalkService(object):
             _registered_method=True)
 
     @staticmethod
-    def InitiateAssistantTalk(request,
+    def CreatePhoneCall(request,
             target,
             options=(),
             channel_credentials=None,
@@ -358,9 +316,9 @@ class TalkService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/talk_api.TalkService/InitiateAssistantTalk',
-            talk__api__pb2.InitiateAssistantTalkRequest.SerializeToString,
-            talk__api__pb2.InitiateAssistantTalkResponse.FromString,
+            '/talk_api.TalkService/CreatePhoneCall',
+            talk__api__pb2.CreatePhoneCallRequest.SerializeToString,
+            talk__api__pb2.CreatePhoneCallResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -372,7 +330,7 @@ class TalkService(object):
             _registered_method=True)
 
     @staticmethod
-    def InitiateBulkAssistantTalk(request,
+    def CreateBulkPhoneCall(request,
             target,
             options=(),
             channel_credentials=None,
@@ -385,9 +343,9 @@ class TalkService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/talk_api.TalkService/InitiateBulkAssistantTalk',
-            talk__api__pb2.InitiateBulkAssistantTalkRequest.SerializeToString,
-            talk__api__pb2.InitiateBulkAssistantTalkResponse.FromString,
+            '/talk_api.TalkService/CreateBulkPhoneCall',
+            talk__api__pb2.CreateBulkPhoneCallRequest.SerializeToString,
+            talk__api__pb2.CreateBulkPhoneCallResponse.FromString,
             options,
             channel_credentials,
             insecure,

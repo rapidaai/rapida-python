@@ -47,18 +47,6 @@ class CreateProviderCredentialRequest(_message.Message):
     providerName: str
     def __init__(self, providerId: _Optional[int] = ..., credential: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., name: _Optional[str] = ..., providerName: _Optional[str] = ...) -> None: ...
 
-class CreateProviderCredentialResponse(_message.Message):
-    __slots__ = ("code", "success", "data", "error")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    DATA_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    data: VaultCredential
-    error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[VaultCredential, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
-
 class CreateToolCredentialRequest(_message.Message):
     __slots__ = ("toolId", "credential", "name", "toolName")
     TOOLID_FIELD_NUMBER: _ClassVar[int]
@@ -71,35 +59,19 @@ class CreateToolCredentialRequest(_message.Message):
     toolName: str
     def __init__(self, toolId: _Optional[int] = ..., credential: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., name: _Optional[str] = ..., toolName: _Optional[str] = ...) -> None: ...
 
-class CreateToolCredentialResponse(_message.Message):
-    __slots__ = ("code", "success", "data", "error")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    DATA_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    data: VaultCredential
-    error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[VaultCredential, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+class DeleteCredentialRequest(_message.Message):
+    __slots__ = ("vaultId",)
+    VAULTID_FIELD_NUMBER: _ClassVar[int]
+    vaultId: int
+    def __init__(self, vaultId: _Optional[int] = ...) -> None: ...
 
-class DeleteProviderCredentialRequest(_message.Message):
-    __slots__ = ("providerKeyId",)
-    PROVIDERKEYID_FIELD_NUMBER: _ClassVar[int]
-    providerKeyId: int
-    def __init__(self, providerKeyId: _Optional[int] = ...) -> None: ...
-
-class DeleteProviderCredentialResponse(_message.Message):
-    __slots__ = ("code", "success", "id", "error")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    ID_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    id: int
-    error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., id: _Optional[int] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+class GetAllOrganizationCredentialRequest(_message.Message):
+    __slots__ = ("paginate", "criterias")
+    PAGINATE_FIELD_NUMBER: _ClassVar[int]
+    CRITERIAS_FIELD_NUMBER: _ClassVar[int]
+    paginate: _common_pb2.Paginate
+    criterias: _containers.RepeatedCompositeFieldContainer[_common_pb2.Criteria]
+    def __init__(self, paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ...) -> None: ...
 
 class GetAllOrganizationCredentialResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error", "paginated")
@@ -123,7 +95,7 @@ class GetProviderCredentialRequest(_message.Message):
     organizationId: int
     def __init__(self, providerId: _Optional[int] = ..., organizationId: _Optional[int] = ...) -> None: ...
 
-class GetProviderCredentialResponse(_message.Message):
+class GetCredentialResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")
     CODE_FIELD_NUMBER: _ClassVar[int]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
@@ -135,32 +107,8 @@ class GetProviderCredentialResponse(_message.Message):
     error: _common_pb2.Error
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[VaultCredential, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
-class GetAllOrganizationCredentialRequest(_message.Message):
-    __slots__ = ("paginate", "criterias")
-    PAGINATE_FIELD_NUMBER: _ClassVar[int]
-    CRITERIAS_FIELD_NUMBER: _ClassVar[int]
-    paginate: _common_pb2.Paginate
-    criterias: _containers.RepeatedCompositeFieldContainer[_common_pb2.Criteria]
-    def __init__(self, paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ...) -> None: ...
-
-class GetOauth2VaultCredentialRequest(_message.Message):
-    __slots__ = ("vaultId", "providerId", "organizationId")
+class GetCredentialRequest(_message.Message):
+    __slots__ = ("vaultId",)
     VAULTID_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERID_FIELD_NUMBER: _ClassVar[int]
-    ORGANIZATIONID_FIELD_NUMBER: _ClassVar[int]
     vaultId: int
-    providerId: int
-    organizationId: int
-    def __init__(self, vaultId: _Optional[int] = ..., providerId: _Optional[int] = ..., organizationId: _Optional[int] = ...) -> None: ...
-
-class GetOauth2VaultCredentialResponse(_message.Message):
-    __slots__ = ("code", "success", "data", "error")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    DATA_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    data: VaultCredential
-    error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[VaultCredential, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+    def __init__(self, vaultId: _Optional[int] = ...) -> None: ...

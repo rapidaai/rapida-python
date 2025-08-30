@@ -45,11 +45,6 @@ class EndpointServiceStub(object):
                 request_serializer=endpoint__api__pb2.GetAllEndpointRequest.SerializeToString,
                 response_deserializer=endpoint__api__pb2.GetAllEndpointResponse.FromString,
                 _registered_method=True)
-        self.GetAllDeployment = channel.unary_unary(
-                '/endpoint_api.EndpointService/GetAllDeployment',
-                request_serializer=endpoint__api__pb2.GetAllDeploymentRequest.SerializeToString,
-                response_deserializer=endpoint__api__pb2.GetAllDeploymentResponse.FromString,
-                _registered_method=True)
         self.GetAllEndpointProviderModel = channel.unary_unary(
                 '/endpoint_api.EndpointService/GetAllEndpointProviderModel',
                 request_serializer=endpoint__api__pb2.GetAllEndpointProviderModelRequest.SerializeToString,
@@ -95,6 +90,16 @@ class EndpointServiceStub(object):
                 request_serializer=endpoint__api__pb2.UpdateEndpointDetailRequest.SerializeToString,
                 response_deserializer=endpoint__api__pb2.GetEndpointResponse.FromString,
                 _registered_method=True)
+        self.GetAllEndpointLog = channel.unary_unary(
+                '/endpoint_api.EndpointService/GetAllEndpointLog',
+                request_serializer=endpoint__api__pb2.GetAllEndpointLogRequest.SerializeToString,
+                response_deserializer=endpoint__api__pb2.GetAllEndpointLogResponse.FromString,
+                _registered_method=True)
+        self.GetEndpointLog = channel.unary_unary(
+                '/endpoint_api.EndpointService/GetEndpointLog',
+                request_serializer=endpoint__api__pb2.GetEndpointLogRequest.SerializeToString,
+                response_deserializer=endpoint__api__pb2.GetEndpointLogResponse.FromString,
+                _registered_method=True)
 
 
 class EndpointServiceServicer(object):
@@ -108,14 +113,6 @@ class EndpointServiceServicer(object):
 
     def GetAllEndpoint(self, request, context):
         """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetAllDeployment(self, request, context):
-        """
-        get all public deployments
-        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -176,6 +173,18 @@ class EndpointServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAllEndpointLog(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetEndpointLog(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_EndpointServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -188,11 +197,6 @@ def add_EndpointServiceServicer_to_server(servicer, server):
                     servicer.GetAllEndpoint,
                     request_deserializer=endpoint__api__pb2.GetAllEndpointRequest.FromString,
                     response_serializer=endpoint__api__pb2.GetAllEndpointResponse.SerializeToString,
-            ),
-            'GetAllDeployment': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAllDeployment,
-                    request_deserializer=endpoint__api__pb2.GetAllDeploymentRequest.FromString,
-                    response_serializer=endpoint__api__pb2.GetAllDeploymentResponse.SerializeToString,
             ),
             'GetAllEndpointProviderModel': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllEndpointProviderModel,
@@ -238,6 +242,16 @@ def add_EndpointServiceServicer_to_server(servicer, server):
                     servicer.UpdateEndpointDetail,
                     request_deserializer=endpoint__api__pb2.UpdateEndpointDetailRequest.FromString,
                     response_serializer=endpoint__api__pb2.GetEndpointResponse.SerializeToString,
+            ),
+            'GetAllEndpointLog': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllEndpointLog,
+                    request_deserializer=endpoint__api__pb2.GetAllEndpointLogRequest.FromString,
+                    response_serializer=endpoint__api__pb2.GetAllEndpointLogResponse.SerializeToString,
+            ),
+            'GetEndpointLog': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetEndpointLog,
+                    request_deserializer=endpoint__api__pb2.GetEndpointLogRequest.FromString,
+                    response_serializer=endpoint__api__pb2.GetEndpointLogResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -294,33 +308,6 @@ class EndpointService(object):
             '/endpoint_api.EndpointService/GetAllEndpoint',
             endpoint__api__pb2.GetAllEndpointRequest.SerializeToString,
             endpoint__api__pb2.GetAllEndpointResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GetAllDeployment(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/endpoint_api.EndpointService/GetAllDeployment',
-            endpoint__api__pb2.GetAllDeploymentRequest.SerializeToString,
-            endpoint__api__pb2.GetAllDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -564,6 +551,60 @@ class EndpointService(object):
             '/endpoint_api.EndpointService/UpdateEndpointDetail',
             endpoint__api__pb2.UpdateEndpointDetailRequest.SerializeToString,
             endpoint__api__pb2.GetEndpointResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllEndpointLog(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/endpoint_api.EndpointService/GetAllEndpointLog',
+            endpoint__api__pb2.GetAllEndpointLogRequest.SerializeToString,
+            endpoint__api__pb2.GetAllEndpointLogResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetEndpointLog(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/endpoint_api.EndpointService/GetEndpointLog',
+            endpoint__api__pb2.GetEndpointLogRequest.SerializeToString,
+            endpoint__api__pb2.GetEndpointLogResponse.FromString,
             options,
             channel_credentials,
             insecure,

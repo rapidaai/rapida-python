@@ -64,18 +64,6 @@ class FunctionParameterProperty(_message.Message):
     items: FunctionParameter
     def __init__(self, type: _Optional[str] = ..., description: _Optional[str] = ..., enum: _Optional[_Iterable[str]] = ..., items: _Optional[_Union[FunctionParameter, _Mapping]] = ...) -> None: ...
 
-class ModelParameter(_message.Message):
-    __slots__ = ("key", "value", "type", "place")
-    KEY_FIELD_NUMBER: _ClassVar[int]
-    VALUE_FIELD_NUMBER: _ClassVar[int]
-    TYPE_FIELD_NUMBER: _ClassVar[int]
-    PLACE_FIELD_NUMBER: _ClassVar[int]
-    key: str
-    value: _any_pb2.Any
-    type: str
-    place: str
-    def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ..., type: _Optional[str] = ..., place: _Optional[str] = ...) -> None: ...
-
 class Embedding(_message.Message):
     __slots__ = ("index", "embedding", "base64")
     INDEX_FIELD_NUMBER: _ClassVar[int]
@@ -87,7 +75,7 @@ class Embedding(_message.Message):
     def __init__(self, index: _Optional[int] = ..., embedding: _Optional[_Iterable[float]] = ..., base64: _Optional[str] = ...) -> None: ...
 
 class EmbeddingRequest(_message.Message):
-    __slots__ = ("credential", "model", "version", "content", "modelParameters", "additionalData")
+    __slots__ = ("credential", "content", "modelParameters", "additionalData")
     class ContentEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -95,6 +83,13 @@ class EmbeddingRequest(_message.Message):
         key: int
         value: str
         def __init__(self, key: _Optional[int] = ..., value: _Optional[str] = ...) -> None: ...
+    class ModelParametersEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
     class AdditionalDataEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -103,18 +98,14 @@ class EmbeddingRequest(_message.Message):
         value: str
         def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
     CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
-    MODEL_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
     CONTENT_FIELD_NUMBER: _ClassVar[int]
     MODELPARAMETERS_FIELD_NUMBER: _ClassVar[int]
     ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
     credential: Credential
-    model: str
-    version: str
     content: _containers.ScalarMap[int, str]
-    modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
+    modelParameters: _containers.MessageMap[str, _any_pb2.Any]
     additionalData: _containers.ScalarMap[str, str]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., content: _Optional[_Mapping[int, str]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., content: _Optional[_Mapping[int, str]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class EmbeddingResponse(_message.Message):
     __slots__ = ("code", "success", "requestId", "data", "error", "metrics")
@@ -143,7 +134,7 @@ class Reranking(_message.Message):
     def __init__(self, index: _Optional[int] = ..., content: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., RelevanceScore: _Optional[float] = ...) -> None: ...
 
 class RerankingRequest(_message.Message):
-    __slots__ = ("credential", "model", "version", "query", "content", "modelParameters", "additionalData")
+    __slots__ = ("credential", "query", "content", "modelParameters", "additionalData")
     class ContentEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -151,6 +142,13 @@ class RerankingRequest(_message.Message):
         key: int
         value: _common_pb2.Content
         def __init__(self, key: _Optional[int] = ..., value: _Optional[_Union[_common_pb2.Content, _Mapping]] = ...) -> None: ...
+    class ModelParametersEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
     class AdditionalDataEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -159,20 +157,16 @@ class RerankingRequest(_message.Message):
         value: str
         def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
     CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
-    MODEL_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
     QUERY_FIELD_NUMBER: _ClassVar[int]
     CONTENT_FIELD_NUMBER: _ClassVar[int]
     MODELPARAMETERS_FIELD_NUMBER: _ClassVar[int]
     ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
     credential: Credential
-    model: str
-    version: str
     query: str
     content: _containers.MessageMap[int, _common_pb2.Content]
-    modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
+    modelParameters: _containers.MessageMap[str, _any_pb2.Any]
     additionalData: _containers.ScalarMap[str, str]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., query: _Optional[str] = ..., content: _Optional[_Mapping[int, _common_pb2.Content]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., query: _Optional[str] = ..., content: _Optional[_Mapping[int, _common_pb2.Content]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class RerankingResponse(_message.Message):
     __slots__ = ("code", "success", "requestId", "data", "error", "metrics")
@@ -189,31 +183,6 @@ class RerankingResponse(_message.Message):
     error: _common_pb2.Error
     metrics: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metric]
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[int] = ..., data: _Optional[_Iterable[_Union[Reranking, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ...) -> None: ...
-
-class ChatRequest(_message.Message):
-    __slots__ = ("credential", "model", "version", "conversations", "additionalData", "modelParameters", "toolDefinitions")
-    class AdditionalDataEntry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
-    CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
-    MODEL_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
-    CONVERSATIONS_FIELD_NUMBER: _ClassVar[int]
-    ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
-    MODELPARAMETERS_FIELD_NUMBER: _ClassVar[int]
-    TOOLDEFINITIONS_FIELD_NUMBER: _ClassVar[int]
-    credential: Credential
-    model: str
-    version: str
-    conversations: _containers.RepeatedCompositeFieldContainer[_common_pb2.Message]
-    additionalData: _containers.ScalarMap[str, str]
-    modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
-    toolDefinitions: _containers.RepeatedCompositeFieldContainer[ToolDefinition]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., conversations: _Optional[_Iterable[_Union[_common_pb2.Message, _Mapping]]] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ..., toolDefinitions: _Optional[_Iterable[_Union[ToolDefinition, _Mapping]]] = ...) -> None: ...
 
 class ChatResponse(_message.Message):
     __slots__ = ("code", "success", "requestId", "data", "error", "metrics", "finishReason")
@@ -233,8 +202,8 @@ class ChatResponse(_message.Message):
     finishReason: str
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[int] = ..., data: _Optional[_Union[_common_pb2.Message, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ..., finishReason: _Optional[str] = ...) -> None: ...
 
-class GenerateRequest(_message.Message):
-    __slots__ = ("credential", "model", "version", "prompt", "additionalData", "modelParameters", "systemPrompt")
+class ChatRequest(_message.Message):
+    __slots__ = ("credential", "conversations", "additionalData", "modelParameters", "toolDefinitions")
     class AdditionalDataEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -242,158 +211,24 @@ class GenerateRequest(_message.Message):
         key: str
         value: str
         def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
-    CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
-    MODEL_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
-    ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
-    MODELPARAMETERS_FIELD_NUMBER: _ClassVar[int]
-    SYSTEMPROMPT_FIELD_NUMBER: _ClassVar[int]
-    credential: Credential
-    model: str
-    version: str
-    prompt: str
-    additionalData: _containers.ScalarMap[str, str]
-    modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
-    systemPrompt: str
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., prompt: _Optional[str] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ..., systemPrompt: _Optional[str] = ...) -> None: ...
-
-class GenerateResponse(_message.Message):
-    __slots__ = ("code", "success", "requestId", "data", "error", "metrics")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    DATA_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    METRICS_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    requestId: int
-    data: _containers.RepeatedCompositeFieldContainer[_common_pb2.Content]
-    error: _common_pb2.Error
-    metrics: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metric]
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[int] = ..., data: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ...) -> None: ...
-
-class GenerateTextToImageRequest(_message.Message):
-    __slots__ = ("credential", "model", "version", "prompt", "additionalData", "modelParameters")
-    class AdditionalDataEntry(_message.Message):
+    class ModelParametersEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
         key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
     CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
-    MODEL_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
+    CONVERSATIONS_FIELD_NUMBER: _ClassVar[int]
     ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
     MODELPARAMETERS_FIELD_NUMBER: _ClassVar[int]
+    TOOLDEFINITIONS_FIELD_NUMBER: _ClassVar[int]
     credential: Credential
-    model: str
-    version: str
-    prompt: str
+    conversations: _containers.RepeatedCompositeFieldContainer[_common_pb2.Message]
     additionalData: _containers.ScalarMap[str, str]
-    modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., prompt: _Optional[str] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ...) -> None: ...
-
-class GenerateTextToImageResponse(_message.Message):
-    __slots__ = ("code", "success", "requestId", "data", "error", "metrics")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    DATA_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    METRICS_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    requestId: int
-    data: _containers.RepeatedCompositeFieldContainer[_common_pb2.Content]
-    error: _common_pb2.Error
-    metrics: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metric]
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[int] = ..., data: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ...) -> None: ...
-
-class GenerateTextToSpeechRequest(_message.Message):
-    __slots__ = ("credential", "model", "version", "prompt", "additionalData", "modelParameters")
-    class AdditionalDataEntry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
-    CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
-    MODEL_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
-    ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
-    MODELPARAMETERS_FIELD_NUMBER: _ClassVar[int]
-    credential: Credential
-    model: str
-    version: str
-    prompt: str
-    additionalData: _containers.ScalarMap[str, str]
-    modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., prompt: _Optional[str] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ...) -> None: ...
-
-class GenerateTextToSpeechResponse(_message.Message):
-    __slots__ = ("code", "success", "requestId", "data", "error", "metrics")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    DATA_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    METRICS_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    requestId: int
-    data: _containers.RepeatedCompositeFieldContainer[_common_pb2.Content]
-    error: _common_pb2.Error
-    metrics: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metric]
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[int] = ..., data: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ...) -> None: ...
-
-class GenerateSpeechToTextRequest(_message.Message):
-    __slots__ = ("credential", "model", "version", "prompt", "speech", "additionalData", "modelParameters")
-    class AdditionalDataEntry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
-    CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
-    MODEL_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
-    SPEECH_FIELD_NUMBER: _ClassVar[int]
-    ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
-    MODELPARAMETERS_FIELD_NUMBER: _ClassVar[int]
-    credential: Credential
-    model: str
-    version: str
-    prompt: str
-    speech: _common_pb2.Content
-    additionalData: _containers.ScalarMap[str, str]
-    modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., prompt: _Optional[str] = ..., speech: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ...) -> None: ...
-
-class GenerateSpeechToTextResponse(_message.Message):
-    __slots__ = ("code", "success", "requestId", "data", "error", "metrics", "meta")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    DATA_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    METRICS_FIELD_NUMBER: _ClassVar[int]
-    META_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    requestId: int
-    data: _containers.RepeatedCompositeFieldContainer[_common_pb2.Content]
-    error: _common_pb2.Error
-    metrics: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metric]
-    meta: _struct_pb2.Struct
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[int] = ..., data: _Optional[_Iterable[_Union[_common_pb2.Content, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ..., meta: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ...) -> None: ...
+    modelParameters: _containers.MessageMap[str, _any_pb2.Any]
+    toolDefinitions: _containers.RepeatedCompositeFieldContainer[ToolDefinition]
+    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., conversations: _Optional[_Iterable[_Union[_common_pb2.Message, _Mapping]]] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ..., toolDefinitions: _Optional[_Iterable[_Union[ToolDefinition, _Mapping]]] = ...) -> None: ...
 
 class VerifyCredentialRequest(_message.Message):
     __slots__ = ("credential",)
@@ -432,6 +267,13 @@ class GetModerationRequest(_message.Message):
         key: str
         value: str
         def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+    class ModelParametersEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
     CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
     MODEL_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -443,8 +285,8 @@ class GetModerationRequest(_message.Message):
     version: str
     content: _common_pb2.Content
     additionalData: _containers.ScalarMap[str, str]
-    modelParameters: _containers.RepeatedCompositeFieldContainer[ModelParameter]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., content: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Iterable[_Union[ModelParameter, _Mapping]]] = ...) -> None: ...
+    modelParameters: _containers.MessageMap[str, _any_pb2.Any]
+    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., content: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
 
 class GetModerationResponse(_message.Message):
     __slots__ = ("code", "success", "requestId", "data", "error", "metrics")

@@ -12,27 +12,21 @@ DESCRIPTOR: _descriptor.FileDescriptor
 class Source(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
     WEB_PLUGIN: _ClassVar[Source]
-    RAPIDA_APP: _ClassVar[Source]
-    PYTHON_SDK: _ClassVar[Source]
-    NODE_SDK: _ClassVar[Source]
-    GO_SDK: _ClassVar[Source]
-    TYPESCRIPT_SDK: _ClassVar[Source]
-    JAVA_SDK: _ClassVar[Source]
-    PHP_SDK: _ClassVar[Source]
-    RUST_SDK: _ClassVar[Source]
-    REACT_SDK: _ClassVar[Source]
-    TWILIO_CALL: _ClassVar[Source]
+    DEBUGGER: _ClassVar[Source]
+    SDK: _ClassVar[Source]
+    PHONE_CALL: _ClassVar[Source]
+    WHATSAPP: _ClassVar[Source]
 WEB_PLUGIN: Source
-RAPIDA_APP: Source
-PYTHON_SDK: Source
-NODE_SDK: Source
-GO_SDK: Source
-TYPESCRIPT_SDK: Source
-JAVA_SDK: Source
-PHP_SDK: Source
-RUST_SDK: Source
-REACT_SDK: Source
-TWILIO_CALL: Source
+DEBUGGER: Source
+SDK: Source
+PHONE_CALL: Source
+WHATSAPP: Source
+
+class FieldSelector(_message.Message):
+    __slots__ = ("field",)
+    FIELD_FIELD_NUMBER: _ClassVar[int]
+    field: str
+    def __init__(self, field: _Optional[str] = ...) -> None: ...
 
 class Criteria(_message.Message):
     __slots__ = ("key", "value", "logic")
@@ -123,32 +117,27 @@ class Metadata(_message.Message):
     value: str
     def __init__(self, id: _Optional[int] = ..., key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
 
+class Argument(_message.Message):
+    __slots__ = ("id", "name", "value")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    VALUE_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    name: str
+    value: str
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+
 class Variable(_message.Message):
-    __slots__ = ("id", "name", "type", "defaultValue", "required", "label")
+    __slots__ = ("id", "name", "type", "defaultValue")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     DEFAULTVALUE_FIELD_NUMBER: _ClassVar[int]
-    IN_FIELD_NUMBER: _ClassVar[int]
-    REQUIRED_FIELD_NUMBER: _ClassVar[int]
-    LABEL_FIELD_NUMBER: _ClassVar[int]
     id: int
     name: str
     type: str
     defaultValue: str
-    required: bool
-    label: str
-    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., type: _Optional[str] = ..., defaultValue: _Optional[str] = ..., required: bool = ..., label: _Optional[str] = ..., **kwargs) -> None: ...
-
-class ProviderModelParameter(_message.Message):
-    __slots__ = ("id", "providerModelVariableId", "value")
-    ID_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERMODELVARIABLEID_FIELD_NUMBER: _ClassVar[int]
-    VALUE_FIELD_NUMBER: _ClassVar[int]
-    id: int
-    providerModelVariableId: int
-    value: str
-    def __init__(self, id: _Optional[int] = ..., providerModelVariableId: _Optional[int] = ..., value: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., type: _Optional[str] = ..., defaultValue: _Optional[str] = ...) -> None: ...
 
 class Provider(_message.Message):
     __slots__ = ("id", "name", "description", "humanName", "image", "website", "status", "connectConfiguration")
@@ -169,56 +158,6 @@ class Provider(_message.Message):
     status: str
     connectConfiguration: _containers.RepeatedCompositeFieldContainer[Variable]
     def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., humanName: _Optional[str] = ..., image: _Optional[str] = ..., website: _Optional[str] = ..., status: _Optional[str] = ..., connectConfiguration: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
-
-class ProviderModelVariable(_message.Message):
-    __slots__ = ("id", "providerModelId", "key", "name", "description", "defaultValue", "type", "place", "metadatas")
-    ID_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERMODELID_FIELD_NUMBER: _ClassVar[int]
-    KEY_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
-    DEFAULTVALUE_FIELD_NUMBER: _ClassVar[int]
-    TYPE_FIELD_NUMBER: _ClassVar[int]
-    PLACE_FIELD_NUMBER: _ClassVar[int]
-    METADATAS_FIELD_NUMBER: _ClassVar[int]
-    id: int
-    providerModelId: int
-    key: str
-    name: str
-    description: str
-    defaultValue: str
-    type: str
-    place: str
-    metadatas: _containers.RepeatedCompositeFieldContainer[Metadata]
-    def __init__(self, id: _Optional[int] = ..., providerModelId: _Optional[int] = ..., key: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., defaultValue: _Optional[str] = ..., type: _Optional[str] = ..., place: _Optional[str] = ..., metadatas: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ...) -> None: ...
-
-class ProviderModel(_message.Message):
-    __slots__ = ("id", "name", "description", "humanName", "category", "status", "owner", "provider", "parameters", "metadatas", "providerId", "endpoint")
-    ID_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
-    HUMANNAME_FIELD_NUMBER: _ClassVar[int]
-    CATEGORY_FIELD_NUMBER: _ClassVar[int]
-    STATUS_FIELD_NUMBER: _ClassVar[int]
-    OWNER_FIELD_NUMBER: _ClassVar[int]
-    PROVIDER_FIELD_NUMBER: _ClassVar[int]
-    PARAMETERS_FIELD_NUMBER: _ClassVar[int]
-    METADATAS_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERID_FIELD_NUMBER: _ClassVar[int]
-    ENDPOINT_FIELD_NUMBER: _ClassVar[int]
-    id: int
-    name: str
-    description: str
-    humanName: str
-    category: str
-    status: str
-    owner: str
-    provider: Provider
-    parameters: _containers.RepeatedCompositeFieldContainer[ProviderModelVariable]
-    metadatas: _containers.RepeatedCompositeFieldContainer[Metadata]
-    providerId: int
-    endpoint: str
-    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., humanName: _Optional[str] = ..., category: _Optional[str] = ..., status: _Optional[str] = ..., owner: _Optional[str] = ..., provider: _Optional[_Union[Provider, _Mapping]] = ..., parameters: _Optional[_Iterable[_Union[ProviderModelVariable, _Mapping]]] = ..., metadatas: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., providerId: _Optional[int] = ..., endpoint: _Optional[str] = ...) -> None: ...
 
 class Tag(_message.Message):
     __slots__ = ("id", "tag")
@@ -278,16 +217,6 @@ class Message(_message.Message):
     toolCalls: _containers.RepeatedCompositeFieldContainer[ToolCall]
     def __init__(self, role: _Optional[str] = ..., contents: _Optional[_Iterable[_Union[Content, _Mapping]]] = ..., toolCalls: _Optional[_Iterable[_Union[ToolCall, _Mapping]]] = ...) -> None: ...
 
-class Event(_message.Message):
-    __slots__ = ("name", "meta", "time")
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    META_FIELD_NUMBER: _ClassVar[int]
-    TIME_FIELD_NUMBER: _ClassVar[int]
-    name: str
-    meta: _struct_pb2.Struct
-    time: _timestamp_pb2.Timestamp
-    def __init__(self, name: _Optional[str] = ..., meta: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
-
 class ToolCall(_message.Message):
     __slots__ = ("id", "type", "function")
     ID_FIELD_NUMBER: _ClassVar[int]
@@ -299,24 +228,23 @@ class ToolCall(_message.Message):
     def __init__(self, id: _Optional[str] = ..., type: _Optional[str] = ..., function: _Optional[_Union[FunctionCall, _Mapping]] = ...) -> None: ...
 
 class FunctionCall(_message.Message):
-    __slots__ = ("name", "arguments", "args")
+    __slots__ = ("name", "arguments")
     NAME_FIELD_NUMBER: _ClassVar[int]
     ARGUMENTS_FIELD_NUMBER: _ClassVar[int]
-    ARGS_FIELD_NUMBER: _ClassVar[int]
     name: str
     arguments: str
-    args: _struct_pb2.Struct
-    def __init__(self, name: _Optional[str] = ..., arguments: _Optional[str] = ..., args: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ...) -> None: ...
+    def __init__(self, name: _Optional[str] = ..., arguments: _Optional[str] = ...) -> None: ...
 
 class Knowledge(_message.Message):
-    __slots__ = ("id", "name", "description", "visibility", "language", "embeddingProviderModelId", "embeddingProviderModel", "status", "createdBy", "createdUser", "updatedBy", "updatedUser", "createdDate", "updatedDate", "organizationId", "projectId", "organization", "knowledgeTag", "documentCount", "tokenCount", "wordCount", "embeddingProviderId")
+    __slots__ = ("id", "name", "description", "visibility", "language", "embeddingModelProviderId", "embeddingModelProviderName", "knowledgeEmbeddingModelOptions", "status", "createdBy", "createdUser", "updatedBy", "updatedUser", "createdDate", "updatedDate", "organizationId", "projectId", "organization", "knowledgeTag", "documentCount", "tokenCount", "wordCount")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     VISIBILITY_FIELD_NUMBER: _ClassVar[int]
     LANGUAGE_FIELD_NUMBER: _ClassVar[int]
-    EMBEDDINGPROVIDERMODELID_FIELD_NUMBER: _ClassVar[int]
-    EMBEDDINGPROVIDERMODEL_FIELD_NUMBER: _ClassVar[int]
+    EMBEDDINGMODELPROVIDERID_FIELD_NUMBER: _ClassVar[int]
+    EMBEDDINGMODELPROVIDERNAME_FIELD_NUMBER: _ClassVar[int]
+    KNOWLEDGEEMBEDDINGMODELOPTIONS_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
     CREATEDBY_FIELD_NUMBER: _ClassVar[int]
     CREATEDUSER_FIELD_NUMBER: _ClassVar[int]
@@ -331,14 +259,14 @@ class Knowledge(_message.Message):
     DOCUMENTCOUNT_FIELD_NUMBER: _ClassVar[int]
     TOKENCOUNT_FIELD_NUMBER: _ClassVar[int]
     WORDCOUNT_FIELD_NUMBER: _ClassVar[int]
-    EMBEDDINGPROVIDERID_FIELD_NUMBER: _ClassVar[int]
     id: int
     name: str
     description: str
     visibility: str
     language: str
-    embeddingProviderModelId: int
-    embeddingProviderModel: ProviderModel
+    embeddingModelProviderId: int
+    embeddingModelProviderName: str
+    knowledgeEmbeddingModelOptions: _containers.RepeatedCompositeFieldContainer[Metadata]
     status: str
     createdBy: int
     createdUser: User
@@ -353,18 +281,7 @@ class Knowledge(_message.Message):
     documentCount: int
     tokenCount: int
     wordCount: int
-    embeddingProviderId: int
-    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., visibility: _Optional[str] = ..., language: _Optional[str] = ..., embeddingProviderModelId: _Optional[int] = ..., embeddingProviderModel: _Optional[_Union[ProviderModel, _Mapping]] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[User, _Mapping]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., organizationId: _Optional[int] = ..., projectId: _Optional[int] = ..., organization: _Optional[_Union[Organization, _Mapping]] = ..., knowledgeTag: _Optional[_Union[Tag, _Mapping]] = ..., documentCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., wordCount: _Optional[int] = ..., embeddingProviderId: _Optional[int] = ...) -> None: ...
-
-class AgentPromptTemplate(_message.Message):
-    __slots__ = ("type", "prompt", "promptVariables")
-    TYPE_FIELD_NUMBER: _ClassVar[int]
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
-    PROMPTVARIABLES_FIELD_NUMBER: _ClassVar[int]
-    type: str
-    prompt: str
-    promptVariables: _containers.RepeatedCompositeFieldContainer[Variable]
-    def __init__(self, type: _Optional[str] = ..., prompt: _Optional[str] = ..., promptVariables: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., visibility: _Optional[str] = ..., language: _Optional[str] = ..., embeddingModelProviderId: _Optional[int] = ..., embeddingModelProviderName: _Optional[str] = ..., knowledgeEmbeddingModelOptions: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[User, _Mapping]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., organizationId: _Optional[int] = ..., projectId: _Optional[int] = ..., organization: _Optional[_Union[Organization, _Mapping]] = ..., knowledgeTag: _Optional[_Union[Tag, _Mapping]] = ..., documentCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., wordCount: _Optional[int] = ...) -> None: ...
 
 class TextPrompt(_message.Message):
     __slots__ = ("role", "content")
@@ -374,14 +291,6 @@ class TextPrompt(_message.Message):
     content: str
     def __init__(self, role: _Optional[str] = ..., content: _Optional[str] = ...) -> None: ...
 
-class FilePrompt(_message.Message):
-    __slots__ = ("name", "accepts")
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    ACCEPTS_FIELD_NUMBER: _ClassVar[int]
-    name: str
-    accepts: str
-    def __init__(self, name: _Optional[str] = ..., accepts: _Optional[str] = ...) -> None: ...
-
 class TextChatCompletePrompt(_message.Message):
     __slots__ = ("prompt", "promptVariables")
     PROMPT_FIELD_NUMBER: _ClassVar[int]
@@ -389,38 +298,6 @@ class TextChatCompletePrompt(_message.Message):
     prompt: _containers.RepeatedCompositeFieldContainer[TextPrompt]
     promptVariables: _containers.RepeatedCompositeFieldContainer[Variable]
     def __init__(self, prompt: _Optional[_Iterable[_Union[TextPrompt, _Mapping]]] = ..., promptVariables: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
-
-class TextCompletePrompt(_message.Message):
-    __slots__ = ("prompt", "promptVariables")
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
-    PROMPTVARIABLES_FIELD_NUMBER: _ClassVar[int]
-    prompt: TextPrompt
-    promptVariables: _containers.RepeatedCompositeFieldContainer[Variable]
-    def __init__(self, prompt: _Optional[_Union[TextPrompt, _Mapping]] = ..., promptVariables: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
-
-class TextToImagePrompt(_message.Message):
-    __slots__ = ("prompt", "promptVariables")
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
-    PROMPTVARIABLES_FIELD_NUMBER: _ClassVar[int]
-    prompt: TextPrompt
-    promptVariables: _containers.RepeatedCompositeFieldContainer[Variable]
-    def __init__(self, prompt: _Optional[_Union[TextPrompt, _Mapping]] = ..., promptVariables: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
-
-class TextToSpeechPrompt(_message.Message):
-    __slots__ = ("prompt", "promptVariables")
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
-    PROMPTVARIABLES_FIELD_NUMBER: _ClassVar[int]
-    prompt: TextPrompt
-    promptVariables: _containers.RepeatedCompositeFieldContainer[Variable]
-    def __init__(self, prompt: _Optional[_Union[TextPrompt, _Mapping]] = ..., promptVariables: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
-
-class SpeechToTextPrompt(_message.Message):
-    __slots__ = ("prompt", "promptVariables")
-    PROMPT_FIELD_NUMBER: _ClassVar[int]
-    PROMPTVARIABLES_FIELD_NUMBER: _ClassVar[int]
-    prompt: FilePrompt
-    promptVariables: _containers.RepeatedCompositeFieldContainer[Variable]
-    def __init__(self, prompt: _Optional[_Union[FilePrompt, _Mapping]] = ..., promptVariables: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
 
 class AssistantMessageStage(_message.Message):
     __slots__ = ("stage", "additionalData", "timetaken", "lifecycleId", "startTimestamp", "endTimestamp")
@@ -496,7 +373,7 @@ class AssistantConversationContext(_message.Message):
     def __init__(self, id: _Optional[int] = ..., metadata: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., result: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., query: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ...) -> None: ...
 
 class AssistantConversation(_message.Message):
-    __slots__ = ("id", "userId", "assistantId", "name", "projectId", "organizationId", "source", "createdBy", "updatedBy", "user", "assistantProviderModelId", "assistantConversationMessage", "identifier", "status", "createdDate", "updatedDate", "contexts", "metrics", "metadata")
+    __slots__ = ("id", "userId", "assistantId", "name", "projectId", "organizationId", "source", "createdBy", "updatedBy", "user", "assistantProviderModelId", "assistantConversationMessage", "identifier", "status", "createdDate", "updatedDate", "contexts", "metrics", "metadata", "arguments", "options")
     ID_FIELD_NUMBER: _ClassVar[int]
     USERID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
@@ -516,6 +393,8 @@ class AssistantConversation(_message.Message):
     CONTEXTS_FIELD_NUMBER: _ClassVar[int]
     METRICS_FIELD_NUMBER: _ClassVar[int]
     METADATA_FIELD_NUMBER: _ClassVar[int]
+    ARGUMENTS_FIELD_NUMBER: _ClassVar[int]
+    OPTIONS_FIELD_NUMBER: _ClassVar[int]
     id: int
     userId: int
     assistantId: int
@@ -535,7 +414,9 @@ class AssistantConversation(_message.Message):
     contexts: _containers.RepeatedCompositeFieldContainer[AssistantConversationContext]
     metrics: _containers.RepeatedCompositeFieldContainer[Metric]
     metadata: _containers.RepeatedCompositeFieldContainer[Metadata]
-    def __init__(self, id: _Optional[int] = ..., userId: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., source: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., user: _Optional[_Union[User, _Mapping]] = ..., assistantProviderModelId: _Optional[int] = ..., assistantConversationMessage: _Optional[_Iterable[_Union[AssistantConversationMessage, _Mapping]]] = ..., identifier: _Optional[str] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., contexts: _Optional[_Iterable[_Union[AssistantConversationContext, _Mapping]]] = ..., metrics: _Optional[_Iterable[_Union[Metric, _Mapping]]] = ..., metadata: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ...) -> None: ...
+    arguments: _containers.RepeatedCompositeFieldContainer[Argument]
+    options: _containers.RepeatedCompositeFieldContainer[Metadata]
+    def __init__(self, id: _Optional[int] = ..., userId: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., source: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., user: _Optional[_Union[User, _Mapping]] = ..., assistantProviderModelId: _Optional[int] = ..., assistantConversationMessage: _Optional[_Iterable[_Union[AssistantConversationMessage, _Mapping]]] = ..., identifier: _Optional[str] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., contexts: _Optional[_Iterable[_Union[AssistantConversationContext, _Mapping]]] = ..., metrics: _Optional[_Iterable[_Union[Metric, _Mapping]]] = ..., metadata: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., arguments: _Optional[_Iterable[_Union[Argument, _Mapping]]] = ..., options: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ...) -> None: ...
 
 class GetAllAssistantConversationRequest(_message.Message):
     __slots__ = ("assistantId", "paginate", "criterias", "source")

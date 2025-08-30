@@ -492,7 +492,7 @@ class AddUsersToProjectResponse(_message.Message):
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[Project, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class ProjectCredential(_message.Message):
-    __slots__ = ("id", "projectId", "organizationId", "name", "key", "status", "createdBy", "updatedBy", "createdDate", "updatedDate")
+    __slots__ = ("id", "projectId", "organizationId", "name", "key", "status", "createdBy", "updatedBy", "createdDate", "updatedDate", "createdUser")
     ID_FIELD_NUMBER: _ClassVar[int]
     PROJECTID_FIELD_NUMBER: _ClassVar[int]
     ORGANIZATIONID_FIELD_NUMBER: _ClassVar[int]
@@ -503,6 +503,7 @@ class ProjectCredential(_message.Message):
     UPDATEDBY_FIELD_NUMBER: _ClassVar[int]
     CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
     UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
+    CREATEDUSER_FIELD_NUMBER: _ClassVar[int]
     id: int
     projectId: int
     organizationId: int
@@ -513,7 +514,8 @@ class ProjectCredential(_message.Message):
     updatedBy: int
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[int] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., name: _Optional[str] = ..., key: _Optional[str] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    createdUser: _common_pb2.User
+    def __init__(self, id: _Optional[int] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., name: _Optional[str] = ..., key: _Optional[str] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ...) -> None: ...
 
 class CreateProjectCredentialRequest(_message.Message):
     __slots__ = ("projectId", "name")
@@ -558,9 +560,3 @@ class GetAllProjectCredentialResponse(_message.Message):
     error: _common_pb2.Error
     paginated: _common_pb2.Paginated
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[ProjectCredential, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
-
-class LeadCreationRequest(_message.Message):
-    __slots__ = ("email",)
-    EMAIL_FIELD_NUMBER: _ClassVar[int]
-    email: str
-    def __init__(self, email: _Optional[str] = ...) -> None: ...
