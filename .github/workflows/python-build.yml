@@ -10,10 +10,10 @@ on:
       - main
       - master
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -26,36 +26,59 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools wheel twine
-          pip install build
+          pip install setuptools wheel twine build
 
       - name: Build the package
-        run: |
-          python -m build
+        run: python -m build
 
       - name: Publish to PyPI
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         env:
+          TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          twine upload dist/*
+        run: twine upload dist/*
 
-  tag:
-    runs-on: ubuntu-latest
+  create_release:
+    name: Create Release
     needs: build
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set Git committer identity
+      - name: Get version and create tag
+        id: version
         run: |
-          git config --global user.email "p_srivastav@outlook.com"
-          git config --global user.name "Prashant Srivastav"
+          VERSION="0.1.$(date +%Y%m%d)-$(git rev-parse --short HEAD)"
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=v${VERSION}" >> $GITHUB_OUTPUT
+          if git tag -l "v${VERSION}" | grep -q "v${VERSION}"; then
+            echo "TAG_EXISTS=true" >> $GITHUB_OUTPUT
+          else
+            echo "TAG_EXISTS=false" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Tag the release
-        id: tag
+      - name: Create and push tag
+        if: steps.version.outputs.TAG_EXISTS == 'false'
         run: |
-          NEW_TAG=$(date +'%Y%m%d%H%M%S')
-          git tag -a "v${NEW_TAG}" -m "Release version ${NEW_TAG}"
-          git push origin "v${NEW_TAG}"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.version.outputs.TAG_NAME }}" -m "Release ${{ steps.version.outputs.TAG_NAME }}"
+          git push origin "${{ steps.version.outputs.TAG_NAME }}"
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "# Release ${{ steps.version.outputs.TAG_NAME }}" > release-notes.md
+          echo "" >> release-notes.md
+          echo "## Changes" >> release-notes.md
+          echo "- Automated release from commit $(git rev-parse --short HEAD)" >> release-notes.md
+          gh release create "${{ steps.version.outputs.TAG_NAME }}" \
+            --title "Release ${{ steps.version.outputs.TAG_NAME }}" \
+            --notes-file release-notes.md
