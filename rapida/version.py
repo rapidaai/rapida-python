@@ -22,7 +22,7 @@
 
 _MAJOR = "0"
 _MINOR = "1"
-_REVISION = "4-alpha"
+_REVISION = "6"
 
 VERSION_SHORT = f"{_MAJOR}.{_MINOR}"
 VERSION = f"{_MAJOR}.{_MINOR}.{_REVISION}"

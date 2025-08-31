@@ -22,6 +22,7 @@
 # Author: Prashant <prashant@rapida.ai>
 """
 
+from typing import Optional, TypedDict
 from rapida.configs import (
     ASSISTANT_API,
     ENDPOINT_API,
@@ -30,7 +31,6 @@ from rapida.configs import (
     LOCAL_WEB_API,
     WEB_API,
 )
-from rapida.clients import ClientAuthInfo, UserAuthInfo
 from rapida.utils.rapida_source import RapidaSource
 from rapida.utils.rapida_header import (
     HEADER_API_KEY,
@@ -38,26 +38,39 @@ from rapida.utils.rapida_header import (
     HEADER_PROJECT_ID,
     HEADER_SOURCE_KEY,
 )
-from rapida.artifacts.protos.talk_api_pb2_grpc import TalkServiceStub
-from rapida.artifacts.protos.assistant_api_pb2_grpc import AssistantServiceStub
-from rapida.artifacts.protos.invoker_api_pb2_grpc import DeploymentStub
-from rapida.artifacts.protos.web_api_pb2_grpc import (
+from rapida.clients.protos.talk_api_pb2_grpc import TalkServiceStub
+from rapida.clients.protos.assistant_api_pb2_grpc import AssistantServiceStub
+from rapida.clients.protos.invoker_api_pb2_grpc import DeploymentStub
+from rapida.clients.protos.web_api_pb2_grpc import (
     AuthenticationServiceStub,
     OrganizationServiceStub,
     ProjectServiceStub,
 )
-from rapida.artifacts.protos.knowledge_api_pb2_grpc import KnowledgeServiceStub
-from rapida.artifacts.protos.document_api_pb2_grpc import DocumentServiceStub
-from rapida.artifacts.protos.vault_api_pb2_grpc import VaultServiceStub
-from rapida.artifacts.protos.endpoint_api_pb2_grpc import EndpointServiceStub
-from rapida.artifacts.protos.audit_logging_api_pb2_grpc import AuditLoggingServiceStub
-from rapida.artifacts.protos.marketplace_api_pb2_grpc import MarketplaceServiceStub
-from rapida.artifacts.protos.assistant_deployment_pb2_grpc import (
+from rapida.clients.protos.knowledge_api_pb2_grpc import KnowledgeServiceStub
+from rapida.clients.protos.document_api_pb2_grpc import DocumentServiceStub
+from rapida.clients.protos.vault_api_pb2_grpc import VaultServiceStub
+from rapida.clients.protos.endpoint_api_pb2_grpc import EndpointServiceStub
+from rapida.clients.protos.audit_logging_api_pb2_grpc import AuditLoggingServiceStub
+from rapida.clients.protos.marketplace_api_pb2_grpc import MarketplaceServiceStub
+from rapida.clients.protos.assistant_deployment_pb2_grpc import (
     AssistantDeploymentServiceStub,
 )
-from rapida.artifacts.protos.connect_api_pb2_grpc import ConnectServiceStub
-from rapida.artifacts.protos.provider_api_pb2_grpc import ProviderServiceStub
+from rapida.clients.protos.connect_api_pb2_grpc import ConnectServiceStub
+from rapida.clients.protos.provider_api_pb2_grpc import ProviderServiceStub
 import grpc
+
+
+class UserAuthInfo(TypedDict):
+    authorization: str
+    auth_id: str
+    project_id: str
+    Client: dict[str, str]
+
+
+class ClientAuthInfo(TypedDict):
+    api_key: str
+    auth_id: Optional[str]
+    Client: dict[str, str]
 
 
 class ConnectionConfig:
@@ -69,9 +82,7 @@ class ConnectionConfig:
             "authorization": authorization,
             HEADER_AUTH_ID: user_id,
             HEADER_PROJECT_ID: project_id,
-            "Client": {
-                HEADER_SOURCE_KEY: RapidaSource.DEBUGGER,
-            },
+            HEADER_SOURCE_KEY: RapidaSource.DEBUGGER.get(),
         }
 
     @staticmethod
@@ -82,9 +93,7 @@ class ConnectionConfig:
             "authorization": authorization,
             HEADER_AUTH_ID: auth_id,
             HEADER_PROJECT_ID: project_id,
-            "Client": {
-                HEADER_SOURCE_KEY: RapidaSource.SDK,
-            },
+            HEADER_SOURCE_KEY: RapidaSource.SDK.get(),
         }
 
     @staticmethod
@@ -92,9 +101,7 @@ class ConnectionConfig:
         return {
             HEADER_API_KEY: api_key,
             HEADER_AUTH_ID: user_id,
-            "Client": {
-                HEADER_SOURCE_KEY: RapidaSource.WEB_PLUGIN,
-            },
+            HEADER_SOURCE_KEY: RapidaSource.WEB_PLUGIN.get(),
         }
 
     @staticmethod
@@ -102,9 +109,7 @@ class ConnectionConfig:
         return {
             HEADER_API_KEY: api_key,
             HEADER_AUTH_ID: user_id,
-            "Client": {
-                HEADER_SOURCE_KEY: RapidaSource.SDK,
-            },
+            HEADER_SOURCE_KEY: RapidaSource.SDK.get(),
         }
 
     def __init__(self, endpoint=None, debug=False):
@@ -193,7 +198,11 @@ class ConnectionConfig:
 
     @property
     def auth(self) -> list[tuple[str, str]]:
-        return self._auth
+        if self._auth is not None:
+            return (
+                list(self._auth.items()) if isinstance(self._auth, dict) else self._auth
+            )
+        return []
 
     def with_custom_endpoint(self, endpoint=None, debug=None):
         self._endpoint = endpoint or {
@@ -220,3 +229,6 @@ class ConnectionConfig:
             return grpc.insecure_channel(endpoint)
         else:
             return grpc.secure_channel(endpoint, grpc.ssl_channel_credentials())
+
+
+__all__ = ["ConnectionConfig"]

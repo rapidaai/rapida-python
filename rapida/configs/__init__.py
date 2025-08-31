@@ -28,9 +28,9 @@ ASSISTANT_API = "https://assistant-01.rapida.ai"
 WEB_API = "https://api.rapida.ai"
 ENDPOINT_API = "https://api.rapida.ai"
 
-LOCAL_ASSISTANT_API = "http://assistant.rapida.local"
-LOCAL_WEB_API = "http://dev.rapida.local"
-LOCAL_ENDPOINT_API = "http://dev.rapida.local"
+LOCAL_ASSISTANT_API = "localhost:9007"
+LOCAL_WEB_API = "localhost:9001"
+LOCAL_ENDPOINT_API = "localhost:9005"
 
 GRPC_ENDPOINT_URL = "endpoint-01.rapida.ai"
 GRPC_ASSISTANT_URL = "workflow-01.rapida.ai"
