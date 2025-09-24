@@ -1,5 +1,3 @@
-import datetime
-
 from google.protobuf import any_pb2 as _any_pb2
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
@@ -20,8 +18,8 @@ class AssistantDefinition(_message.Message):
     version: str
     def __init__(self, assistantId: _Optional[int] = ..., version: _Optional[str] = ...) -> None: ...
 
-class AssistantMessagingRequest(_message.Message):
-    __slots__ = ("assistant", "message", "assistantConversationId", "metadata", "source", "args", "options")
+class AssistantConversationConfiguration(_message.Message):
+    __slots__ = ("assistantConversationId", "assistant", "time", "metadata", "args", "options")
     class MetadataEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -43,31 +41,19 @@ class AssistantMessagingRequest(_message.Message):
         key: str
         value: _any_pb2.Any
         def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
-    ASSISTANT_FIELD_NUMBER: _ClassVar[int]
-    MESSAGE_FIELD_NUMBER: _ClassVar[int]
-    ASSISTANTCONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
-    METADATA_FIELD_NUMBER: _ClassVar[int]
-    SOURCE_FIELD_NUMBER: _ClassVar[int]
-    ARGS_FIELD_NUMBER: _ClassVar[int]
-    OPTIONS_FIELD_NUMBER: _ClassVar[int]
-    assistant: AssistantDefinition
-    message: _common_pb2.Message
-    assistantConversationId: int
-    metadata: _containers.MessageMap[str, _any_pb2.Any]
-    source: _common_pb2.Source
-    args: _containers.MessageMap[str, _any_pb2.Any]
-    options: _containers.MessageMap[str, _any_pb2.Any]
-    def __init__(self, assistant: _Optional[_Union[AssistantDefinition, _Mapping]] = ..., message: _Optional[_Union[_common_pb2.Message, _Mapping]] = ..., assistantConversationId: _Optional[int] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., source: _Optional[_Union[_common_pb2.Source, str]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
-
-class AssistantConversationConfiguration(_message.Message):
-    __slots__ = ("assistantConversationId", "assistant", "time")
     ASSISTANTCONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANT_FIELD_NUMBER: _ClassVar[int]
     TIME_FIELD_NUMBER: _ClassVar[int]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    ARGS_FIELD_NUMBER: _ClassVar[int]
+    OPTIONS_FIELD_NUMBER: _ClassVar[int]
     assistantConversationId: int
     assistant: AssistantDefinition
     time: _timestamp_pb2.Timestamp
-    def __init__(self, assistantConversationId: _Optional[int] = ..., assistant: _Optional[_Union[AssistantDefinition, _Mapping]] = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    metadata: _containers.MessageMap[str, _any_pb2.Any]
+    args: _containers.MessageMap[str, _any_pb2.Any]
+    options: _containers.MessageMap[str, _any_pb2.Any]
+    def __init__(self, assistantConversationId: _Optional[int] = ..., assistant: _Optional[_Union[AssistantDefinition, _Mapping]] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
 
 class AssistantConversationInterruption(_message.Message):
     __slots__ = ("id", "type", "time")
@@ -85,7 +71,7 @@ class AssistantConversationInterruption(_message.Message):
     id: str
     type: AssistantConversationInterruption.InterruptionType
     time: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[str] = ..., type: _Optional[_Union[AssistantConversationInterruption.InterruptionType, str]] = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., type: _Optional[_Union[AssistantConversationInterruption.InterruptionType, str]] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class AssistantConversationUserMessage(_message.Message):
     __slots__ = ("message", "id", "completed", "time")
@@ -97,7 +83,7 @@ class AssistantConversationUserMessage(_message.Message):
     id: str
     completed: bool
     time: _timestamp_pb2.Timestamp
-    def __init__(self, message: _Optional[_Union[_common_pb2.Message, _Mapping]] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, message: _Optional[_Union[_common_pb2.Message, _Mapping]] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class AssistantConversationAssistantMessage(_message.Message):
     __slots__ = ("message", "id", "completed", "time")
@@ -109,7 +95,15 @@ class AssistantConversationAssistantMessage(_message.Message):
     id: str
     completed: bool
     time: _timestamp_pb2.Timestamp
-    def __init__(self, message: _Optional[_Union[_common_pb2.Message, _Mapping]] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, message: _Optional[_Union[_common_pb2.Message, _Mapping]] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+
+class AssistantMessagingRequest(_message.Message):
+    __slots__ = ("configuration", "message")
+    CONFIGURATION_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    configuration: AssistantConversationConfiguration
+    message: AssistantConversationUserMessage
+    def __init__(self, configuration: _Optional[_Union[AssistantConversationConfiguration, _Mapping]] = ..., message: _Optional[_Union[AssistantConversationUserMessage, _Mapping]] = ...) -> None: ...
 
 class AssistantMessagingResponse(_message.Message):
     __slots__ = ("code", "success", "error", "configuration", "interruption", "user", "assistant", "message")

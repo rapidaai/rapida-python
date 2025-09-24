@@ -1,5 +1,3 @@
-import datetime
-
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf import struct_pb2 as _struct_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
@@ -57,7 +55,7 @@ class SearchableDeployment(_message.Message):
     modelProviderId: int
     modelProviderName: str
     modelOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
-    def __init__(self, id: _Optional[str] = ..., status: _Optional[str] = ..., visibility: _Optional[str] = ..., type: _Optional[str] = ..., projectId: _Optional[str] = ..., organizationId: _Optional[str] = ..., tag: _Optional[_Iterable[str]] = ..., language: _Optional[str] = ..., organization: _Optional[_Union[_common_pb2.Organization, _Mapping]] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., appAppearance: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., webAppearance: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., modelProviderId: _Optional[int] = ..., modelProviderName: _Optional[str] = ..., modelOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., status: _Optional[str] = ..., visibility: _Optional[str] = ..., type: _Optional[str] = ..., projectId: _Optional[str] = ..., organizationId: _Optional[str] = ..., tag: _Optional[_Iterable[str]] = ..., language: _Optional[str] = ..., organization: _Optional[_Union[_common_pb2.Organization, _Mapping]] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., appAppearance: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., webAppearance: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., modelProviderId: _Optional[int] = ..., modelProviderName: _Optional[str] = ..., modelOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ...) -> None: ...
 
 class GetAllDeploymentResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error", "paginated")

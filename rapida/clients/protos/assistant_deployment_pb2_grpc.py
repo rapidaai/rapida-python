@@ -5,7 +5,7 @@ import warnings
 
 import rapida.clients.protos.assistant_deployment_pb2 as assistant__deployment__pb2
 
-GRPC_GENERATED_VERSION = '1.74.0'
+GRPC_GENERATED_VERSION = '1.72.1'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -36,53 +36,53 @@ class AssistantDeploymentServiceStub(object):
         """
         self.CreateAssistantApiDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/CreateAssistantApiDeployment',
-                request_serializer=assistant__deployment__pb2.CreateAssistantApiDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantApiDeploymentResponse.FromString,
+                request_serializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantApiDeploymentResponse.FromString,
                 _registered_method=True)
         self.GetAssistantApiDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/GetAssistantApiDeployment',
                 request_serializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantApiDeploymentResponse.FromString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantApiDeploymentResponse.FromString,
                 _registered_method=True)
         self.CreateAssistantWebpluginDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/CreateAssistantWebpluginDeployment',
-                request_serializer=assistant__deployment__pb2.CreateAssistantWebpluginDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantWebpluginDeploymentResponse.FromString,
+                request_serializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantWebpluginDeploymentResponse.FromString,
                 _registered_method=True)
         self.GetAssistantWebpluginDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/GetAssistantWebpluginDeployment',
                 request_serializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantWebpluginDeploymentResponse.FromString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantWebpluginDeploymentResponse.FromString,
                 _registered_method=True)
         self.CreateAssistantDebuggerDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/CreateAssistantDebuggerDeployment',
-                request_serializer=assistant__deployment__pb2.CreateAssistantDebuggerDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantDebuggerDeploymentResponse.FromString,
+                request_serializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantDebuggerDeploymentResponse.FromString,
                 _registered_method=True)
         self.GetAssistantDebuggerDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/GetAssistantDebuggerDeployment',
                 request_serializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantDebuggerDeploymentResponse.FromString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantDebuggerDeploymentResponse.FromString,
                 _registered_method=True)
         self.CreateAssistantWhatsappDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/CreateAssistantWhatsappDeployment',
-                request_serializer=assistant__deployment__pb2.CreateAssistantWhatsappDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantWhatsappDeploymentResponse.FromString,
+                request_serializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantWhatsappDeploymentResponse.FromString,
                 _registered_method=True)
         self.GetAssistantWhatsappDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/GetAssistantWhatsappDeployment',
                 request_serializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantWhatsappDeploymentResponse.FromString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantWhatsappDeploymentResponse.FromString,
                 _registered_method=True)
         self.CreateAssistantPhoneDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/CreateAssistantPhoneDeployment',
-                request_serializer=assistant__deployment__pb2.CreateAssistantPhoneDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantPhoneDeploymentResponse.FromString,
+                request_serializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantPhoneDeploymentResponse.FromString,
                 _registered_method=True)
         self.GetAssistantPhoneDeployment = channel.unary_unary(
                 '/assistant_api.AssistantDeploymentService/GetAssistantPhoneDeployment',
                 request_serializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-                response_deserializer=assistant__deployment__pb2.AssistantPhoneDeploymentResponse.FromString,
+                response_deserializer=assistant__deployment__pb2.GetAssistantPhoneDeploymentResponse.FromString,
                 _registered_method=True)
 
 
@@ -154,53 +154,53 @@ def add_AssistantDeploymentServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'CreateAssistantApiDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateAssistantApiDeployment,
-                    request_deserializer=assistant__deployment__pb2.CreateAssistantApiDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantApiDeploymentResponse.SerializeToString,
+                    request_deserializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.FromString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantApiDeploymentResponse.SerializeToString,
             ),
             'GetAssistantApiDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAssistantApiDeployment,
                     request_deserializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantApiDeploymentResponse.SerializeToString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantApiDeploymentResponse.SerializeToString,
             ),
             'CreateAssistantWebpluginDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateAssistantWebpluginDeployment,
-                    request_deserializer=assistant__deployment__pb2.CreateAssistantWebpluginDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantWebpluginDeploymentResponse.SerializeToString,
+                    request_deserializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.FromString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantWebpluginDeploymentResponse.SerializeToString,
             ),
             'GetAssistantWebpluginDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAssistantWebpluginDeployment,
                     request_deserializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantWebpluginDeploymentResponse.SerializeToString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantWebpluginDeploymentResponse.SerializeToString,
             ),
             'CreateAssistantDebuggerDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateAssistantDebuggerDeployment,
-                    request_deserializer=assistant__deployment__pb2.CreateAssistantDebuggerDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantDebuggerDeploymentResponse.SerializeToString,
+                    request_deserializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.FromString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantDebuggerDeploymentResponse.SerializeToString,
             ),
             'GetAssistantDebuggerDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAssistantDebuggerDeployment,
                     request_deserializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantDebuggerDeploymentResponse.SerializeToString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantDebuggerDeploymentResponse.SerializeToString,
             ),
             'CreateAssistantWhatsappDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateAssistantWhatsappDeployment,
-                    request_deserializer=assistant__deployment__pb2.CreateAssistantWhatsappDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantWhatsappDeploymentResponse.SerializeToString,
+                    request_deserializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.FromString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantWhatsappDeploymentResponse.SerializeToString,
             ),
             'GetAssistantWhatsappDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAssistantWhatsappDeployment,
                     request_deserializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantWhatsappDeploymentResponse.SerializeToString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantWhatsappDeploymentResponse.SerializeToString,
             ),
             'CreateAssistantPhoneDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateAssistantPhoneDeployment,
-                    request_deserializer=assistant__deployment__pb2.CreateAssistantPhoneDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantPhoneDeploymentResponse.SerializeToString,
+                    request_deserializer=assistant__deployment__pb2.CreateAssistantDeploymentRequest.FromString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantPhoneDeploymentResponse.SerializeToString,
             ),
             'GetAssistantPhoneDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAssistantPhoneDeployment,
                     request_deserializer=assistant__deployment__pb2.GetAssistantDeploymentRequest.FromString,
-                    response_serializer=assistant__deployment__pb2.AssistantPhoneDeploymentResponse.SerializeToString,
+                    response_serializer=assistant__deployment__pb2.GetAssistantPhoneDeploymentResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -228,8 +228,8 @@ class AssistantDeploymentService(object):
             request,
             target,
             '/assistant_api.AssistantDeploymentService/CreateAssistantApiDeployment',
-            assistant__deployment__pb2.CreateAssistantApiDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantApiDeploymentResponse.FromString,
+            assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+            assistant__deployment__pb2.GetAssistantApiDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -256,7 +256,7 @@ class AssistantDeploymentService(object):
             target,
             '/assistant_api.AssistantDeploymentService/GetAssistantApiDeployment',
             assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantApiDeploymentResponse.FromString,
+            assistant__deployment__pb2.GetAssistantApiDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -282,8 +282,8 @@ class AssistantDeploymentService(object):
             request,
             target,
             '/assistant_api.AssistantDeploymentService/CreateAssistantWebpluginDeployment',
-            assistant__deployment__pb2.CreateAssistantWebpluginDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantWebpluginDeploymentResponse.FromString,
+            assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+            assistant__deployment__pb2.GetAssistantWebpluginDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -310,7 +310,7 @@ class AssistantDeploymentService(object):
             target,
             '/assistant_api.AssistantDeploymentService/GetAssistantWebpluginDeployment',
             assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantWebpluginDeploymentResponse.FromString,
+            assistant__deployment__pb2.GetAssistantWebpluginDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -336,8 +336,8 @@ class AssistantDeploymentService(object):
             request,
             target,
             '/assistant_api.AssistantDeploymentService/CreateAssistantDebuggerDeployment',
-            assistant__deployment__pb2.CreateAssistantDebuggerDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantDebuggerDeploymentResponse.FromString,
+            assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+            assistant__deployment__pb2.GetAssistantDebuggerDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -364,7 +364,7 @@ class AssistantDeploymentService(object):
             target,
             '/assistant_api.AssistantDeploymentService/GetAssistantDebuggerDeployment',
             assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantDebuggerDeploymentResponse.FromString,
+            assistant__deployment__pb2.GetAssistantDebuggerDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -390,8 +390,8 @@ class AssistantDeploymentService(object):
             request,
             target,
             '/assistant_api.AssistantDeploymentService/CreateAssistantWhatsappDeployment',
-            assistant__deployment__pb2.CreateAssistantWhatsappDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantWhatsappDeploymentResponse.FromString,
+            assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+            assistant__deployment__pb2.GetAssistantWhatsappDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -418,7 +418,7 @@ class AssistantDeploymentService(object):
             target,
             '/assistant_api.AssistantDeploymentService/GetAssistantWhatsappDeployment',
             assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantWhatsappDeploymentResponse.FromString,
+            assistant__deployment__pb2.GetAssistantWhatsappDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -444,8 +444,8 @@ class AssistantDeploymentService(object):
             request,
             target,
             '/assistant_api.AssistantDeploymentService/CreateAssistantPhoneDeployment',
-            assistant__deployment__pb2.CreateAssistantPhoneDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantPhoneDeploymentResponse.FromString,
+            assistant__deployment__pb2.CreateAssistantDeploymentRequest.SerializeToString,
+            assistant__deployment__pb2.GetAssistantPhoneDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -472,7 +472,7 @@ class AssistantDeploymentService(object):
             target,
             '/assistant_api.AssistantDeploymentService/GetAssistantPhoneDeployment',
             assistant__deployment__pb2.GetAssistantDeploymentRequest.SerializeToString,
-            assistant__deployment__pb2.AssistantPhoneDeploymentResponse.FromString,
+            assistant__deployment__pb2.GetAssistantPhoneDeploymentResponse.FromString,
             options,
             channel_credentials,
             insecure,

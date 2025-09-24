@@ -1,5 +1,3 @@
-import datetime
-
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
 import rapida.clients.protos.assistant_deployment_pb2 as _assistant_deployment_pb2
@@ -73,7 +71,7 @@ class Assistant(_message.Message):
     apiDeployment: _assistant_deployment_pb2.AssistantApiDeployment
     assistantConversations: _containers.RepeatedCompositeFieldContainer[_common_pb2.AssistantConversation]
     assistantWebhooks: _containers.RepeatedCompositeFieldContainer[_assistant_webhook_pb2.AssistantWebhook]
-    def __init__(self, id: _Optional[int] = ..., status: _Optional[str] = ..., visibility: _Optional[str] = ..., source: _Optional[str] = ..., sourceIdentifier: _Optional[int] = ..., assistantTools: _Optional[_Iterable[_Union[_assistant_tool_pb2.AssistantTool, _Mapping]]] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., assistantProviderModelId: _Optional[int] = ..., assistantProviderModel: _Optional[_Union[AssistantProviderModel, _Mapping]] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., assistantTag: _Optional[_Union[_common_pb2.Tag, _Mapping]] = ..., language: _Optional[str] = ..., organization: _Optional[_Union[_common_pb2.Organization, _Mapping]] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., debuggerDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantDebuggerDeployment, _Mapping]] = ..., phoneDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantPhoneDeployment, _Mapping]] = ..., whatsappDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantWhatsappDeployment, _Mapping]] = ..., webPluginDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantWebpluginDeployment, _Mapping]] = ..., apiDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantApiDeployment, _Mapping]] = ..., assistantConversations: _Optional[_Iterable[_Union[_common_pb2.AssistantConversation, _Mapping]]] = ..., assistantWebhooks: _Optional[_Iterable[_Union[_assistant_webhook_pb2.AssistantWebhook, _Mapping]]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., status: _Optional[str] = ..., visibility: _Optional[str] = ..., source: _Optional[str] = ..., sourceIdentifier: _Optional[int] = ..., assistantTools: _Optional[_Iterable[_Union[_assistant_tool_pb2.AssistantTool, _Mapping]]] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., assistantProviderModelId: _Optional[int] = ..., assistantProviderModel: _Optional[_Union[AssistantProviderModel, _Mapping]] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., assistantTag: _Optional[_Union[_common_pb2.Tag, _Mapping]] = ..., language: _Optional[str] = ..., organization: _Optional[_Union[_common_pb2.Organization, _Mapping]] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., debuggerDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantDebuggerDeployment, _Mapping]] = ..., phoneDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantPhoneDeployment, _Mapping]] = ..., whatsappDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantWhatsappDeployment, _Mapping]] = ..., webPluginDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantWebpluginDeployment, _Mapping]] = ..., apiDeployment: _Optional[_Union[_assistant_deployment_pb2.AssistantApiDeployment, _Mapping]] = ..., assistantConversations: _Optional[_Iterable[_Union[_common_pb2.AssistantConversation, _Mapping]]] = ..., assistantWebhooks: _Optional[_Iterable[_Union[_assistant_webhook_pb2.AssistantWebhook, _Mapping]]] = ...) -> None: ...
 
 class AssistantProviderModel(_message.Message):
     __slots__ = ("id", "template", "description", "modelProviderId", "modelProviderName", "assistantModelOptions", "status", "createdBy", "createdUser", "updatedBy", "updatedUser", "createdDate", "updatedDate")
@@ -103,7 +101,7 @@ class AssistantProviderModel(_message.Message):
     updatedUser: _common_pb2.User
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[int] = ..., template: _Optional[_Union[_common_pb2.TextChatCompletePrompt, _Mapping]] = ..., description: _Optional[str] = ..., modelProviderId: _Optional[int] = ..., modelProviderName: _Optional[str] = ..., assistantModelOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., template: _Optional[_Union[_common_pb2.TextChatCompletePrompt, _Mapping]] = ..., description: _Optional[str] = ..., modelProviderId: _Optional[int] = ..., modelProviderName: _Optional[str] = ..., assistantModelOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class CreateAssistantRequest(_message.Message):
     __slots__ = ("assistantProviderModel", "assistantKnowledges", "assistantTools", "description", "visibility", "language", "source", "sourceIdentifier", "tags", "name")
@@ -336,29 +334,23 @@ class GetAllAssistantUserConversationResponse(_message.Message):
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[_common_pb2.AssistantConversation, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
 
 class GetAssistantConversationRequest(_message.Message):
-    __slots__ = ("assistantId", "conversationId", "paginate", "criterias", "selectors")
+    __slots__ = ("assistantId", "assistantConversationId", "selectors")
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
-    CONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
-    PAGINATE_FIELD_NUMBER: _ClassVar[int]
-    CRITERIAS_FIELD_NUMBER: _ClassVar[int]
+    ASSISTANTCONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
     SELECTORS_FIELD_NUMBER: _ClassVar[int]
     assistantId: int
-    conversationId: int
-    paginate: _common_pb2.Paginate
-    criterias: _containers.RepeatedCompositeFieldContainer[_common_pb2.Criteria]
+    assistantConversationId: int
     selectors: _containers.RepeatedCompositeFieldContainer[_common_pb2.FieldSelector]
-    def __init__(self, assistantId: _Optional[int] = ..., conversationId: _Optional[int] = ..., paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ..., selectors: _Optional[_Iterable[_Union[_common_pb2.FieldSelector, _Mapping]]] = ...) -> None: ...
+    def __init__(self, assistantId: _Optional[int] = ..., assistantConversationId: _Optional[int] = ..., selectors: _Optional[_Iterable[_Union[_common_pb2.FieldSelector, _Mapping]]] = ...) -> None: ...
 
 class GetAssistantConversationResponse(_message.Message):
-    __slots__ = ("code", "success", "data", "error", "paginated")
+    __slots__ = ("code", "success", "data", "error")
     CODE_FIELD_NUMBER: _ClassVar[int]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     DATA_FIELD_NUMBER: _ClassVar[int]
     ERROR_FIELD_NUMBER: _ClassVar[int]
-    PAGINATED_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
     data: _common_pb2.AssistantConversation
     error: _common_pb2.Error
-    paginated: _common_pb2.Paginated
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_common_pb2.AssistantConversation, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_common_pb2.AssistantConversation, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...

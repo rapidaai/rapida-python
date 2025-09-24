@@ -10,7 +10,7 @@ import rapida.clients.protos.assistant_tool_pb2 as assistant__tool__pb2
 import rapida.clients.protos.assistant_webhook_pb2 as assistant__webhook__pb2
 import rapida.clients.protos.common_pb2 as common__pb2
 
-GRPC_GENERATED_VERSION = '1.74.0'
+GRPC_GENERATED_VERSION = '1.72.1'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -143,6 +143,16 @@ class AssistantServiceStub(object):
                 '/assistant_api.AssistantService/DeleteAssistantWebhook',
                 request_serializer=assistant__webhook__pb2.DeleteAssistantWebhookRequest.SerializeToString,
                 response_deserializer=assistant__webhook__pb2.GetAssistantWebhookResponse.FromString,
+                _registered_method=True)
+        self.GetAssistantToolLog = channel.unary_unary(
+                '/assistant_api.AssistantService/GetAssistantToolLog',
+                request_serializer=assistant__tool__pb2.GetAssistantToolLogRequest.SerializeToString,
+                response_deserializer=assistant__tool__pb2.GetAssistantToolLogResponse.FromString,
+                _registered_method=True)
+        self.GetAllAssistantToolLog = channel.unary_unary(
+                '/assistant_api.AssistantService/GetAllAssistantToolLog',
+                request_serializer=assistant__tool__pb2.GetAllAssistantToolLogRequest.SerializeToString,
+                response_deserializer=assistant__tool__pb2.GetAllAssistantToolLogResponse.FromString,
                 _registered_method=True)
         self.GetAssistantAnalysis = channel.unary_unary(
                 '/assistant_api.AssistantService/GetAssistantAnalysis',
@@ -351,6 +361,19 @@ class AssistantServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAssistantToolLog(self, request, context):
+        """tool log
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetAllAssistantToolLog(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetAssistantAnalysis(self, request, context):
         """analysis
         """
@@ -551,6 +574,16 @@ def add_AssistantServiceServicer_to_server(servicer, server):
                     servicer.DeleteAssistantWebhook,
                     request_deserializer=assistant__webhook__pb2.DeleteAssistantWebhookRequest.FromString,
                     response_serializer=assistant__webhook__pb2.GetAssistantWebhookResponse.SerializeToString,
+            ),
+            'GetAssistantToolLog': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAssistantToolLog,
+                    request_deserializer=assistant__tool__pb2.GetAssistantToolLogRequest.FromString,
+                    response_serializer=assistant__tool__pb2.GetAssistantToolLogResponse.SerializeToString,
+            ),
+            'GetAllAssistantToolLog': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllAssistantToolLog,
+                    request_deserializer=assistant__tool__pb2.GetAllAssistantToolLogRequest.FromString,
+                    response_serializer=assistant__tool__pb2.GetAllAssistantToolLogResponse.SerializeToString,
             ),
             'GetAssistantAnalysis': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAssistantAnalysis,
@@ -1195,6 +1228,60 @@ class AssistantService(object):
             '/assistant_api.AssistantService/DeleteAssistantWebhook',
             assistant__webhook__pb2.DeleteAssistantWebhookRequest.SerializeToString,
             assistant__webhook__pb2.GetAssistantWebhookResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAssistantToolLog(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.AssistantService/GetAssistantToolLog',
+            assistant__tool__pb2.GetAssistantToolLogRequest.SerializeToString,
+            assistant__tool__pb2.GetAssistantToolLogResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllAssistantToolLog(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.AssistantService/GetAllAssistantToolLog',
+            assistant__tool__pb2.GetAllAssistantToolLogRequest.SerializeToString,
+            assistant__tool__pb2.GetAllAssistantToolLogResponse.FromString,
             options,
             channel_credentials,
             insecure,

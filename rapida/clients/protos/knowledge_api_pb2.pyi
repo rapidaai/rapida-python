@@ -1,5 +1,3 @@
-import datetime
-
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
 from google.protobuf import struct_pb2 as _struct_pb2
@@ -134,7 +132,7 @@ class KnowledgeDocument(_message.Message):
     updatedUser: _common_pb2.User
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[int] = ..., knowledgeId: _Optional[int] = ..., language: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., documentSource: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., documentType: _Optional[str] = ..., documentSize: _Optional[int] = ..., documentPath: _Optional[str] = ..., indexStatus: _Optional[str] = ..., retrievalCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., wordCount: _Optional[int] = ..., DisplayStatus: _Optional[str] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., knowledgeId: _Optional[int] = ..., language: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., documentSource: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., documentType: _Optional[str] = ..., documentSize: _Optional[int] = ..., documentPath: _Optional[str] = ..., indexStatus: _Optional[str] = ..., retrievalCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., wordCount: _Optional[int] = ..., DisplayStatus: _Optional[str] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class GetAllKnowledgeDocumentRequest(_message.Message):
     __slots__ = ("knowledgeId", "paginate", "criterias")
@@ -337,3 +335,94 @@ class DeleteKnowledgeDocumentSegmentRequest(_message.Message):
     index: str
     reason: str
     def __init__(self, documentId: _Optional[str] = ..., index: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...
+
+class GetAllKnowledgeLogRequest(_message.Message):
+    __slots__ = ("projectId", "paginate", "criterias", "order")
+    PROJECTID_FIELD_NUMBER: _ClassVar[int]
+    PAGINATE_FIELD_NUMBER: _ClassVar[int]
+    CRITERIAS_FIELD_NUMBER: _ClassVar[int]
+    ORDER_FIELD_NUMBER: _ClassVar[int]
+    projectId: int
+    paginate: _common_pb2.Paginate
+    criterias: _containers.RepeatedCompositeFieldContainer[_common_pb2.Criteria]
+    order: _common_pb2.Ordering
+    def __init__(self, projectId: _Optional[int] = ..., paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ..., order: _Optional[_Union[_common_pb2.Ordering, _Mapping]] = ...) -> None: ...
+
+class GetKnowledgeLogRequest(_message.Message):
+    __slots__ = ("projectId", "id")
+    PROJECTID_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    projectId: int
+    id: int
+    def __init__(self, projectId: _Optional[int] = ..., id: _Optional[int] = ...) -> None: ...
+
+class GetKnowledgeLogResponse(_message.Message):
+    __slots__ = ("code", "success", "data", "error")
+    CODE_FIELD_NUMBER: _ClassVar[int]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    DATA_FIELD_NUMBER: _ClassVar[int]
+    ERROR_FIELD_NUMBER: _ClassVar[int]
+    code: int
+    success: bool
+    data: KnowledgeLog
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[KnowledgeLog, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+
+class GetAllKnowledgeLogResponse(_message.Message):
+    __slots__ = ("code", "success", "data", "error", "paginated")
+    CODE_FIELD_NUMBER: _ClassVar[int]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    DATA_FIELD_NUMBER: _ClassVar[int]
+    ERROR_FIELD_NUMBER: _ClassVar[int]
+    PAGINATED_FIELD_NUMBER: _ClassVar[int]
+    code: int
+    success: bool
+    data: _containers.RepeatedCompositeFieldContainer[KnowledgeLog]
+    error: _common_pb2.Error
+    paginated: _common_pb2.Paginated
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[KnowledgeLog, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
+
+class KnowledgeLog(_message.Message):
+    __slots__ = ("id", "action", "request", "response", "status", "createdDate", "updatedDate", "knowledgeId", "projectId", "organizationId", "topK", "scoreThreshold", "documentCount", "assetPrefix", "retrievalMethod", "timeTaken", "additionalData")
+    class AdditionalDataEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: str
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+    ID_FIELD_NUMBER: _ClassVar[int]
+    ACTION_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_FIELD_NUMBER: _ClassVar[int]
+    RESPONSE_FIELD_NUMBER: _ClassVar[int]
+    STATUS_FIELD_NUMBER: _ClassVar[int]
+    CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
+    UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
+    KNOWLEDGEID_FIELD_NUMBER: _ClassVar[int]
+    PROJECTID_FIELD_NUMBER: _ClassVar[int]
+    ORGANIZATIONID_FIELD_NUMBER: _ClassVar[int]
+    TOPK_FIELD_NUMBER: _ClassVar[int]
+    SCORETHRESHOLD_FIELD_NUMBER: _ClassVar[int]
+    DOCUMENTCOUNT_FIELD_NUMBER: _ClassVar[int]
+    ASSETPREFIX_FIELD_NUMBER: _ClassVar[int]
+    RETRIEVALMETHOD_FIELD_NUMBER: _ClassVar[int]
+    TIMETAKEN_FIELD_NUMBER: _ClassVar[int]
+    ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    action: _struct_pb2.Struct
+    request: _struct_pb2.Struct
+    response: _struct_pb2.Struct
+    status: str
+    createdDate: _timestamp_pb2.Timestamp
+    updatedDate: _timestamp_pb2.Timestamp
+    knowledgeId: int
+    projectId: int
+    organizationId: int
+    topK: int
+    scoreThreshold: float
+    documentCount: int
+    assetPrefix: str
+    retrievalMethod: str
+    timeTaken: int
+    additionalData: _containers.ScalarMap[str, str]
+    def __init__(self, id: _Optional[int] = ..., action: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., request: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., response: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., knowledgeId: _Optional[int] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., topK: _Optional[int] = ..., scoreThreshold: _Optional[float] = ..., documentCount: _Optional[int] = ..., assetPrefix: _Optional[str] = ..., retrievalMethod: _Optional[str] = ..., timeTaken: _Optional[int] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...

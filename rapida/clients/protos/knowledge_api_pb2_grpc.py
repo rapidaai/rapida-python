@@ -6,7 +6,7 @@ import warnings
 import rapida.clients.protos.common_pb2 as common__pb2
 import rapida.clients.protos.knowledge_api_pb2 as knowledge__api__pb2
 
-GRPC_GENERATED_VERSION = '1.74.0'
+GRPC_GENERATED_VERSION = '1.72.1'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -85,6 +85,16 @@ class KnowledgeServiceStub(object):
                 request_serializer=knowledge__api__pb2.DeleteKnowledgeDocumentSegmentRequest.SerializeToString,
                 response_deserializer=common__pb2.BaseResponse.FromString,
                 _registered_method=True)
+        self.GetAllKnowledgeLog = channel.unary_unary(
+                '/knowledge_api.KnowledgeService/GetAllKnowledgeLog',
+                request_serializer=knowledge__api__pb2.GetAllKnowledgeLogRequest.SerializeToString,
+                response_deserializer=knowledge__api__pb2.GetAllKnowledgeLogResponse.FromString,
+                _registered_method=True)
+        self.GetKnowledgeLog = channel.unary_unary(
+                '/knowledge_api.KnowledgeService/GetKnowledgeLog',
+                request_serializer=knowledge__api__pb2.GetKnowledgeLogRequest.SerializeToString,
+                response_deserializer=knowledge__api__pb2.GetKnowledgeLogResponse.FromString,
+                _registered_method=True)
 
 
 class KnowledgeServiceServicer(object):
@@ -151,6 +161,19 @@ class KnowledgeServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAllKnowledgeLog(self, request, context):
+        """knowledge log retrieval log
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetKnowledgeLog(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_KnowledgeServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -203,6 +226,16 @@ def add_KnowledgeServiceServicer_to_server(servicer, server):
                     servicer.DeleteKnowledgeDocumentSegment,
                     request_deserializer=knowledge__api__pb2.DeleteKnowledgeDocumentSegmentRequest.FromString,
                     response_serializer=common__pb2.BaseResponse.SerializeToString,
+            ),
+            'GetAllKnowledgeLog': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllKnowledgeLog,
+                    request_deserializer=knowledge__api__pb2.GetAllKnowledgeLogRequest.FromString,
+                    response_serializer=knowledge__api__pb2.GetAllKnowledgeLogResponse.SerializeToString,
+            ),
+            'GetKnowledgeLog': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetKnowledgeLog,
+                    request_deserializer=knowledge__api__pb2.GetKnowledgeLogRequest.FromString,
+                    response_serializer=knowledge__api__pb2.GetKnowledgeLogResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -475,6 +508,60 @@ class KnowledgeService(object):
             '/knowledge_api.KnowledgeService/DeleteKnowledgeDocumentSegment',
             knowledge__api__pb2.DeleteKnowledgeDocumentSegmentRequest.SerializeToString,
             common__pb2.BaseResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllKnowledgeLog(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/knowledge_api.KnowledgeService/GetAllKnowledgeLog',
+            knowledge__api__pb2.GetAllKnowledgeLogRequest.SerializeToString,
+            knowledge__api__pb2.GetAllKnowledgeLogResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetKnowledgeLog(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/knowledge_api.KnowledgeService/GetKnowledgeLog',
+            knowledge__api__pb2.GetKnowledgeLogRequest.SerializeToString,
+            knowledge__api__pb2.GetKnowledgeLogResponse.FromString,
             options,
             channel_credentials,
             insecure,
