@@ -15,7 +15,7 @@ from rapida.connections import ConnectionConfig, UserAuthInfo, ClientAuthInfo
 def get_endpoint(
     client_cfg: ConnectionConfig,
     request: GetEndpointRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None],
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
 ) -> GetEndpointResponse:
     if auth is None:
         auth = client_cfg.auth
@@ -29,7 +29,7 @@ def get_endpoint(
 def get_all_endpoint(
     client_cfg: ConnectionConfig,
     request: GetAllEndpointRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None],
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
 ) -> GetAllEndpointResponse:
     if auth is None:
         auth = client_cfg.auth
@@ -42,7 +42,7 @@ def get_all_endpoint(
 def get_endpoint_log(
     client_cfg: ConnectionConfig,
     request: GetEndpointLogRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None],
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
 ) -> GetEndpointLogResponse:
     if auth is None:
         auth = client_cfg.auth
@@ -56,7 +56,7 @@ def get_endpoint_log(
 def get_all_endpoint_log(
     client_cfg: ConnectionConfig,
     request: GetAllEndpointLogRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None],
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
 ) -> GetAllEndpointLogResponse:
     if auth is None:
         auth = client_cfg.auth

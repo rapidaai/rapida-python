@@ -9,7 +9,7 @@ from rapida.connections import ConnectionConfig, UserAuthInfo, ClientAuthInfo
 def invoke(
     client_cfg: ConnectionConfig,
     request: InvokeRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None],
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
 ) -> InvokeResponse:
     if auth is None:
         auth = client_cfg.auth

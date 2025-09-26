@@ -11,7 +11,7 @@ from rapida.connections import ConnectionConfig, UserAuthInfo, ClientAuthInfo
 def create_phone_call(
     client_cfg: ConnectionConfig,
     request: CreatePhoneCallRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None],
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
 ) -> CreatePhoneCallResponse:
     if auth is None:
         auth = client_cfg.auth
@@ -24,7 +24,7 @@ def create_phone_call(
 def create_bulk_phone_call(
     client_cfg: ConnectionConfig,
     request: CreateBulkPhoneCallRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None],
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
 ) -> CreateBulkPhoneCallResponse:
     if auth is None:
         auth = client_cfg.auth
