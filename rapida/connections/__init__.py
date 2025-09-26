@@ -231,4 +231,4 @@ class ConnectionConfig:
             return grpc.secure_channel(endpoint, grpc.ssl_channel_credentials())
 
 
-__all__ = ["ConnectionConfig"]
+__all__ = ["ConnectionConfig", "UserAuthInfo", "ClientAuthInfo"]
