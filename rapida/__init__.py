@@ -200,6 +200,29 @@ from rapida.utils.rapida_header import (
 #     CreateProjectCredential,
 # )
 from rapida.clients.call import create_phone_call, create_bulk_phone_call
+from rapida.clients.assistant import (
+    get_assistant,
+    get_all_assistant,
+    get_assistant_conversation,
+    get_all_assistant_conversation,
+    get_assistant_webhook,
+    get_all_assistant_webhook,
+    get_assistant_knowledge,
+    get_all_assistant_knowledge,
+    get_assistant_tool,
+    get_all_assistant_tool,
+    get_assistant_webhook_log,
+    get_all_assistant_webhook_log,
+)
+
+from rapida.clients.endpoint import (
+    get_endpoint,
+    get_all_endpoint,
+    get_endpoint_log,
+    get_all_endpoint_log,
+)
+
+from rapida.clients.invoke import invoke
 
 # # Protobuf imports
 from rapida.clients.protos.assistant_knowledge_pb2 import (
@@ -569,6 +592,24 @@ __all__ = [
     "HEADER_REMOTE_URL",
     "HEADER_LATITUDE",
     "HEADER_LONGITUDE",
+    #
+    "get_assistant",
+    "get_all_assistant",
+    "get_assistant_conversation",
+    "get_all_assistant_conversation",
+    "get_assistant_webhook",
+    "get_all_assistant_webhook",
+    "get_assistant_knowledge",
+    "get_all_assistant_knowledge",
+    "get_assistant_tool",
+    "get_all_assistant_tool",
+    "get_assistant_webhook_log",
+    "get_all_assistant_webhook_log",
+    "get_endpoint",
+    "get_all_endpoint",
+    "get_endpoint_log",
+    "get_all_endpoint_log",
+    "invoke",
     #     "IndexKnowledgeDocument",
     #     "GetAllDeployment",
     #     "Invoke",
