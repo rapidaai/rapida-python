@@ -142,7 +142,7 @@ class ConnectionConfig:
 
     @property
     def deployment_client(self):
-        return DeploymentStub(self._create_channel(self._endpoint["web"]))
+        return DeploymentStub(self._create_channel(self._endpoint["endpoint"]))
 
     @property
     def marketplace_client(self):
