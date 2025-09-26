@@ -31,8 +31,9 @@ from rapida.clients.protos.assistant_api_pb2 import (
     GetAllAssistantResponse,
     GetAssistantConversationRequest,
     GetAssistantConversationResponse,
+    GetAssistantRequest,
+    GetAssistantResponse,
 )
-from rapida.clients.protos.talk_api_pb2 import GetAssistantRequest, GetAssistantResponse
 from rapida.connections import ConnectionConfig, UserAuthInfo, ClientAuthInfo
 
 
