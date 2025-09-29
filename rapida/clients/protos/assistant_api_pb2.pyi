@@ -307,41 +307,15 @@ class UpdateAssistantDetailRequest(_message.Message):
     description: str
     def __init__(self, assistantId: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
 
-class GetAllAssistantUserConversationRequest(_message.Message):
-    __slots__ = ("assistantId", "paginate", "criterias", "source")
-    ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
-    PAGINATE_FIELD_NUMBER: _ClassVar[int]
-    CRITERIAS_FIELD_NUMBER: _ClassVar[int]
-    SOURCE_FIELD_NUMBER: _ClassVar[int]
-    assistantId: int
-    paginate: _common_pb2.Paginate
-    criterias: _containers.RepeatedCompositeFieldContainer[_common_pb2.Criteria]
-    source: _common_pb2.Source
-    def __init__(self, assistantId: _Optional[int] = ..., paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ..., source: _Optional[_Union[_common_pb2.Source, str]] = ...) -> None: ...
-
-class GetAllAssistantUserConversationResponse(_message.Message):
-    __slots__ = ("code", "success", "data", "error", "paginated")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    DATA_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    PAGINATED_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    data: _containers.RepeatedCompositeFieldContainer[_common_pb2.AssistantConversation]
-    error: _common_pb2.Error
-    paginated: _common_pb2.Paginated
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[_common_pb2.AssistantConversation, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
-
 class GetAssistantConversationRequest(_message.Message):
-    __slots__ = ("assistantId", "assistantConversationId", "selectors")
+    __slots__ = ("assistantId", "id", "selectors")
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
-    ASSISTANTCONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
     SELECTORS_FIELD_NUMBER: _ClassVar[int]
     assistantId: int
-    assistantConversationId: int
+    id: int
     selectors: _containers.RepeatedCompositeFieldContainer[_common_pb2.FieldSelector]
-    def __init__(self, assistantId: _Optional[int] = ..., assistantConversationId: _Optional[int] = ..., selectors: _Optional[_Iterable[_Union[_common_pb2.FieldSelector, _Mapping]]] = ...) -> None: ...
+    def __init__(self, assistantId: _Optional[int] = ..., id: _Optional[int] = ..., selectors: _Optional[_Iterable[_Union[_common_pb2.FieldSelector, _Mapping]]] = ...) -> None: ...
 
 class GetAssistantConversationResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")
