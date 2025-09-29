@@ -20,6 +20,13 @@ from rapida.clients.protos.assistant_webhook_pb2 import (
     GetAssistantWebhookRequest,
     GetAssistantWebhookResponse,
 )
+
+from rapida.clients.protos.assistant_analysis_pb2 import (
+    GetAllAssistantAnalysisRequest,
+    GetAssistantAnalysisRequest,
+    GetAssistantAnalysisResponse,
+    GetAllAssistantAnalysisResponse
+)
 from rapida.clients.protos.assistant_tool_pb2 import (
     GetAllAssistantToolRequest,
     GetAllAssistantToolResponse,
@@ -162,6 +169,32 @@ def get_all_assistant_tool(
     if auth is None:
         auth = client_cfg.auth
     return client_cfg.assistant_client.GetAllAssistantTool(
+        request,
+        metadata=auth,
+    )
+
+
+def get_assistant_analysis(
+    client_cfg: ConnectionConfig,
+    request: GetAssistantAnalysisRequest,
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
+) -> GetAssistantAnalysisResponse:
+    if auth is None:
+        auth = client_cfg.auth
+    return client_cfg.assistant_client.GetAssistantAnalysis(
+        request,
+        metadata=auth,
+    )
+
+
+def get_all_assistant_analysis(
+    client_cfg: ConnectionConfig,
+    request: GetAllAssistantAnalysisRequest,
+    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
+) -> GetAllAssistantAnalysisResponse:
+    if auth is None:
+        auth = client_cfg.auth
+    return client_cfg.assistant_client.GetAllAssistantAnalysis(
         request,
         metadata=auth,
     )

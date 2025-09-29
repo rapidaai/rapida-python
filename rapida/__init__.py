@@ -213,6 +213,8 @@ from rapida.clients.assistant import (
     get_all_assistant_tool,
     get_assistant_webhook_log,
     get_all_assistant_webhook_log,
+    get_assistant_analysis,
+    get_all_assistant_analysis,
 )
 
 from rapida.clients.endpoint import (
@@ -534,8 +536,6 @@ from rapida.clients.protos.assistant_api_pb2 import (
     GetAllMessageResponse,
     UpdateAssistantVersionRequest,
     UpdateAssistantDetailRequest,
-    GetAllAssistantUserConversationRequest,
-    GetAllAssistantUserConversationResponse,
     GetAssistantConversationRequest,
     GetAssistantConversationResponse,
 )
@@ -599,6 +599,8 @@ __all__ = [
     "get_endpoint_log",
     "get_all_endpoint_log",
     "invoke",
+    "get_assistant_analysis",
+    "get_all_assistant_analysis",
     #     "IndexKnowledgeDocument",
     #     "GetAllDeployment",
     #     "Invoke",
