@@ -988,8 +988,6 @@ __all__ = [
     "GetAllMessageResponse",
     "UpdateAssistantVersionRequest",
     "UpdateAssistantDetailRequest",
-    "GetAllAssistantUserConversationRequest",
-    "GetAllAssistantUserConversationResponse",
     "GetAssistantConversationRequest",
     "GetAssistantConversationResponse",
 ]
