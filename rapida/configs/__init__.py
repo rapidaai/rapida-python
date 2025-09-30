@@ -24,9 +24,9 @@ Author: Prashant <prashant@rapida.ai>
 This module provides functions for managing projects through the ProjectService.
 """
 
-ASSISTANT_API = "https://assistant-01.rapida.ai"
-WEB_API = "https://api.rapida.ai"
-ENDPOINT_API = "https://api.rapida.ai"
+ASSISTANT_API = "workflow-01.rapida.ai"
+WEB_API = "api.rapida.ai"
+ENDPOINT_API = "endpoint-01.rapida.ai"
 
 LOCAL_ASSISTANT_API = "localhost:9007"
 LOCAL_WEB_API = "localhost:9001"

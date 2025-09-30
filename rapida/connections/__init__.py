@@ -130,7 +130,7 @@ class ConnectionConfig:
 
     @property
     def assistant_client(self):
-        return AssistantServiceStub(self._create_channel(self._endpoint["web"]))
+        return AssistantServiceStub(self._create_channel(self._endpoint["assistant"]))
 
     @property
     def project_client(self):
@@ -138,7 +138,7 @@ class ConnectionConfig:
 
     @property
     def knowledge_client(self):
-        return KnowledgeServiceStub(self._create_channel(self._endpoint["web"]))
+        return KnowledgeServiceStub(self._create_channel(self._endpoint["assistant"]))
 
     @property
     def deployment_client(self):
@@ -158,7 +158,7 @@ class ConnectionConfig:
 
     @property
     def endpoint_client(self):
-        return EndpointServiceStub(self._create_channel(self._endpoint["web"]))
+        return EndpointServiceStub(self._create_channel(self._endpoint["endpoint"]))
 
     @property
     def audit_logging_client(self):
@@ -167,7 +167,7 @@ class ConnectionConfig:
     @property
     def assistant_deployment_client(self):
         return AssistantDeploymentServiceStub(
-            self._create_channel(self._endpoint["web"])
+            self._create_channel(self._endpoint["assistant"])
         )
 
     @property
