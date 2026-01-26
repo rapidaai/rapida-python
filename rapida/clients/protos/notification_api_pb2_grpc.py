@@ -3,9 +3,9 @@
 import grpc
 import warnings
 
-import rapida.clients.protos.provider_api_pb2 as provider__api__pb2
+import rapida.clients.protos.notification_api_pb2 as notification__api__pb2
 
-GRPC_GENERATED_VERSION = '1.72.1'
+GRPC_GENERATED_VERSION = '1.74.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -18,14 +18,14 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in provider_api_pb2_grpc.py depends on'
+        + f' but the generated code in notification_api_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class ProviderServiceStub(object):
+class NotificationServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -34,59 +34,59 @@ class ProviderServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetAllToolProvider = channel.unary_unary(
-                '/provider_api.ProviderService/GetAllToolProvider',
-                request_serializer=provider__api__pb2.GetAllToolProviderRequest.SerializeToString,
-                response_deserializer=provider__api__pb2.GetAllToolProviderResponse.FromString,
+        self.UpdateNotificationSetting = channel.unary_unary(
+                '/notification_api.NotificationService/UpdateNotificationSetting',
+                request_serializer=notification__api__pb2.UpdateNotificationSettingRequest.SerializeToString,
+                response_deserializer=notification__api__pb2.NotificationSettingResponse.FromString,
                 _registered_method=True)
-        self.GetAllModelProvider = channel.unary_unary(
-                '/provider_api.ProviderService/GetAllModelProvider',
-                request_serializer=provider__api__pb2.GetAllModelProviderRequest.SerializeToString,
-                response_deserializer=provider__api__pb2.GetAllModelProviderResponse.FromString,
+        self.GetNotificationSettting = channel.unary_unary(
+                '/notification_api.NotificationService/GetNotificationSettting',
+                request_serializer=notification__api__pb2.GetNotificationSettingRequest.SerializeToString,
+                response_deserializer=notification__api__pb2.NotificationSettingResponse.FromString,
                 _registered_method=True)
 
 
-class ProviderServiceServicer(object):
+class NotificationServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetAllToolProvider(self, request, context):
+    def UpdateNotificationSetting(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetAllModelProvider(self, request, context):
+    def GetNotificationSettting(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_ProviderServiceServicer_to_server(servicer, server):
+def add_NotificationServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetAllToolProvider': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAllToolProvider,
-                    request_deserializer=provider__api__pb2.GetAllToolProviderRequest.FromString,
-                    response_serializer=provider__api__pb2.GetAllToolProviderResponse.SerializeToString,
+            'UpdateNotificationSetting': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateNotificationSetting,
+                    request_deserializer=notification__api__pb2.UpdateNotificationSettingRequest.FromString,
+                    response_serializer=notification__api__pb2.NotificationSettingResponse.SerializeToString,
             ),
-            'GetAllModelProvider': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAllModelProvider,
-                    request_deserializer=provider__api__pb2.GetAllModelProviderRequest.FromString,
-                    response_serializer=provider__api__pb2.GetAllModelProviderResponse.SerializeToString,
+            'GetNotificationSettting': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetNotificationSettting,
+                    request_deserializer=notification__api__pb2.GetNotificationSettingRequest.FromString,
+                    response_serializer=notification__api__pb2.NotificationSettingResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'provider_api.ProviderService', rpc_method_handlers)
+            'notification_api.NotificationService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('provider_api.ProviderService', rpc_method_handlers)
+    server.add_registered_method_handlers('notification_api.NotificationService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class ProviderService(object):
+class NotificationService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetAllToolProvider(request,
+    def UpdateNotificationSetting(request,
             target,
             options=(),
             channel_credentials=None,
@@ -99,9 +99,9 @@ class ProviderService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/provider_api.ProviderService/GetAllToolProvider',
-            provider__api__pb2.GetAllToolProviderRequest.SerializeToString,
-            provider__api__pb2.GetAllToolProviderResponse.FromString,
+            '/notification_api.NotificationService/UpdateNotificationSetting',
+            notification__api__pb2.UpdateNotificationSettingRequest.SerializeToString,
+            notification__api__pb2.NotificationSettingResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -113,7 +113,7 @@ class ProviderService(object):
             _registered_method=True)
 
     @staticmethod
-    def GetAllModelProvider(request,
+    def GetNotificationSettting(request,
             target,
             options=(),
             channel_credentials=None,
@@ -126,9 +126,9 @@ class ProviderService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/provider_api.ProviderService/GetAllModelProvider',
-            provider__api__pb2.GetAllModelProviderRequest.SerializeToString,
-            provider__api__pb2.GetAllModelProviderResponse.FromString,
+            '/notification_api.NotificationService/GetNotificationSettting',
+            notification__api__pb2.GetNotificationSettingRequest.SerializeToString,
+            notification__api__pb2.NotificationSettingResponse.FromString,
             options,
             channel_credentials,
             insecure,

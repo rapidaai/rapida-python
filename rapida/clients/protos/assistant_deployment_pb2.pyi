@@ -1,3 +1,5 @@
+import datetime
+
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
 from google.protobuf.internal import containers as _containers
@@ -9,33 +11,28 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class DeploymentAudioProvider(_message.Message):
-    __slots__ = ("id", "audioProvider", "audioOptions", "audioProviderId", "status", "audioType")
+    __slots__ = ("id", "audioProvider", "audioOptions", "status", "audioType")
     ID_FIELD_NUMBER: _ClassVar[int]
     AUDIOPROVIDER_FIELD_NUMBER: _ClassVar[int]
     AUDIOOPTIONS_FIELD_NUMBER: _ClassVar[int]
-    AUDIOPROVIDERID_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
     AUDIOTYPE_FIELD_NUMBER: _ClassVar[int]
     id: int
     audioProvider: str
     audioOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
-    audioProviderId: int
     status: str
     audioType: str
-    def __init__(self, id: _Optional[int] = ..., audioProvider: _Optional[str] = ..., audioOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., audioProviderId: _Optional[int] = ..., status: _Optional[str] = ..., audioType: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., audioProvider: _Optional[str] = ..., audioOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., status: _Optional[str] = ..., audioType: _Optional[str] = ...) -> None: ...
 
 class AssistantWebpluginDeployment(_message.Message):
-    __slots__ = ("id", "assistantId", "name", "greeting", "mistake", "ending", "inputAudio", "outputAudio", "url", "raw", "suggestion", "helpCenterEnabled", "productCatalogEnabled", "articleCatalogEnabled", "uploadFileEnabled", "createdDate", "updatedDate", "status")
+    __slots__ = ("id", "assistantId", "name", "greeting", "mistake", "inputAudio", "outputAudio", "suggestion", "helpCenterEnabled", "productCatalogEnabled", "articleCatalogEnabled", "uploadFileEnabled", "createdDate", "updatedDate", "status", "maxSessionDuration", "idealTimeout", "idealTimeoutMessage", "idealTimeoutBackoff")
     ID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     GREETING_FIELD_NUMBER: _ClassVar[int]
     MISTAKE_FIELD_NUMBER: _ClassVar[int]
-    ENDING_FIELD_NUMBER: _ClassVar[int]
     INPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
     OUTPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
-    URL_FIELD_NUMBER: _ClassVar[int]
-    RAW_FIELD_NUMBER: _ClassVar[int]
     SUGGESTION_FIELD_NUMBER: _ClassVar[int]
     HELPCENTERENABLED_FIELD_NUMBER: _ClassVar[int]
     PRODUCTCATALOGENABLED_FIELD_NUMBER: _ClassVar[int]
@@ -44,16 +41,17 @@ class AssistantWebpluginDeployment(_message.Message):
     CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
     UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    MAXSESSIONDURATION_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTBACKOFF_FIELD_NUMBER: _ClassVar[int]
     id: int
     assistantId: int
     name: str
     greeting: str
     mistake: str
-    ending: str
     inputAudio: DeploymentAudioProvider
     outputAudio: DeploymentAudioProvider
-    url: str
-    raw: _common_pb2.Content
     suggestion: _containers.RepeatedScalarFieldContainer[str]
     helpCenterEnabled: bool
     productCatalogEnabled: bool
@@ -62,121 +60,143 @@ class AssistantWebpluginDeployment(_message.Message):
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., url: _Optional[str] = ..., raw: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., suggestion: _Optional[_Iterable[str]] = ..., helpCenterEnabled: bool = ..., productCatalogEnabled: bool = ..., articleCatalogEnabled: bool = ..., uploadFileEnabled: bool = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    maxSessionDuration: int
+    idealTimeout: int
+    idealTimeoutMessage: str
+    idealTimeoutBackoff: int
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., suggestion: _Optional[_Iterable[str]] = ..., helpCenterEnabled: bool = ..., productCatalogEnabled: bool = ..., articleCatalogEnabled: bool = ..., uploadFileEnabled: bool = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ..., maxSessionDuration: _Optional[int] = ..., idealTimeout: _Optional[int] = ..., idealTimeoutMessage: _Optional[str] = ..., idealTimeoutBackoff: _Optional[int] = ...) -> None: ...
 
 class AssistantPhoneDeployment(_message.Message):
-    __slots__ = ("id", "assistantId", "greeting", "mistake", "ending", "inputAudio", "outputAudio", "phoneProviderName", "phoneProviderId", "phoneOptions", "createdDate", "updatedDate", "status")
+    __slots__ = ("id", "assistantId", "greeting", "mistake", "inputAudio", "outputAudio", "phoneProviderName", "phoneOptions", "createdDate", "updatedDate", "status", "maxSessionDuration", "idealTimeout", "idealTimeoutMessage", "idealTimeoutBackoff")
     ID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
     GREETING_FIELD_NUMBER: _ClassVar[int]
     MISTAKE_FIELD_NUMBER: _ClassVar[int]
-    ENDING_FIELD_NUMBER: _ClassVar[int]
     INPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
     OUTPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
     PHONEPROVIDERNAME_FIELD_NUMBER: _ClassVar[int]
-    PHONEPROVIDERID_FIELD_NUMBER: _ClassVar[int]
     PHONEOPTIONS_FIELD_NUMBER: _ClassVar[int]
     CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
     UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    MAXSESSIONDURATION_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTBACKOFF_FIELD_NUMBER: _ClassVar[int]
     id: int
     assistantId: int
     greeting: str
     mistake: str
-    ending: str
     inputAudio: DeploymentAudioProvider
     outputAudio: DeploymentAudioProvider
     phoneProviderName: str
-    phoneProviderId: int
     phoneOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., phoneProviderName: _Optional[str] = ..., phoneProviderId: _Optional[int] = ..., phoneOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    maxSessionDuration: int
+    idealTimeout: int
+    idealTimeoutMessage: str
+    idealTimeoutBackoff: int
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., phoneProviderName: _Optional[str] = ..., phoneOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ..., maxSessionDuration: _Optional[int] = ..., idealTimeout: _Optional[int] = ..., idealTimeoutMessage: _Optional[str] = ..., idealTimeoutBackoff: _Optional[int] = ...) -> None: ...
 
 class AssistantWhatsappDeployment(_message.Message):
-    __slots__ = ("id", "assistantId", "name", "greeting", "mistake", "ending", "whatsappProviderName", "whatsappProviderId", "whatsappOptions", "createdDate", "updatedDate", "status")
+    __slots__ = ("id", "assistantId", "name", "greeting", "mistake", "inputAudio", "outputAudio", "whatsappProviderName", "whatsappOptions", "createdDate", "updatedDate", "status", "maxSessionDuration", "idealTimeout", "idealTimeoutMessage", "idealTimeoutBackoff")
     ID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     GREETING_FIELD_NUMBER: _ClassVar[int]
     MISTAKE_FIELD_NUMBER: _ClassVar[int]
-    ENDING_FIELD_NUMBER: _ClassVar[int]
+    INPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
+    OUTPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
     WHATSAPPPROVIDERNAME_FIELD_NUMBER: _ClassVar[int]
-    WHATSAPPPROVIDERID_FIELD_NUMBER: _ClassVar[int]
     WHATSAPPOPTIONS_FIELD_NUMBER: _ClassVar[int]
     CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
     UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    MAXSESSIONDURATION_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTBACKOFF_FIELD_NUMBER: _ClassVar[int]
     id: int
     assistantId: int
     name: str
     greeting: str
     mistake: str
-    ending: str
+    inputAudio: DeploymentAudioProvider
+    outputAudio: DeploymentAudioProvider
     whatsappProviderName: str
-    whatsappProviderId: int
     whatsappOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., whatsappProviderName: _Optional[str] = ..., whatsappProviderId: _Optional[int] = ..., whatsappOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    maxSessionDuration: int
+    idealTimeout: int
+    idealTimeoutMessage: str
+    idealTimeoutBackoff: int
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., whatsappProviderName: _Optional[str] = ..., whatsappOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ..., maxSessionDuration: _Optional[int] = ..., idealTimeout: _Optional[int] = ..., idealTimeoutMessage: _Optional[str] = ..., idealTimeoutBackoff: _Optional[int] = ...) -> None: ...
 
 class AssistantDebuggerDeployment(_message.Message):
-    __slots__ = ("id", "assistantId", "name", "greeting", "mistake", "ending", "inputAudio", "outputAudio", "url", "raw", "suggestion", "createdDate", "updatedDate", "status")
+    __slots__ = ("id", "assistantId", "name", "greeting", "mistake", "inputAudio", "outputAudio", "createdDate", "updatedDate", "status", "maxSessionDuration", "idealTimeout", "idealTimeoutMessage", "idealTimeoutBackoff")
     ID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     GREETING_FIELD_NUMBER: _ClassVar[int]
     MISTAKE_FIELD_NUMBER: _ClassVar[int]
-    ENDING_FIELD_NUMBER: _ClassVar[int]
     INPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
     OUTPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
-    URL_FIELD_NUMBER: _ClassVar[int]
-    RAW_FIELD_NUMBER: _ClassVar[int]
-    SUGGESTION_FIELD_NUMBER: _ClassVar[int]
     CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
     UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    MAXSESSIONDURATION_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTBACKOFF_FIELD_NUMBER: _ClassVar[int]
     id: int
     assistantId: int
     name: str
     greeting: str
     mistake: str
-    ending: str
     inputAudio: DeploymentAudioProvider
     outputAudio: DeploymentAudioProvider
-    url: str
-    raw: _common_pb2.Content
-    suggestion: _containers.RepeatedScalarFieldContainer[str]
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., url: _Optional[str] = ..., raw: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., suggestion: _Optional[_Iterable[str]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    maxSessionDuration: int
+    idealTimeout: int
+    idealTimeoutMessage: str
+    idealTimeoutBackoff: int
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ..., maxSessionDuration: _Optional[int] = ..., idealTimeout: _Optional[int] = ..., idealTimeoutMessage: _Optional[str] = ..., idealTimeoutBackoff: _Optional[int] = ...) -> None: ...
 
 class AssistantApiDeployment(_message.Message):
-    __slots__ = ("id", "assistantId", "greeting", "mistake", "ending", "inputAudio", "outputAudio", "createdDate", "updatedDate", "status")
+    __slots__ = ("id", "assistantId", "greeting", "mistake", "inputAudio", "outputAudio", "createdDate", "updatedDate", "status", "maxSessionDuration", "idealTimeout", "idealTimeoutMessage", "idealTimeoutBackoff")
     ID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
     GREETING_FIELD_NUMBER: _ClassVar[int]
     MISTAKE_FIELD_NUMBER: _ClassVar[int]
-    ENDING_FIELD_NUMBER: _ClassVar[int]
     INPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
     OUTPUTAUDIO_FIELD_NUMBER: _ClassVar[int]
     CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
     UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    MAXSESSIONDURATION_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTMESSAGE_FIELD_NUMBER: _ClassVar[int]
+    IDEALTIMEOUTBACKOFF_FIELD_NUMBER: _ClassVar[int]
     id: int
     assistantId: int
     greeting: str
     mistake: str
-    ending: str
     inputAudio: DeploymentAudioProvider
     outputAudio: DeploymentAudioProvider
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., ending: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    maxSessionDuration: int
+    idealTimeout: int
+    idealTimeoutMessage: str
+    idealTimeoutBackoff: int
+    def __init__(self, id: _Optional[int] = ..., assistantId: _Optional[int] = ..., greeting: _Optional[str] = ..., mistake: _Optional[str] = ..., inputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., outputAudio: _Optional[_Union[DeploymentAudioProvider, _Mapping]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ..., maxSessionDuration: _Optional[int] = ..., idealTimeout: _Optional[int] = ..., idealTimeoutMessage: _Optional[str] = ..., idealTimeoutBackoff: _Optional[int] = ...) -> None: ...
 
 class CreateAssistantDeploymentRequest(_message.Message):
     __slots__ = ("api", "debugger", "whatsapp", "phone", "plugin")

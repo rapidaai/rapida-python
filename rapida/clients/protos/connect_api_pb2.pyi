@@ -8,32 +8,6 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
-class KnowledgeConnectRequest(_message.Message):
-    __slots__ = ("state", "code", "scope", "connect")
-    STATE_FIELD_NUMBER: _ClassVar[int]
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SCOPE_FIELD_NUMBER: _ClassVar[int]
-    CONNECT_FIELD_NUMBER: _ClassVar[int]
-    state: str
-    code: str
-    scope: str
-    connect: str
-    def __init__(self, state: _Optional[str] = ..., code: _Optional[str] = ..., scope: _Optional[str] = ..., connect: _Optional[str] = ...) -> None: ...
-
-class KnowledgeConnectResponse(_message.Message):
-    __slots__ = ("code", "success", "toolId", "redirectTo", "error")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    TOOLID_FIELD_NUMBER: _ClassVar[int]
-    REDIRECTTO_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    toolId: int
-    redirectTo: str
-    error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., toolId: _Optional[int] = ..., redirectTo: _Optional[str] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
-
 class GeneralConnectRequest(_message.Message):
     __slots__ = ("state", "code", "scope", "connect")
     STATE_FIELD_NUMBER: _ClassVar[int]
@@ -47,54 +21,28 @@ class GeneralConnectRequest(_message.Message):
     def __init__(self, state: _Optional[str] = ..., code: _Optional[str] = ..., scope: _Optional[str] = ..., connect: _Optional[str] = ...) -> None: ...
 
 class GeneralConnectResponse(_message.Message):
-    __slots__ = ("code", "success", "toolId", "redirectTo", "error")
+    __slots__ = ("code", "success", "provider", "redirectTo", "error")
     CODE_FIELD_NUMBER: _ClassVar[int]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    TOOLID_FIELD_NUMBER: _ClassVar[int]
+    PROVIDER_FIELD_NUMBER: _ClassVar[int]
     REDIRECTTO_FIELD_NUMBER: _ClassVar[int]
     ERROR_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    toolId: int
+    provider: str
     redirectTo: str
     error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., toolId: _Optional[int] = ..., redirectTo: _Optional[str] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
-
-class ActionConnectRequest(_message.Message):
-    __slots__ = ("state", "code", "scope", "connect")
-    STATE_FIELD_NUMBER: _ClassVar[int]
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SCOPE_FIELD_NUMBER: _ClassVar[int]
-    CONNECT_FIELD_NUMBER: _ClassVar[int]
-    state: str
-    code: str
-    scope: str
-    connect: str
-    def __init__(self, state: _Optional[str] = ..., code: _Optional[str] = ..., scope: _Optional[str] = ..., connect: _Optional[str] = ...) -> None: ...
-
-class ActionConnectResponse(_message.Message):
-    __slots__ = ("code", "success", "toolId", "redirectTo", "error")
-    CODE_FIELD_NUMBER: _ClassVar[int]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    TOOLID_FIELD_NUMBER: _ClassVar[int]
-    REDIRECTTO_FIELD_NUMBER: _ClassVar[int]
-    ERROR_FIELD_NUMBER: _ClassVar[int]
-    code: int
-    success: bool
-    toolId: int
-    redirectTo: str
-    error: _common_pb2.Error
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., toolId: _Optional[int] = ..., redirectTo: _Optional[str] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., provider: _Optional[str] = ..., redirectTo: _Optional[str] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class GetConnectorFilesRequest(_message.Message):
-    __slots__ = ("paginate", "criterias", "toolId")
+    __slots__ = ("paginate", "criterias", "provider")
     PAGINATE_FIELD_NUMBER: _ClassVar[int]
     CRITERIAS_FIELD_NUMBER: _ClassVar[int]
-    TOOLID_FIELD_NUMBER: _ClassVar[int]
+    PROVIDER_FIELD_NUMBER: _ClassVar[int]
     paginate: _common_pb2.Paginate
     criterias: _containers.RepeatedCompositeFieldContainer[_common_pb2.Criteria]
-    toolId: int
-    def __init__(self, paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ..., toolId: _Optional[int] = ...) -> None: ...
+    provider: str
+    def __init__(self, paginate: _Optional[_Union[_common_pb2.Paginate, _Mapping]] = ..., criterias: _Optional[_Iterable[_Union[_common_pb2.Criteria, _Mapping]]] = ..., provider: _Optional[str] = ...) -> None: ...
 
 class GetConnectorFilesResponse(_message.Message):
     __slots__ = ("code", "success", "data", "paginated", "error", "args")

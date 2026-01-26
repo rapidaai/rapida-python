@@ -6,7 +6,7 @@ import warnings
 import rapida.clients.protos.common_pb2 as common__pb2
 import rapida.clients.protos.web_api_pb2 as web__api__pb2
 
-GRPC_GENERATED_VERSION = '1.72.1'
+GRPC_GENERATED_VERSION = '1.74.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -69,6 +69,11 @@ class AuthenticationServiceStub(object):
                 '/web_api.AuthenticationService/CreatePassword',
                 request_serializer=web__api__pb2.CreatePasswordRequest.SerializeToString,
                 response_deserializer=web__api__pb2.CreatePasswordResponse.FromString,
+                _registered_method=True)
+        self.ChangePassword = channel.unary_unary(
+                '/web_api.AuthenticationService/ChangePassword',
+                request_serializer=web__api__pb2.ChangePasswordRequest.SerializeToString,
+                response_deserializer=web__api__pb2.ChangePasswordResponse.FromString,
                 _registered_method=True)
         self.GetUser = channel.unary_unary(
                 '/web_api.AuthenticationService/GetUser',
@@ -148,6 +153,12 @@ class AuthenticationServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ChangePassword(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetUser(self, request, context):
         """
         """
@@ -222,6 +233,11 @@ def add_AuthenticationServiceServicer_to_server(servicer, server):
                     servicer.CreatePassword,
                     request_deserializer=web__api__pb2.CreatePasswordRequest.FromString,
                     response_serializer=web__api__pb2.CreatePasswordResponse.SerializeToString,
+            ),
+            'ChangePassword': grpc.unary_unary_rpc_method_handler(
+                    servicer.ChangePassword,
+                    request_deserializer=web__api__pb2.ChangePasswordRequest.FromString,
+                    response_serializer=web__api__pb2.ChangePasswordResponse.SerializeToString,
             ),
             'GetUser': grpc.unary_unary_rpc_method_handler(
                     servicer.GetUser,
@@ -443,6 +459,33 @@ class AuthenticationService(object):
             '/web_api.AuthenticationService/CreatePassword',
             web__api__pb2.CreatePasswordRequest.SerializeToString,
             web__api__pb2.CreatePasswordResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ChangePassword(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/web_api.AuthenticationService/ChangePassword',
+            web__api__pb2.ChangePasswordRequest.SerializeToString,
+            web__api__pb2.ChangePasswordResponse.FromString,
             options,
             channel_credentials,
             insecure,

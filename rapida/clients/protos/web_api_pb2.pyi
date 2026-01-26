@@ -1,3 +1,5 @@
+import datetime
+
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
 from google.protobuf.internal import containers as _containers
@@ -99,16 +101,6 @@ class ScopedAuthentication(_message.Message):
     status: str
     def __init__(self, userId: _Optional[int] = ..., organizationId: _Optional[int] = ..., projectId: _Optional[int] = ..., status: _Optional[str] = ...) -> None: ...
 
-class AuthenticationError(_message.Message):
-    __slots__ = ("errorCode", "errorMessage", "humanMessage")
-    ERRORCODE_FIELD_NUMBER: _ClassVar[int]
-    ERRORMESSAGE_FIELD_NUMBER: _ClassVar[int]
-    HUMANMESSAGE_FIELD_NUMBER: _ClassVar[int]
-    errorCode: int
-    errorMessage: str
-    humanMessage: str
-    def __init__(self, errorCode: _Optional[int] = ..., errorMessage: _Optional[str] = ..., humanMessage: _Optional[str] = ...) -> None: ...
-
 class AuthenticateResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")
     CODE_FIELD_NUMBER: _ClassVar[int]
@@ -118,8 +110,8 @@ class AuthenticateResponse(_message.Message):
     code: int
     success: bool
     data: Authentication
-    error: AuthenticationError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[Authentication, _Mapping]] = ..., error: _Optional[_Union[AuthenticationError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[Authentication, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class ForgotPasswordRequest(_message.Message):
     __slots__ = ("email",)
@@ -134,8 +126,26 @@ class ForgotPasswordResponse(_message.Message):
     ERROR_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    error: AuthenticationError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[AuthenticationError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
+
+class ChangePasswordRequest(_message.Message):
+    __slots__ = ("oldPassword", "password")
+    OLDPASSWORD_FIELD_NUMBER: _ClassVar[int]
+    PASSWORD_FIELD_NUMBER: _ClassVar[int]
+    oldPassword: str
+    password: str
+    def __init__(self, oldPassword: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
+
+class ChangePasswordResponse(_message.Message):
+    __slots__ = ("code", "success", "error")
+    CODE_FIELD_NUMBER: _ClassVar[int]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    ERROR_FIELD_NUMBER: _ClassVar[int]
+    code: int
+    success: bool
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class CreatePasswordRequest(_message.Message):
     __slots__ = ("token", "password")
@@ -152,8 +162,8 @@ class CreatePasswordResponse(_message.Message):
     ERROR_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    error: AuthenticationError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[AuthenticationError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class VerifyTokenRequest(_message.Message):
     __slots__ = ("tokenType", "token")
@@ -192,8 +202,8 @@ class ScopedAuthenticationResponse(_message.Message):
     code: int
     success: bool
     data: ScopedAuthentication
-    error: AuthenticationError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[ScopedAuthentication, _Mapping]] = ..., error: _Optional[_Union[AuthenticationError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[ScopedAuthentication, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class GetUserRequest(_message.Message):
     __slots__ = ()
@@ -257,16 +267,6 @@ class GetAllUserResponse(_message.Message):
     paginated: _common_pb2.Paginated
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[_common_pb2.User, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
 
-class OrganizationError(_message.Message):
-    __slots__ = ("errorCode", "errorMessage", "humanMessage")
-    ERRORCODE_FIELD_NUMBER: _ClassVar[int]
-    ERRORMESSAGE_FIELD_NUMBER: _ClassVar[int]
-    HUMANMESSAGE_FIELD_NUMBER: _ClassVar[int]
-    errorCode: int
-    errorMessage: str
-    humanMessage: str
-    def __init__(self, errorCode: _Optional[int] = ..., errorMessage: _Optional[str] = ..., humanMessage: _Optional[str] = ...) -> None: ...
-
 class CreateOrganizationRequest(_message.Message):
     __slots__ = ("organizationName", "organizationSize", "organizationIndustry", "organizationContact")
     ORGANIZATIONNAME_FIELD_NUMBER: _ClassVar[int]
@@ -306,8 +306,8 @@ class GetOrganizationResponse(_message.Message):
     success: bool
     data: _common_pb2.Organization
     role: OrganizationRole
-    error: OrganizationError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_common_pb2.Organization, _Mapping]] = ..., role: _Optional[_Union[OrganizationRole, _Mapping]] = ..., error: _Optional[_Union[OrganizationError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_common_pb2.Organization, _Mapping]] = ..., role: _Optional[_Union[OrganizationRole, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class CreateOrganizationResponse(_message.Message):
     __slots__ = ("code", "success", "data", "role", "error")
@@ -320,8 +320,8 @@ class CreateOrganizationResponse(_message.Message):
     success: bool
     data: _common_pb2.Organization
     role: OrganizationRole
-    error: OrganizationError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_common_pb2.Organization, _Mapping]] = ..., role: _Optional[_Union[OrganizationRole, _Mapping]] = ..., error: _Optional[_Union[OrganizationError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Union[_common_pb2.Organization, _Mapping]] = ..., role: _Optional[_Union[OrganizationRole, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class UpdateOrganizationResponse(_message.Message):
     __slots__ = ("code", "success", "error")
@@ -330,8 +330,8 @@ class UpdateOrganizationResponse(_message.Message):
     ERROR_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    error: OrganizationError
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[OrganizationError, _Mapping]] = ...) -> None: ...
+    error: _common_pb2.Error
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ...) -> None: ...
 
 class UpdateBillingInformationRequest(_message.Message):
     __slots__ = ("paymentMethod", "billingInterval", "taxInformation", "address", "email")
@@ -367,7 +367,7 @@ class Project(_message.Message):
     members: _containers.RepeatedCompositeFieldContainer[_common_pb2.User]
     status: str
     createdDate: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., members: _Optional[_Iterable[_Union[_common_pb2.User, _Mapping]]] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., members: _Optional[_Iterable[_Union[_common_pb2.User, _Mapping]]] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class CreateProjectRequest(_message.Message):
     __slots__ = ("projectName", "projectDescription")
@@ -515,7 +515,7 @@ class ProjectCredential(_message.Message):
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     createdUser: _common_pb2.User
-    def __init__(self, id: _Optional[int] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., name: _Optional[str] = ..., key: _Optional[str] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., name: _Optional[str] = ..., key: _Optional[str] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ...) -> None: ...
 
 class CreateProjectCredentialRequest(_message.Message):
     __slots__ = ("projectId", "name")

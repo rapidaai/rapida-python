@@ -6,11 +6,12 @@ import warnings
 import rapida.clients.protos.assistant_analysis_pb2 as assistant__analysis__pb2
 import rapida.clients.protos.assistant_api_pb2 as assistant__api__pb2
 import rapida.clients.protos.assistant_knowledge_pb2 as assistant__knowledge__pb2
+import rapida.clients.protos.assistant_provider_pb2 as assistant__provider__pb2
 import rapida.clients.protos.assistant_tool_pb2 as assistant__tool__pb2
 import rapida.clients.protos.assistant_webhook_pb2 as assistant__webhook__pb2
 import rapida.clients.protos.common_pb2 as common__pb2
 
-GRPC_GENERATED_VERSION = '1.72.1'
+GRPC_GENERATED_VERSION = '1.74.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -59,15 +60,15 @@ class AssistantServiceStub(object):
                 request_serializer=assistant__api__pb2.DeleteAssistantRequest.SerializeToString,
                 response_deserializer=assistant__api__pb2.GetAssistantResponse.FromString,
                 _registered_method=True)
-        self.GetAllAssistantProviderModel = channel.unary_unary(
-                '/assistant_api.AssistantService/GetAllAssistantProviderModel',
-                request_serializer=assistant__api__pb2.GetAllAssistantProviderModelRequest.SerializeToString,
-                response_deserializer=assistant__api__pb2.GetAllAssistantProviderModelResponse.FromString,
+        self.GetAllAssistantProvider = channel.unary_unary(
+                '/assistant_api.AssistantService/GetAllAssistantProvider',
+                request_serializer=assistant__provider__pb2.GetAllAssistantProviderRequest.SerializeToString,
+                response_deserializer=assistant__provider__pb2.GetAllAssistantProviderResponse.FromString,
                 _registered_method=True)
-        self.CreateAssistantProviderModel = channel.unary_unary(
-                '/assistant_api.AssistantService/CreateAssistantProviderModel',
-                request_serializer=assistant__api__pb2.CreateAssistantProviderModelRequest.SerializeToString,
-                response_deserializer=assistant__api__pb2.GetAssistantProviderModelResponse.FromString,
+        self.CreateAssistantProvider = channel.unary_unary(
+                '/assistant_api.AssistantService/CreateAssistantProvider',
+                request_serializer=assistant__provider__pb2.CreateAssistantProviderRequest.SerializeToString,
+                response_deserializer=assistant__provider__pb2.GetAssistantProviderResponse.FromString,
                 _registered_method=True)
         self.CreateAssistantTag = channel.unary_unary(
                 '/assistant_api.AssistantService/CreateAssistantTag',
@@ -76,7 +77,7 @@ class AssistantServiceStub(object):
                 _registered_method=True)
         self.UpdateAssistantVersion = channel.unary_unary(
                 '/assistant_api.AssistantService/UpdateAssistantVersion',
-                request_serializer=assistant__api__pb2.UpdateAssistantVersionRequest.SerializeToString,
+                request_serializer=assistant__provider__pb2.UpdateAssistantVersionRequest.SerializeToString,
                 response_deserializer=assistant__api__pb2.GetAssistantResponse.FromString,
                 _registered_method=True)
         self.UpdateAssistantDetail = channel.unary_unary(
@@ -98,6 +99,11 @@ class AssistantServiceStub(object):
                 '/assistant_api.AssistantService/GetAllMessage',
                 request_serializer=assistant__api__pb2.GetAllMessageRequest.SerializeToString,
                 response_deserializer=assistant__api__pb2.GetAllMessageResponse.FromString,
+                _registered_method=True)
+        self.GetAllAssistantTelemetry = channel.unary_unary(
+                '/assistant_api.AssistantService/GetAllAssistantTelemetry',
+                request_serializer=assistant__api__pb2.GetAllAssistantTelemetryRequest.SerializeToString,
+                response_deserializer=assistant__api__pb2.GetAllAssistantTelemetryResponse.FromString,
                 _registered_method=True)
         self.GetAllAssistantConversation = channel.unary_unary(
                 '/assistant_api.AssistantService/GetAllAssistantConversation',
@@ -258,13 +264,13 @@ class AssistantServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetAllAssistantProviderModel(self, request, context):
+    def GetAllAssistantProvider(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def CreateAssistantProviderModel(self, request, context):
+    def CreateAssistantProvider(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -301,6 +307,12 @@ class AssistantServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetAllMessage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetAllAssistantTelemetry(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -490,15 +502,15 @@ def add_AssistantServiceServicer_to_server(servicer, server):
                     request_deserializer=assistant__api__pb2.DeleteAssistantRequest.FromString,
                     response_serializer=assistant__api__pb2.GetAssistantResponse.SerializeToString,
             ),
-            'GetAllAssistantProviderModel': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAllAssistantProviderModel,
-                    request_deserializer=assistant__api__pb2.GetAllAssistantProviderModelRequest.FromString,
-                    response_serializer=assistant__api__pb2.GetAllAssistantProviderModelResponse.SerializeToString,
+            'GetAllAssistantProvider': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllAssistantProvider,
+                    request_deserializer=assistant__provider__pb2.GetAllAssistantProviderRequest.FromString,
+                    response_serializer=assistant__provider__pb2.GetAllAssistantProviderResponse.SerializeToString,
             ),
-            'CreateAssistantProviderModel': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateAssistantProviderModel,
-                    request_deserializer=assistant__api__pb2.CreateAssistantProviderModelRequest.FromString,
-                    response_serializer=assistant__api__pb2.GetAssistantProviderModelResponse.SerializeToString,
+            'CreateAssistantProvider': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateAssistantProvider,
+                    request_deserializer=assistant__provider__pb2.CreateAssistantProviderRequest.FromString,
+                    response_serializer=assistant__provider__pb2.GetAssistantProviderResponse.SerializeToString,
             ),
             'CreateAssistantTag': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateAssistantTag,
@@ -507,7 +519,7 @@ def add_AssistantServiceServicer_to_server(servicer, server):
             ),
             'UpdateAssistantVersion': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateAssistantVersion,
-                    request_deserializer=assistant__api__pb2.UpdateAssistantVersionRequest.FromString,
+                    request_deserializer=assistant__provider__pb2.UpdateAssistantVersionRequest.FromString,
                     response_serializer=assistant__api__pb2.GetAssistantResponse.SerializeToString,
             ),
             'UpdateAssistantDetail': grpc.unary_unary_rpc_method_handler(
@@ -529,6 +541,11 @@ def add_AssistantServiceServicer_to_server(servicer, server):
                     servicer.GetAllMessage,
                     request_deserializer=assistant__api__pb2.GetAllMessageRequest.FromString,
                     response_serializer=assistant__api__pb2.GetAllMessageResponse.SerializeToString,
+            ),
+            'GetAllAssistantTelemetry': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllAssistantTelemetry,
+                    request_deserializer=assistant__api__pb2.GetAllAssistantTelemetryRequest.FromString,
+                    response_serializer=assistant__api__pb2.GetAllAssistantTelemetryResponse.SerializeToString,
             ),
             'GetAllAssistantConversation': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllAssistantConversation,
@@ -780,7 +797,7 @@ class AssistantService(object):
             _registered_method=True)
 
     @staticmethod
-    def GetAllAssistantProviderModel(request,
+    def GetAllAssistantProvider(request,
             target,
             options=(),
             channel_credentials=None,
@@ -793,9 +810,9 @@ class AssistantService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/assistant_api.AssistantService/GetAllAssistantProviderModel',
-            assistant__api__pb2.GetAllAssistantProviderModelRequest.SerializeToString,
-            assistant__api__pb2.GetAllAssistantProviderModelResponse.FromString,
+            '/assistant_api.AssistantService/GetAllAssistantProvider',
+            assistant__provider__pb2.GetAllAssistantProviderRequest.SerializeToString,
+            assistant__provider__pb2.GetAllAssistantProviderResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -807,7 +824,7 @@ class AssistantService(object):
             _registered_method=True)
 
     @staticmethod
-    def CreateAssistantProviderModel(request,
+    def CreateAssistantProvider(request,
             target,
             options=(),
             channel_credentials=None,
@@ -820,9 +837,9 @@ class AssistantService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/assistant_api.AssistantService/CreateAssistantProviderModel',
-            assistant__api__pb2.CreateAssistantProviderModelRequest.SerializeToString,
-            assistant__api__pb2.GetAssistantProviderModelResponse.FromString,
+            '/assistant_api.AssistantService/CreateAssistantProvider',
+            assistant__provider__pb2.CreateAssistantProviderRequest.SerializeToString,
+            assistant__provider__pb2.GetAssistantProviderResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -875,7 +892,7 @@ class AssistantService(object):
             request,
             target,
             '/assistant_api.AssistantService/UpdateAssistantVersion',
-            assistant__api__pb2.UpdateAssistantVersionRequest.SerializeToString,
+            assistant__provider__pb2.UpdateAssistantVersionRequest.SerializeToString,
             assistant__api__pb2.GetAssistantResponse.FromString,
             options,
             channel_credentials,
@@ -985,6 +1002,33 @@ class AssistantService(object):
             '/assistant_api.AssistantService/GetAllMessage',
             assistant__api__pb2.GetAllMessageRequest.SerializeToString,
             assistant__api__pb2.GetAllMessageResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllAssistantTelemetry(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/assistant_api.AssistantService/GetAllAssistantTelemetry',
+            assistant__api__pb2.GetAllAssistantTelemetryRequest.SerializeToString,
+            assistant__api__pb2.GetAllAssistantTelemetryResponse.FromString,
             options,
             channel_credentials,
             insecure,

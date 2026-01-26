@@ -5,7 +5,7 @@ import warnings
 
 import rapida.clients.protos.connect_api_pb2 as connect__api__pb2
 
-GRPC_GENERATED_VERSION = '1.72.1'
+GRPC_GENERATED_VERSION = '1.74.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -34,20 +34,10 @@ class ConnectServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.KnowledgeConnect = channel.unary_unary(
-                '/connect_api.ConnectService/KnowledgeConnect',
-                request_serializer=connect__api__pb2.KnowledgeConnectRequest.SerializeToString,
-                response_deserializer=connect__api__pb2.KnowledgeConnectResponse.FromString,
-                _registered_method=True)
         self.GeneralConnect = channel.unary_unary(
                 '/connect_api.ConnectService/GeneralConnect',
                 request_serializer=connect__api__pb2.GeneralConnectRequest.SerializeToString,
                 response_deserializer=connect__api__pb2.GeneralConnectResponse.FromString,
-                _registered_method=True)
-        self.ActionConnect = channel.unary_unary(
-                '/connect_api.ConnectService/ActionConnect',
-                request_serializer=connect__api__pb2.ActionConnectRequest.SerializeToString,
-                response_deserializer=connect__api__pb2.ActionConnectResponse.FromString,
                 _registered_method=True)
         self.GetConnectorFiles = channel.unary_unary(
                 '/connect_api.ConnectService/GetConnectorFiles',
@@ -59,19 +49,7 @@ class ConnectServiceStub(object):
 class ConnectServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def KnowledgeConnect(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def GeneralConnect(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def ActionConnect(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -86,20 +64,10 @@ class ConnectServiceServicer(object):
 
 def add_ConnectServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'KnowledgeConnect': grpc.unary_unary_rpc_method_handler(
-                    servicer.KnowledgeConnect,
-                    request_deserializer=connect__api__pb2.KnowledgeConnectRequest.FromString,
-                    response_serializer=connect__api__pb2.KnowledgeConnectResponse.SerializeToString,
-            ),
             'GeneralConnect': grpc.unary_unary_rpc_method_handler(
                     servicer.GeneralConnect,
                     request_deserializer=connect__api__pb2.GeneralConnectRequest.FromString,
                     response_serializer=connect__api__pb2.GeneralConnectResponse.SerializeToString,
-            ),
-            'ActionConnect': grpc.unary_unary_rpc_method_handler(
-                    servicer.ActionConnect,
-                    request_deserializer=connect__api__pb2.ActionConnectRequest.FromString,
-                    response_serializer=connect__api__pb2.ActionConnectResponse.SerializeToString,
             ),
             'GetConnectorFiles': grpc.unary_unary_rpc_method_handler(
                     servicer.GetConnectorFiles,
@@ -118,33 +86,6 @@ class ConnectService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def KnowledgeConnect(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/connect_api.ConnectService/KnowledgeConnect',
-            connect__api__pb2.KnowledgeConnectRequest.SerializeToString,
-            connect__api__pb2.KnowledgeConnectResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def GeneralConnect(request,
             target,
             options=(),
@@ -161,33 +102,6 @@ class ConnectService(object):
             '/connect_api.ConnectService/GeneralConnect',
             connect__api__pb2.GeneralConnectRequest.SerializeToString,
             connect__api__pb2.GeneralConnectResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def ActionConnect(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/connect_api.ConnectService/ActionConnect',
-            connect__api__pb2.ActionConnectRequest.SerializeToString,
-            connect__api__pb2.ActionConnectResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -1,3 +1,6 @@
+import datetime
+
+from google.protobuf import any_pb2 as _any_pb2
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf import struct_pb2 as _struct_pb2
 from google.protobuf.internal import containers as _containers
@@ -27,6 +30,14 @@ class FieldSelector(_message.Message):
     FIELD_FIELD_NUMBER: _ClassVar[int]
     field: str
     def __init__(self, field: _Optional[str] = ...) -> None: ...
+
+class AssistantDefinition(_message.Message):
+    __slots__ = ("assistantId", "version")
+    ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
+    VERSION_FIELD_NUMBER: _ClassVar[int]
+    assistantId: int
+    version: str
+    def __init__(self, assistantId: _Optional[int] = ..., version: _Optional[str] = ...) -> None: ...
 
 class Criteria(_message.Message):
     __slots__ = ("key", "value", "logic")
@@ -86,7 +97,7 @@ class User(_message.Message):
     role: str
     createdDate: _timestamp_pb2.Timestamp
     status: str
-    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., email: _Optional[str] = ..., role: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., email: _Optional[str] = ..., role: _Optional[str] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., status: _Optional[str] = ...) -> None: ...
 
 class BaseResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")
@@ -138,26 +149,6 @@ class Variable(_message.Message):
     type: str
     defaultValue: str
     def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., type: _Optional[str] = ..., defaultValue: _Optional[str] = ...) -> None: ...
-
-class Provider(_message.Message):
-    __slots__ = ("id", "name", "description", "humanName", "image", "website", "status", "connectConfiguration")
-    ID_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
-    HUMANNAME_FIELD_NUMBER: _ClassVar[int]
-    IMAGE_FIELD_NUMBER: _ClassVar[int]
-    WEBSITE_FIELD_NUMBER: _ClassVar[int]
-    STATUS_FIELD_NUMBER: _ClassVar[int]
-    CONNECTCONFIGURATION_FIELD_NUMBER: _ClassVar[int]
-    id: int
-    name: str
-    description: str
-    humanName: str
-    image: str
-    website: str
-    status: str
-    connectConfiguration: _containers.RepeatedCompositeFieldContainer[Variable]
-    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., humanName: _Optional[str] = ..., image: _Optional[str] = ..., website: _Optional[str] = ..., status: _Optional[str] = ..., connectConfiguration: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
 
 class Tag(_message.Message):
     __slots__ = ("id", "tag")
@@ -235,6 +226,31 @@ class FunctionCall(_message.Message):
     arguments: str
     def __init__(self, name: _Optional[str] = ..., arguments: _Optional[str] = ...) -> None: ...
 
+class Telemetry(_message.Message):
+    __slots__ = ("stageName", "startTime", "endTime", "duration", "attributes", "spanID", "parentID")
+    class AttributesEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: str
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+    STAGENAME_FIELD_NUMBER: _ClassVar[int]
+    STARTTIME_FIELD_NUMBER: _ClassVar[int]
+    ENDTIME_FIELD_NUMBER: _ClassVar[int]
+    DURATION_FIELD_NUMBER: _ClassVar[int]
+    ATTRIBUTES_FIELD_NUMBER: _ClassVar[int]
+    SPANID_FIELD_NUMBER: _ClassVar[int]
+    PARENTID_FIELD_NUMBER: _ClassVar[int]
+    stageName: str
+    startTime: _timestamp_pb2.Timestamp
+    endTime: _timestamp_pb2.Timestamp
+    duration: int
+    attributes: _containers.ScalarMap[str, str]
+    spanID: str
+    parentID: str
+    def __init__(self, stageName: _Optional[str] = ..., startTime: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., endTime: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., duration: _Optional[int] = ..., attributes: _Optional[_Mapping[str, str]] = ..., spanID: _Optional[str] = ..., parentID: _Optional[str] = ...) -> None: ...
+
 class Knowledge(_message.Message):
     __slots__ = ("id", "name", "description", "visibility", "language", "embeddingModelProviderId", "embeddingModelProviderName", "knowledgeEmbeddingModelOptions", "status", "createdBy", "createdUser", "updatedBy", "updatedUser", "createdDate", "updatedDate", "organizationId", "projectId", "organization", "knowledgeTag", "documentCount", "tokenCount", "wordCount")
     ID_FIELD_NUMBER: _ClassVar[int]
@@ -281,7 +297,7 @@ class Knowledge(_message.Message):
     documentCount: int
     tokenCount: int
     wordCount: int
-    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., visibility: _Optional[str] = ..., language: _Optional[str] = ..., embeddingModelProviderId: _Optional[int] = ..., embeddingModelProviderName: _Optional[str] = ..., knowledgeEmbeddingModelOptions: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[User, _Mapping]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., organizationId: _Optional[int] = ..., projectId: _Optional[int] = ..., organization: _Optional[_Union[Organization, _Mapping]] = ..., knowledgeTag: _Optional[_Union[Tag, _Mapping]] = ..., documentCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., wordCount: _Optional[int] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., visibility: _Optional[str] = ..., language: _Optional[str] = ..., embeddingModelProviderId: _Optional[int] = ..., embeddingModelProviderName: _Optional[str] = ..., knowledgeEmbeddingModelOptions: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[User, _Mapping]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., organizationId: _Optional[int] = ..., projectId: _Optional[int] = ..., organization: _Optional[_Union[Organization, _Mapping]] = ..., knowledgeTag: _Optional[_Union[Tag, _Mapping]] = ..., documentCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., wordCount: _Optional[int] = ...) -> None: ...
 
 class TextPrompt(_message.Message):
     __slots__ = ("role", "content")
@@ -299,43 +315,18 @@ class TextChatCompletePrompt(_message.Message):
     promptVariables: _containers.RepeatedCompositeFieldContainer[Variable]
     def __init__(self, prompt: _Optional[_Iterable[_Union[TextPrompt, _Mapping]]] = ..., promptVariables: _Optional[_Iterable[_Union[Variable, _Mapping]]] = ...) -> None: ...
 
-class AssistantMessageStage(_message.Message):
-    __slots__ = ("stage", "additionalData", "timetaken", "lifecycleId", "startTimestamp", "endTimestamp")
-    class AdditionalDataEntry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
-    STAGE_FIELD_NUMBER: _ClassVar[int]
-    ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
-    TIMETAKEN_FIELD_NUMBER: _ClassVar[int]
-    LIFECYCLEID_FIELD_NUMBER: _ClassVar[int]
-    STARTTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
-    ENDTIMESTAMP_FIELD_NUMBER: _ClassVar[int]
-    stage: str
-    additionalData: _containers.ScalarMap[str, str]
-    timetaken: int
-    lifecycleId: str
-    startTimestamp: _timestamp_pb2.Timestamp
-    endTimestamp: _timestamp_pb2.Timestamp
-    def __init__(self, stage: _Optional[str] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., timetaken: _Optional[int] = ..., lifecycleId: _Optional[str] = ..., startTimestamp: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., endTimestamp: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
-
 class AssistantConversationMessage(_message.Message):
-    __slots__ = ("id", "messageId", "assistantConversationId", "request", "response", "source", "metrics", "status", "createdBy", "updatedBy", "suggestedQuestions", "stages", "createdDate", "updatedDate", "assistantId", "assistantProviderModelId", "metadata")
+    __slots__ = ("id", "messageId", "assistantConversationId", "role", "body", "source", "metrics", "status", "createdBy", "updatedBy", "createdDate", "updatedDate", "assistantId", "assistantProviderModelId", "metadata")
     ID_FIELD_NUMBER: _ClassVar[int]
     MESSAGEID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTCONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
-    REQUEST_FIELD_NUMBER: _ClassVar[int]
-    RESPONSE_FIELD_NUMBER: _ClassVar[int]
+    ROLE_FIELD_NUMBER: _ClassVar[int]
+    BODY_FIELD_NUMBER: _ClassVar[int]
     SOURCE_FIELD_NUMBER: _ClassVar[int]
     METRICS_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
     CREATEDBY_FIELD_NUMBER: _ClassVar[int]
     UPDATEDBY_FIELD_NUMBER: _ClassVar[int]
-    SUGGESTEDQUESTIONS_FIELD_NUMBER: _ClassVar[int]
-    STAGES_FIELD_NUMBER: _ClassVar[int]
     CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
     UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
@@ -344,21 +335,19 @@ class AssistantConversationMessage(_message.Message):
     id: int
     messageId: str
     assistantConversationId: int
-    request: Message
-    response: Message
+    role: str
+    body: str
     source: str
     metrics: _containers.RepeatedCompositeFieldContainer[Metric]
     status: str
     createdBy: int
     updatedBy: int
-    suggestedQuestions: _containers.RepeatedScalarFieldContainer[str]
-    stages: _containers.RepeatedCompositeFieldContainer[AssistantMessageStage]
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     assistantId: int
     assistantProviderModelId: int
     metadata: _containers.RepeatedCompositeFieldContainer[Metadata]
-    def __init__(self, id: _Optional[int] = ..., messageId: _Optional[str] = ..., assistantConversationId: _Optional[int] = ..., request: _Optional[_Union[Message, _Mapping]] = ..., response: _Optional[_Union[Message, _Mapping]] = ..., source: _Optional[str] = ..., metrics: _Optional[_Iterable[_Union[Metric, _Mapping]]] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., suggestedQuestions: _Optional[_Iterable[str]] = ..., stages: _Optional[_Iterable[_Union[AssistantMessageStage, _Mapping]]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., assistantId: _Optional[int] = ..., assistantProviderModelId: _Optional[int] = ..., metadata: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., messageId: _Optional[str] = ..., assistantConversationId: _Optional[int] = ..., role: _Optional[str] = ..., body: _Optional[str] = ..., source: _Optional[str] = ..., metrics: _Optional[_Iterable[_Union[Metric, _Mapping]]] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., assistantId: _Optional[int] = ..., assistantProviderModelId: _Optional[int] = ..., metadata: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ...) -> None: ...
 
 class AssistantConversationContext(_message.Message):
     __slots__ = ("id", "metadata", "result", "query")
@@ -378,8 +367,26 @@ class AssistantConversationRecording(_message.Message):
     recordingUrl: str
     def __init__(self, recordingUrl: _Optional[str] = ...) -> None: ...
 
+class AssistantConversationTelephonyEvent(_message.Message):
+    __slots__ = ("id", "assistantConversationId", "provider", "eventType", "payload", "createdDate", "updatedDate")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    ASSISTANTCONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
+    PROVIDER_FIELD_NUMBER: _ClassVar[int]
+    EVENTTYPE_FIELD_NUMBER: _ClassVar[int]
+    PAYLOAD_FIELD_NUMBER: _ClassVar[int]
+    CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
+    UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    assistantConversationId: int
+    provider: str
+    eventType: str
+    payload: _struct_pb2.Struct
+    createdDate: _timestamp_pb2.Timestamp
+    updatedDate: _timestamp_pb2.Timestamp
+    def __init__(self, id: _Optional[int] = ..., assistantConversationId: _Optional[int] = ..., provider: _Optional[str] = ..., eventType: _Optional[str] = ..., payload: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+
 class AssistantConversation(_message.Message):
-    __slots__ = ("id", "userId", "assistantId", "name", "projectId", "organizationId", "source", "createdBy", "updatedBy", "user", "assistantProviderModelId", "assistantConversationMessage", "identifier", "status", "createdDate", "updatedDate", "contexts", "metrics", "metadata", "arguments", "options", "direction", "recordings")
+    __slots__ = ("id", "userId", "assistantId", "name", "projectId", "organizationId", "source", "createdBy", "updatedBy", "user", "assistantProviderModelId", "assistantConversationMessage", "identifier", "status", "createdDate", "updatedDate", "contexts", "metrics", "metadata", "arguments", "options", "direction", "recordings", "telephonyEvents")
     ID_FIELD_NUMBER: _ClassVar[int]
     USERID_FIELD_NUMBER: _ClassVar[int]
     ASSISTANTID_FIELD_NUMBER: _ClassVar[int]
@@ -403,6 +410,7 @@ class AssistantConversation(_message.Message):
     OPTIONS_FIELD_NUMBER: _ClassVar[int]
     DIRECTION_FIELD_NUMBER: _ClassVar[int]
     RECORDINGS_FIELD_NUMBER: _ClassVar[int]
+    TELEPHONYEVENTS_FIELD_NUMBER: _ClassVar[int]
     id: int
     userId: int
     assistantId: int
@@ -426,7 +434,8 @@ class AssistantConversation(_message.Message):
     options: _containers.RepeatedCompositeFieldContainer[Metadata]
     direction: str
     recordings: _containers.RepeatedCompositeFieldContainer[AssistantConversationRecording]
-    def __init__(self, id: _Optional[int] = ..., userId: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., source: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., user: _Optional[_Union[User, _Mapping]] = ..., assistantProviderModelId: _Optional[int] = ..., assistantConversationMessage: _Optional[_Iterable[_Union[AssistantConversationMessage, _Mapping]]] = ..., identifier: _Optional[str] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., contexts: _Optional[_Iterable[_Union[AssistantConversationContext, _Mapping]]] = ..., metrics: _Optional[_Iterable[_Union[Metric, _Mapping]]] = ..., metadata: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., arguments: _Optional[_Iterable[_Union[Argument, _Mapping]]] = ..., options: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., direction: _Optional[str] = ..., recordings: _Optional[_Iterable[_Union[AssistantConversationRecording, _Mapping]]] = ...) -> None: ...
+    telephonyEvents: _containers.RepeatedCompositeFieldContainer[AssistantConversationTelephonyEvent]
+    def __init__(self, id: _Optional[int] = ..., userId: _Optional[int] = ..., assistantId: _Optional[int] = ..., name: _Optional[str] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., source: _Optional[str] = ..., createdBy: _Optional[int] = ..., updatedBy: _Optional[int] = ..., user: _Optional[_Union[User, _Mapping]] = ..., assistantProviderModelId: _Optional[int] = ..., assistantConversationMessage: _Optional[_Iterable[_Union[AssistantConversationMessage, _Mapping]]] = ..., identifier: _Optional[str] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., contexts: _Optional[_Iterable[_Union[AssistantConversationContext, _Mapping]]] = ..., metrics: _Optional[_Iterable[_Union[Metric, _Mapping]]] = ..., metadata: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., arguments: _Optional[_Iterable[_Union[Argument, _Mapping]]] = ..., options: _Optional[_Iterable[_Union[Metadata, _Mapping]]] = ..., direction: _Optional[str] = ..., recordings: _Optional[_Iterable[_Union[AssistantConversationRecording, _Mapping]]] = ..., telephonyEvents: _Optional[_Iterable[_Union[AssistantConversationTelephonyEvent, _Mapping]]] = ...) -> None: ...
 
 class GetAllAssistantConversationRequest(_message.Message):
     __slots__ = ("assistantId", "paginate", "criterias", "source")
@@ -483,3 +492,171 @@ class GetAllConversationMessageResponse(_message.Message):
     error: Error
     paginated: Paginated
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[AssistantConversationMessage, _Mapping]]] = ..., error: _Optional[_Union[Error, _Mapping]] = ..., paginated: _Optional[_Union[Paginated, _Mapping]] = ...) -> None: ...
+
+class AssistantConversationConfiguration(_message.Message):
+    __slots__ = ("assistantConversationId", "assistant", "time", "metadata", "args", "options", "inputConfig", "outputConfig")
+    class MetadataEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
+    class ArgsEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
+    class OptionsEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
+    ASSISTANTCONVERSATIONID_FIELD_NUMBER: _ClassVar[int]
+    ASSISTANT_FIELD_NUMBER: _ClassVar[int]
+    TIME_FIELD_NUMBER: _ClassVar[int]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    ARGS_FIELD_NUMBER: _ClassVar[int]
+    OPTIONS_FIELD_NUMBER: _ClassVar[int]
+    INPUTCONFIG_FIELD_NUMBER: _ClassVar[int]
+    OUTPUTCONFIG_FIELD_NUMBER: _ClassVar[int]
+    assistantConversationId: int
+    assistant: AssistantDefinition
+    time: _timestamp_pb2.Timestamp
+    metadata: _containers.MessageMap[str, _any_pb2.Any]
+    args: _containers.MessageMap[str, _any_pb2.Any]
+    options: _containers.MessageMap[str, _any_pb2.Any]
+    inputConfig: StreamConfig
+    outputConfig: StreamConfig
+    def __init__(self, assistantConversationId: _Optional[int] = ..., assistant: _Optional[_Union[AssistantDefinition, _Mapping]] = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ..., inputConfig: _Optional[_Union[StreamConfig, _Mapping]] = ..., outputConfig: _Optional[_Union[StreamConfig, _Mapping]] = ...) -> None: ...
+
+class AssistantConversationError(_message.Message):
+    __slots__ = ("error",)
+    ERROR_FIELD_NUMBER: _ClassVar[int]
+    error: Error
+    def __init__(self, error: _Optional[_Union[Error, _Mapping]] = ...) -> None: ...
+
+class StreamConfig(_message.Message):
+    __slots__ = ("audio", "text")
+    AUDIO_FIELD_NUMBER: _ClassVar[int]
+    TEXT_FIELD_NUMBER: _ClassVar[int]
+    audio: AudioConfig
+    text: TextConfig
+    def __init__(self, audio: _Optional[_Union[AudioConfig, _Mapping]] = ..., text: _Optional[_Union[TextConfig, _Mapping]] = ...) -> None: ...
+
+class AudioConfig(_message.Message):
+    __slots__ = ("sampleRate", "audioFormat", "channels")
+    class AudioFormat(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        LINEAR16: _ClassVar[AudioConfig.AudioFormat]
+        MuLaw8: _ClassVar[AudioConfig.AudioFormat]
+    LINEAR16: AudioConfig.AudioFormat
+    MuLaw8: AudioConfig.AudioFormat
+    SAMPLERATE_FIELD_NUMBER: _ClassVar[int]
+    AUDIOFORMAT_FIELD_NUMBER: _ClassVar[int]
+    CHANNELS_FIELD_NUMBER: _ClassVar[int]
+    sampleRate: int
+    audioFormat: AudioConfig.AudioFormat
+    channels: int
+    def __init__(self, sampleRate: _Optional[int] = ..., audioFormat: _Optional[_Union[AudioConfig.AudioFormat, str]] = ..., channels: _Optional[int] = ...) -> None: ...
+
+class TextConfig(_message.Message):
+    __slots__ = ("charset",)
+    CHARSET_FIELD_NUMBER: _ClassVar[int]
+    charset: str
+    def __init__(self, charset: _Optional[str] = ...) -> None: ...
+
+class AssistantConversationAction(_message.Message):
+    __slots__ = ("name", "action", "args")
+    class ActionType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        ACTION_UNSPECIFIED: _ClassVar[AssistantConversationAction.ActionType]
+        KNOWLEDGE_RETRIEVAL: _ClassVar[AssistantConversationAction.ActionType]
+        API_REQUEST: _ClassVar[AssistantConversationAction.ActionType]
+        ENDPOINT_CALL: _ClassVar[AssistantConversationAction.ActionType]
+        PUT_ON_HOLD: _ClassVar[AssistantConversationAction.ActionType]
+        END_CONVERSATION: _ClassVar[AssistantConversationAction.ActionType]
+        MCP_TOOL_CALL: _ClassVar[AssistantConversationAction.ActionType]
+    ACTION_UNSPECIFIED: AssistantConversationAction.ActionType
+    KNOWLEDGE_RETRIEVAL: AssistantConversationAction.ActionType
+    API_REQUEST: AssistantConversationAction.ActionType
+    ENDPOINT_CALL: AssistantConversationAction.ActionType
+    PUT_ON_HOLD: AssistantConversationAction.ActionType
+    END_CONVERSATION: AssistantConversationAction.ActionType
+    MCP_TOOL_CALL: AssistantConversationAction.ActionType
+    class ArgsEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: _any_pb2.Any
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    ACTION_FIELD_NUMBER: _ClassVar[int]
+    ARGS_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    action: AssistantConversationAction.ActionType
+    args: _containers.MessageMap[str, _any_pb2.Any]
+    def __init__(self, name: _Optional[str] = ..., action: _Optional[_Union[AssistantConversationAction.ActionType, str]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
+
+class AssistantConversationInterruption(_message.Message):
+    __slots__ = ("id", "type", "time")
+    class InterruptionType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        INTERRUPTION_TYPE_UNSPECIFIED: _ClassVar[AssistantConversationInterruption.InterruptionType]
+        INTERRUPTION_TYPE_VAD: _ClassVar[AssistantConversationInterruption.InterruptionType]
+        INTERRUPTION_TYPE_WORD: _ClassVar[AssistantConversationInterruption.InterruptionType]
+    INTERRUPTION_TYPE_UNSPECIFIED: AssistantConversationInterruption.InterruptionType
+    INTERRUPTION_TYPE_VAD: AssistantConversationInterruption.InterruptionType
+    INTERRUPTION_TYPE_WORD: AssistantConversationInterruption.InterruptionType
+    ID_FIELD_NUMBER: _ClassVar[int]
+    TYPE_FIELD_NUMBER: _ClassVar[int]
+    TIME_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    type: AssistantConversationInterruption.InterruptionType
+    time: _timestamp_pb2.Timestamp
+    def __init__(self, id: _Optional[str] = ..., type: _Optional[_Union[AssistantConversationInterruption.InterruptionType, str]] = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+
+class AssistantConversationMessageTextContent(_message.Message):
+    __slots__ = ("content",)
+    CONTENT_FIELD_NUMBER: _ClassVar[int]
+    content: str
+    def __init__(self, content: _Optional[str] = ...) -> None: ...
+
+class AssistantConversationMessageAudioContent(_message.Message):
+    __slots__ = ("content",)
+    CONTENT_FIELD_NUMBER: _ClassVar[int]
+    content: bytes
+    def __init__(self, content: _Optional[bytes] = ...) -> None: ...
+
+class AssistantConversationUserMessage(_message.Message):
+    __slots__ = ("audio", "text", "id", "completed", "time")
+    AUDIO_FIELD_NUMBER: _ClassVar[int]
+    TEXT_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    COMPLETED_FIELD_NUMBER: _ClassVar[int]
+    TIME_FIELD_NUMBER: _ClassVar[int]
+    audio: AssistantConversationMessageAudioContent
+    text: AssistantConversationMessageTextContent
+    id: str
+    completed: bool
+    time: _timestamp_pb2.Timestamp
+    def __init__(self, audio: _Optional[_Union[AssistantConversationMessageAudioContent, _Mapping]] = ..., text: _Optional[_Union[AssistantConversationMessageTextContent, _Mapping]] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+
+class AssistantConversationAssistantMessage(_message.Message):
+    __slots__ = ("audio", "text", "id", "completed", "time")
+    AUDIO_FIELD_NUMBER: _ClassVar[int]
+    TEXT_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    COMPLETED_FIELD_NUMBER: _ClassVar[int]
+    TIME_FIELD_NUMBER: _ClassVar[int]
+    audio: AssistantConversationMessageAudioContent
+    text: AssistantConversationMessageTextContent
+    id: str
+    completed: bool
+    time: _timestamp_pb2.Timestamp
+    def __init__(self, audio: _Optional[_Union[AssistantConversationMessageAudioContent, _Mapping]] = ..., text: _Optional[_Union[AssistantConversationMessageTextContent, _Mapping]] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...

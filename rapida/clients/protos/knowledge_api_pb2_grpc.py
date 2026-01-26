@@ -6,7 +6,7 @@ import warnings
 import rapida.clients.protos.common_pb2 as common__pb2
 import rapida.clients.protos.knowledge_api_pb2 as knowledge__api__pb2
 
-GRPC_GENERATED_VERSION = '1.72.1'
+GRPC_GENERATED_VERSION = '1.74.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 

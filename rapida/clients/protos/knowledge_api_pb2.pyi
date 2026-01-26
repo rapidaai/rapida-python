@@ -1,3 +1,5 @@
+import datetime
+
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
 from google.protobuf import struct_pb2 as _struct_pb2
@@ -11,22 +13,20 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CreateKnowledgeRequest(_message.Message):
-    __slots__ = ("name", "description", "tags", "visibility", "embeddingModelProviderId", "embeddingModelProviderName", "knowledgeEmbeddingModelOptions")
+    __slots__ = ("name", "description", "tags", "visibility", "embeddingModelProviderName", "knowledgeEmbeddingModelOptions")
     NAME_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     TAGS_FIELD_NUMBER: _ClassVar[int]
     VISIBILITY_FIELD_NUMBER: _ClassVar[int]
-    EMBEDDINGMODELPROVIDERID_FIELD_NUMBER: _ClassVar[int]
     EMBEDDINGMODELPROVIDERNAME_FIELD_NUMBER: _ClassVar[int]
     KNOWLEDGEEMBEDDINGMODELOPTIONS_FIELD_NUMBER: _ClassVar[int]
     name: str
     description: str
     tags: _containers.RepeatedScalarFieldContainer[str]
     visibility: str
-    embeddingModelProviderId: int
     embeddingModelProviderName: str
     knowledgeEmbeddingModelOptions: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metadata]
-    def __init__(self, name: _Optional[str] = ..., description: _Optional[str] = ..., tags: _Optional[_Iterable[str]] = ..., visibility: _Optional[str] = ..., embeddingModelProviderId: _Optional[int] = ..., embeddingModelProviderName: _Optional[str] = ..., knowledgeEmbeddingModelOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ...) -> None: ...
+    def __init__(self, name: _Optional[str] = ..., description: _Optional[str] = ..., tags: _Optional[_Iterable[str]] = ..., visibility: _Optional[str] = ..., embeddingModelProviderName: _Optional[str] = ..., knowledgeEmbeddingModelOptions: _Optional[_Iterable[_Union[_common_pb2.Metadata, _Mapping]]] = ...) -> None: ...
 
 class CreateKnowledgeResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")
@@ -132,7 +132,7 @@ class KnowledgeDocument(_message.Message):
     updatedUser: _common_pb2.User
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[int] = ..., knowledgeId: _Optional[int] = ..., language: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., documentSource: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., documentType: _Optional[str] = ..., documentSize: _Optional[int] = ..., documentPath: _Optional[str] = ..., indexStatus: _Optional[str] = ..., retrievalCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., wordCount: _Optional[int] = ..., DisplayStatus: _Optional[str] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., knowledgeId: _Optional[int] = ..., language: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., documentSource: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., documentType: _Optional[str] = ..., documentSize: _Optional[int] = ..., documentPath: _Optional[str] = ..., indexStatus: _Optional[str] = ..., retrievalCount: _Optional[int] = ..., tokenCount: _Optional[int] = ..., wordCount: _Optional[int] = ..., DisplayStatus: _Optional[str] = ..., status: _Optional[str] = ..., createdBy: _Optional[int] = ..., createdUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., updatedBy: _Optional[int] = ..., updatedUser: _Optional[_Union[_common_pb2.User, _Mapping]] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class GetAllKnowledgeDocumentRequest(_message.Message):
     __slots__ = ("knowledgeId", "paginate", "criterias")
@@ -425,4 +425,4 @@ class KnowledgeLog(_message.Message):
     retrievalMethod: str
     timeTaken: int
     additionalData: _containers.ScalarMap[str, str]
-    def __init__(self, id: _Optional[int] = ..., action: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., request: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., response: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., knowledgeId: _Optional[int] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., topK: _Optional[int] = ..., scoreThreshold: _Optional[float] = ..., documentCount: _Optional[int] = ..., assetPrefix: _Optional[str] = ..., retrievalMethod: _Optional[str] = ..., timeTaken: _Optional[int] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., action: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., request: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., response: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., knowledgeId: _Optional[int] = ..., projectId: _Optional[int] = ..., organizationId: _Optional[int] = ..., topK: _Optional[int] = ..., scoreThreshold: _Optional[float] = ..., documentCount: _Optional[int] = ..., assetPrefix: _Optional[str] = ..., retrievalMethod: _Optional[str] = ..., timeTaken: _Optional[int] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...

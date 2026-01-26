@@ -1,3 +1,5 @@
+import datetime
+
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf import struct_pb2 as _struct_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
@@ -10,15 +12,13 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class VaultCredential(_message.Message):
-    __slots__ = ("id", "name", "value", "status", "vaultLevel", "vaultLevelId", "vaultType", "vaultTypeId", "createdDate", "updatedDate", "lastUsedDate")
+    __slots__ = ("id", "name", "value", "status", "provider", "organizationId", "createdDate", "updatedDate", "lastUsedDate")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     VALUE_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
-    VAULTLEVEL_FIELD_NUMBER: _ClassVar[int]
-    VAULTLEVELID_FIELD_NUMBER: _ClassVar[int]
-    VAULTTYPE_FIELD_NUMBER: _ClassVar[int]
-    VAULTTYPEID_FIELD_NUMBER: _ClassVar[int]
+    PROVIDER_FIELD_NUMBER: _ClassVar[int]
+    ORGANIZATIONID_FIELD_NUMBER: _ClassVar[int]
     CREATEDDATE_FIELD_NUMBER: _ClassVar[int]
     UPDATEDDATE_FIELD_NUMBER: _ClassVar[int]
     LASTUSEDDATE_FIELD_NUMBER: _ClassVar[int]
@@ -26,38 +26,22 @@ class VaultCredential(_message.Message):
     name: str
     value: _struct_pb2.Struct
     status: str
-    vaultLevel: str
-    vaultLevelId: int
-    vaultType: str
-    vaultTypeId: int
+    provider: str
+    organizationId: int
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
     lastUsedDate: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., value: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., status: _Optional[str] = ..., vaultLevel: _Optional[str] = ..., vaultLevelId: _Optional[int] = ..., vaultType: _Optional[str] = ..., vaultTypeId: _Optional[int] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., lastUsedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., value: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., status: _Optional[str] = ..., provider: _Optional[str] = ..., organizationId: _Optional[int] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., lastUsedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class CreateProviderCredentialRequest(_message.Message):
-    __slots__ = ("providerId", "credential", "name", "providerName")
-    PROVIDERID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("credential", "name", "provider")
     CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
-    PROVIDERNAME_FIELD_NUMBER: _ClassVar[int]
-    providerId: int
+    PROVIDER_FIELD_NUMBER: _ClassVar[int]
     credential: _struct_pb2.Struct
     name: str
-    providerName: str
-    def __init__(self, providerId: _Optional[int] = ..., credential: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., name: _Optional[str] = ..., providerName: _Optional[str] = ...) -> None: ...
-
-class CreateToolCredentialRequest(_message.Message):
-    __slots__ = ("toolId", "credential", "name", "toolName")
-    TOOLID_FIELD_NUMBER: _ClassVar[int]
-    CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    TOOLNAME_FIELD_NUMBER: _ClassVar[int]
-    toolId: int
-    credential: _struct_pb2.Struct
-    name: str
-    toolName: str
-    def __init__(self, toolId: _Optional[int] = ..., credential: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., name: _Optional[str] = ..., toolName: _Optional[str] = ...) -> None: ...
+    provider: str
+    def __init__(self, credential: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., name: _Optional[str] = ..., provider: _Optional[str] = ...) -> None: ...
 
 class DeleteCredentialRequest(_message.Message):
     __slots__ = ("vaultId",)
@@ -86,14 +70,6 @@ class GetAllOrganizationCredentialResponse(_message.Message):
     error: _common_pb2.Error
     paginated: _common_pb2.Paginated
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., data: _Optional[_Iterable[_Union[VaultCredential, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., paginated: _Optional[_Union[_common_pb2.Paginated, _Mapping]] = ...) -> None: ...
-
-class GetProviderCredentialRequest(_message.Message):
-    __slots__ = ("providerId", "organizationId")
-    PROVIDERID_FIELD_NUMBER: _ClassVar[int]
-    ORGANIZATIONID_FIELD_NUMBER: _ClassVar[int]
-    providerId: int
-    organizationId: int
-    def __init__(self, providerId: _Optional[int] = ..., organizationId: _Optional[int] = ...) -> None: ...
 
 class GetCredentialResponse(_message.Message):
     __slots__ = ("code", "success", "data", "error")
