@@ -58,7 +58,7 @@ jobs:
       - name: Get version and create tag
         id: version
         run: |
-          VERSION="0.1.$(date +%Y%m%d)-$(git rev-parse --short HEAD)"
+          VERSION=$(grep -m1 'version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
           echo "TAG_NAME=v${VERSION}" >> $GITHUB_OUTPUT
           if git tag -l "v${VERSION}" | grep -q "v${VERSION}"; then
