@@ -260,6 +260,7 @@ from rapida.clients.protos.common_pb2 import (
     AssistantConversationConfiguration,
     AssistantConversationInterruption,
     AssistantConversationUserMessage,
+    AssistantConversationAction,
     AssistantConversationAssistantMessage,
 )
 from rapida.clients.protos.assistant_webhook_pb2 import (
@@ -734,4 +735,5 @@ __all__ = [
     "AgentKitServicer",
     "TalkServiceServicer",
     "add_AgentKitServicer_to_server",
+    "AssistantConversationAction",
 ]
