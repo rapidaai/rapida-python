@@ -51,12 +51,10 @@ from rapida.clients.protos.document_api_pb2_grpc import DocumentServiceStub
 from rapida.clients.protos.vault_api_pb2_grpc import VaultServiceStub
 from rapida.clients.protos.endpoint_api_pb2_grpc import EndpointServiceStub
 from rapida.clients.protos.audit_logging_api_pb2_grpc import AuditLoggingServiceStub
-from rapida.clients.protos.marketplace_api_pb2_grpc import MarketplaceServiceStub
 from rapida.clients.protos.assistant_deployment_pb2_grpc import (
     AssistantDeploymentServiceStub,
 )
 from rapida.clients.protos.connect_api_pb2_grpc import ConnectServiceStub
-from rapida.clients.protos.provider_api_pb2_grpc import ProviderServiceStub
 import grpc
 
 
@@ -145,10 +143,6 @@ class ConnectionConfig:
         return DeploymentStub(self._create_channel(self._endpoint["endpoint"]))
 
     @property
-    def marketplace_client(self):
-        return MarketplaceServiceStub(self._create_channel(self._endpoint["web"]))
-
-    @property
     def document_client(self):
         return DocumentServiceStub(self._create_channel(self._endpoint["web"]))
 
@@ -177,10 +171,6 @@ class ConnectionConfig:
     @property
     def connect_client(self):
         return ConnectServiceStub(self._create_channel(self._endpoint["web"]))
-
-    @property
-    def provider_client(self):
-        return ProviderServiceStub(self._create_channel(self._endpoint["web"]))
 
     @property
     def authentication_client(self):
