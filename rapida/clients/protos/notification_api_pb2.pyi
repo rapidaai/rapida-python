@@ -1,5 +1,3 @@
-import datetime
-
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
 from google.protobuf.internal import containers as _containers
@@ -28,7 +26,7 @@ class NotificationSetting(_message.Message):
     status: str
     createdDate: _timestamp_pb2.Timestamp
     updatedDate: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[int] = ..., authUserId: _Optional[int] = ..., channel: _Optional[str] = ..., eventType: _Optional[str] = ..., enabled: bool = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., authUserId: _Optional[int] = ..., channel: _Optional[str] = ..., eventType: _Optional[str] = ..., enabled: bool = ..., status: _Optional[str] = ..., createdDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updatedDate: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class UpdateNotificationSettingRequest(_message.Message):
     __slots__ = ("settings",)
