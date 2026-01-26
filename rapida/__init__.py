@@ -387,29 +387,29 @@ from rapida.clients.protos.knowledge_api_pb2 import (
 )
 from rapida.clients.protos.assistant_api_pb2 import (
     Assistant,
-    AssistantProviderModel,
     CreateAssistantRequest,
-    CreateAssistantProviderModelRequest,
-    GetAssistantProviderModelResponse,
     CreateAssistantTagRequest,
     GetAssistantRequest,
     DeleteAssistantRequest,
     GetAssistantResponse,
     GetAllAssistantRequest,
     GetAllAssistantResponse,
-    GetAllAssistantProviderModelRequest,
-    GetAllAssistantProviderModelResponse,
     GetAllAssistantMessageRequest,
     GetAllAssistantMessageResponse,
     GetAllMessageRequest,
     GetAllMessageResponse,
-    UpdateAssistantVersionRequest,
     UpdateAssistantDetailRequest,
     GetAssistantConversationRequest,
     GetAssistantConversationResponse,
 )
 
-from rapida.clients.protos.talk_api_pb2_grpc import AgentKitStub, AgentKit, AgentKitServicer, add_AgentKitServicer_to_server
+from rapida.clients.protos.talk_api_pb2_grpc import (
+    TalkServiceServicer, 
+    AgentKitStub,
+    AgentKit,
+    AgentKitServicer,
+    add_AgentKitServicer_to_server,
+    )
 
 __all__ = [
     "Any",
@@ -729,23 +729,17 @@ __all__ = [
     "UpdateKnowledgeDocumentSegmentRequest",
     "DeleteKnowledgeDocumentSegmentRequest",
     "Assistant",
-    "AssistantProviderModel",
     "CreateAssistantRequest",
-    "CreateAssistantProviderModelRequest",
-    "GetAssistantProviderModelResponse",
     "CreateAssistantTagRequest",
     "GetAssistantRequest",
     "DeleteAssistantRequest",
     "GetAssistantResponse",
     "GetAllAssistantRequest",
     "GetAllAssistantResponse",
-    "GetAllAssistantProviderModelRequest",
-    "GetAllAssistantProviderModelResponse",
     "GetAllAssistantMessageRequest",
     "GetAllAssistantMessageResponse",
     "GetAllMessageRequest",
     "GetAllMessageResponse",
-    "UpdateAssistantVersionRequest",
     "UpdateAssistantDetailRequest",
     "GetAssistantConversationRequest",
     "GetAssistantConversationResponse",
@@ -754,5 +748,6 @@ __all__ = [
     "AgentKitStub",
     "AgentKit",
     "AgentKitServicer",
+    "TalkServiceServicer",
     "add_AgentKitServicer_to_server",
 ]
