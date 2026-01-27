@@ -569,23 +569,21 @@ class TextConfig(_message.Message):
     def __init__(self, charset: _Optional[str] = ...) -> None: ...
 
 class AssistantConversationAction(_message.Message):
-    __slots__ = ("name", "action", "args")
+    __slots__ = ("id", "name", "action", "args", "time")
     class ActionType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         ACTION_UNSPECIFIED: _ClassVar[AssistantConversationAction.ActionType]
         KNOWLEDGE_RETRIEVAL: _ClassVar[AssistantConversationAction.ActionType]
         API_REQUEST: _ClassVar[AssistantConversationAction.ActionType]
-        ENDPOINT_CALL: _ClassVar[AssistantConversationAction.ActionType]
-        PUT_ON_HOLD: _ClassVar[AssistantConversationAction.ActionType]
+        ENDPOINT_REQUEST: _ClassVar[AssistantConversationAction.ActionType]
         END_CONVERSATION: _ClassVar[AssistantConversationAction.ActionType]
-        MCP_TOOL_CALL: _ClassVar[AssistantConversationAction.ActionType]
+        TRANSFER_CONVERSATION: _ClassVar[AssistantConversationAction.ActionType]
     ACTION_UNSPECIFIED: AssistantConversationAction.ActionType
     KNOWLEDGE_RETRIEVAL: AssistantConversationAction.ActionType
     API_REQUEST: AssistantConversationAction.ActionType
-    ENDPOINT_CALL: AssistantConversationAction.ActionType
-    PUT_ON_HOLD: AssistantConversationAction.ActionType
+    ENDPOINT_REQUEST: AssistantConversationAction.ActionType
     END_CONVERSATION: AssistantConversationAction.ActionType
-    MCP_TOOL_CALL: AssistantConversationAction.ActionType
+    TRANSFER_CONVERSATION: AssistantConversationAction.ActionType
     class ArgsEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -593,13 +591,17 @@ class AssistantConversationAction(_message.Message):
         key: str
         value: _any_pb2.Any
         def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
+    ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     ACTION_FIELD_NUMBER: _ClassVar[int]
     ARGS_FIELD_NUMBER: _ClassVar[int]
+    TIME_FIELD_NUMBER: _ClassVar[int]
+    id: str
     name: str
     action: AssistantConversationAction.ActionType
     args: _containers.MessageMap[str, _any_pb2.Any]
-    def __init__(self, name: _Optional[str] = ..., action: _Optional[_Union[AssistantConversationAction.ActionType, str]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
+    time: _timestamp_pb2.Timestamp
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., action: _Optional[_Union[AssistantConversationAction.ActionType, str]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class AssistantConversationInterruption(_message.Message):
     __slots__ = ("id", "type", "time")
