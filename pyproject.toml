@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rapida-python"
-version = "0.1.24"
+version = "0.1.25"
 description = "RapidaAI SDK to integrate rapida.ai APIs"
 readme = "README.md"
 authors = [{name = "RapidaAI", email = "code@rapida.ai"}]
@@ -45,12 +45,12 @@ Source = "https://github.com/rapidaai/rapida-python"
 [tool.setuptools]
 packages = [
     "rapida",
+    "rapida.agentkit",
     "rapida.clients",
     "rapida.clients.protos",
     "rapida.configs",
     "rapida.connections",
     "rapida.utils"
-    # Add any other packages that should be included
 ]
 
 [tool.setuptools.package-data]

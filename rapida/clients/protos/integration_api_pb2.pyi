@@ -124,14 +124,14 @@ class EmbeddingResponse(_message.Message):
     def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[int] = ..., data: _Optional[_Iterable[_Union[Embedding, _Mapping]]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ...) -> None: ...
 
 class Reranking(_message.Message):
-    __slots__ = ("index", "content", "RelevanceScore")
+    __slots__ = ("index", "content", "relevanceScore")
     INDEX_FIELD_NUMBER: _ClassVar[int]
     CONTENT_FIELD_NUMBER: _ClassVar[int]
     RELEVANCESCORE_FIELD_NUMBER: _ClassVar[int]
     index: int
-    content: _common_pb2.Content
-    RelevanceScore: float
-    def __init__(self, index: _Optional[int] = ..., content: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., RelevanceScore: _Optional[float] = ...) -> None: ...
+    content: str
+    relevanceScore: float
+    def __init__(self, index: _Optional[int] = ..., content: _Optional[str] = ..., relevanceScore: _Optional[float] = ...) -> None: ...
 
 class RerankingRequest(_message.Message):
     __slots__ = ("credential", "query", "content", "modelParameters", "additionalData")
@@ -140,8 +140,8 @@ class RerankingRequest(_message.Message):
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
         key: int
-        value: _common_pb2.Content
-        def __init__(self, key: _Optional[int] = ..., value: _Optional[_Union[_common_pb2.Content, _Mapping]] = ...) -> None: ...
+        value: str
+        def __init__(self, key: _Optional[int] = ..., value: _Optional[str] = ...) -> None: ...
     class ModelParametersEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -163,10 +163,10 @@ class RerankingRequest(_message.Message):
     ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
     credential: Credential
     query: str
-    content: _containers.MessageMap[int, _common_pb2.Content]
+    content: _containers.ScalarMap[int, str]
     modelParameters: _containers.MessageMap[str, _any_pb2.Any]
     additionalData: _containers.ScalarMap[str, str]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., query: _Optional[str] = ..., content: _Optional[_Mapping[int, _common_pb2.Content]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., query: _Optional[str] = ..., content: _Optional[_Mapping[int, str]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ..., additionalData: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class RerankingResponse(_message.Message):
     __slots__ = ("code", "success", "requestId", "data", "error", "metrics")
@@ -283,10 +283,10 @@ class GetModerationRequest(_message.Message):
     credential: Credential
     model: str
     version: str
-    content: _common_pb2.Content
+    content: str
     additionalData: _containers.ScalarMap[str, str]
     modelParameters: _containers.MessageMap[str, _any_pb2.Any]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., content: _Optional[_Union[_common_pb2.Content, _Mapping]] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
+    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., model: _Optional[str] = ..., version: _Optional[str] = ..., content: _Optional[str] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ...) -> None: ...
 
 class GetModerationResponse(_message.Message):
     __slots__ = ("code", "success", "requestId", "data", "error", "metrics")
