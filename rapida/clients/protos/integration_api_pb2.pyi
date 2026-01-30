@@ -195,15 +195,15 @@ class ChatResponse(_message.Message):
     FINISHREASON_FIELD_NUMBER: _ClassVar[int]
     code: int
     success: bool
-    requestId: int
+    requestId: str
     data: _common_pb2.Message
     error: _common_pb2.Error
     metrics: _containers.RepeatedCompositeFieldContainer[_common_pb2.Metric]
     finishReason: str
-    def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[int] = ..., data: _Optional[_Union[_common_pb2.Message, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ..., finishReason: _Optional[str] = ...) -> None: ...
+    def __init__(self, code: _Optional[int] = ..., success: bool = ..., requestId: _Optional[str] = ..., data: _Optional[_Union[_common_pb2.Message, _Mapping]] = ..., error: _Optional[_Union[_common_pb2.Error, _Mapping]] = ..., metrics: _Optional[_Iterable[_Union[_common_pb2.Metric, _Mapping]]] = ..., finishReason: _Optional[str] = ...) -> None: ...
 
 class ChatRequest(_message.Message):
-    __slots__ = ("credential", "conversations", "additionalData", "modelParameters", "toolDefinitions")
+    __slots__ = ("credential", "requestId", "conversations", "additionalData", "modelParameters", "toolDefinitions")
     class AdditionalDataEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -219,16 +219,18 @@ class ChatRequest(_message.Message):
         value: _any_pb2.Any
         def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
     CREDENTIAL_FIELD_NUMBER: _ClassVar[int]
+    REQUESTID_FIELD_NUMBER: _ClassVar[int]
     CONVERSATIONS_FIELD_NUMBER: _ClassVar[int]
     ADDITIONALDATA_FIELD_NUMBER: _ClassVar[int]
     MODELPARAMETERS_FIELD_NUMBER: _ClassVar[int]
     TOOLDEFINITIONS_FIELD_NUMBER: _ClassVar[int]
     credential: Credential
+    requestId: str
     conversations: _containers.RepeatedCompositeFieldContainer[_common_pb2.Message]
     additionalData: _containers.ScalarMap[str, str]
     modelParameters: _containers.MessageMap[str, _any_pb2.Any]
     toolDefinitions: _containers.RepeatedCompositeFieldContainer[ToolDefinition]
-    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., conversations: _Optional[_Iterable[_Union[_common_pb2.Message, _Mapping]]] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ..., toolDefinitions: _Optional[_Iterable[_Union[ToolDefinition, _Mapping]]] = ...) -> None: ...
+    def __init__(self, credential: _Optional[_Union[Credential, _Mapping]] = ..., requestId: _Optional[str] = ..., conversations: _Optional[_Iterable[_Union[_common_pb2.Message, _Mapping]]] = ..., additionalData: _Optional[_Mapping[str, str]] = ..., modelParameters: _Optional[_Mapping[str, _any_pb2.Any]] = ..., toolDefinitions: _Optional[_Iterable[_Union[ToolDefinition, _Mapping]]] = ...) -> None: ...
 
 class VerifyCredentialRequest(_message.Message):
     __slots__ = ("credential",)

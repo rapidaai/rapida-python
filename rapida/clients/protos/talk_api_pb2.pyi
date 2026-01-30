@@ -1,3 +1,5 @@
+import datetime
+
 from google.protobuf import any_pb2 as _any_pb2
 import rapida.clients.protos.common_pb2 as _common_pb2
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
@@ -29,7 +31,7 @@ class ConversationToolCall(_message.Message):
     name: str
     args: _containers.MessageMap[str, _any_pb2.Any]
     time: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[str] = ..., toolId: _Optional[str] = ..., name: _Optional[str] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., toolId: _Optional[str] = ..., name: _Optional[str] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class ConversationToolResult(_message.Message):
     __slots__ = ("id", "toolId", "name", "args", "success", "time")
@@ -52,7 +54,7 @@ class ConversationToolResult(_message.Message):
     args: _containers.MessageMap[str, _any_pb2.Any]
     success: bool
     time: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[str] = ..., toolId: _Optional[str] = ..., name: _Optional[str] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., success: bool = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., toolId: _Optional[str] = ..., name: _Optional[str] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., success: bool = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class ConversationDirective(_message.Message):
     __slots__ = ("id", "type", "args", "time")
@@ -85,7 +87,7 @@ class ConversationDirective(_message.Message):
     type: ConversationDirective.DirectiveType
     args: _containers.MessageMap[str, _any_pb2.Any]
     time: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[str] = ..., type: _Optional[_Union[ConversationDirective.DirectiveType, str]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., type: _Optional[_Union[ConversationDirective.DirectiveType, str]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class ConversationConfiguration(_message.Message):
     __slots__ = ("assistantConversationId", "assistant", "time", "metadata", "args", "options", "inputConfig", "outputConfig")
@@ -126,7 +128,7 @@ class ConversationConfiguration(_message.Message):
     options: _containers.MessageMap[str, _any_pb2.Any]
     inputConfig: StreamConfig
     outputConfig: StreamConfig
-    def __init__(self, assistantConversationId: _Optional[int] = ..., assistant: _Optional[_Union[_common_pb2.AssistantDefinition, _Mapping]] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ..., inputConfig: _Optional[_Union[StreamConfig, _Mapping]] = ..., outputConfig: _Optional[_Union[StreamConfig, _Mapping]] = ...) -> None: ...
+    def __init__(self, assistantConversationId: _Optional[int] = ..., assistant: _Optional[_Union[_common_pb2.AssistantDefinition, _Mapping]] = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., metadata: _Optional[_Mapping[str, _any_pb2.Any]] = ..., args: _Optional[_Mapping[str, _any_pb2.Any]] = ..., options: _Optional[_Mapping[str, _any_pb2.Any]] = ..., inputConfig: _Optional[_Union[StreamConfig, _Mapping]] = ..., outputConfig: _Optional[_Union[StreamConfig, _Mapping]] = ...) -> None: ...
 
 class StreamConfig(_message.Message):
     __slots__ = ("audio", "text")
@@ -174,7 +176,7 @@ class ConversationInterruption(_message.Message):
     id: str
     type: ConversationInterruption.InterruptionType
     time: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[str] = ..., type: _Optional[_Union[ConversationInterruption.InterruptionType, str]] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., type: _Optional[_Union[ConversationInterruption.InterruptionType, str]] = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class ConversationAssistantMessage(_message.Message):
     __slots__ = ("audio", "text", "id", "completed", "time")
@@ -188,7 +190,7 @@ class ConversationAssistantMessage(_message.Message):
     id: str
     completed: bool
     time: _timestamp_pb2.Timestamp
-    def __init__(self, audio: _Optional[bytes] = ..., text: _Optional[str] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, audio: _Optional[bytes] = ..., text: _Optional[str] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class ConversationUserMessage(_message.Message):
     __slots__ = ("audio", "text", "id", "completed", "time")
@@ -202,7 +204,7 @@ class ConversationUserMessage(_message.Message):
     id: str
     completed: bool
     time: _timestamp_pb2.Timestamp
-    def __init__(self, audio: _Optional[bytes] = ..., text: _Optional[str] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, audio: _Optional[bytes] = ..., text: _Optional[str] = ..., id: _Optional[str] = ..., completed: bool = ..., time: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class AssistantTalkInput(_message.Message):
     __slots__ = ("configuration", "message")

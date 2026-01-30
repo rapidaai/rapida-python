@@ -25,18 +25,28 @@ Pytest configuration and shared fixtures for Rapida tests.
 import sys
 import os
 from unittest.mock import Mock, MagicMock
+from types import ModuleType
 
 import pytest
 
 # Add the rapida module path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+# Import the actual protos package first to ensure it's registered as a package
+import rapida.clients.protos
 
 # Mock missing protobuf modules before any rapida imports
 # These mocks need to be set up before the modules are imported
-sys.modules['rapida.clients.protos.marketplace_api_pb2_grpc'] = MagicMock()
-sys.modules['rapida.clients.protos.marketplace_api_pb2'] = MagicMock()
-sys.modules['rapida.clients.protos.provider_api_pb2_grpc'] = MagicMock()
-sys.modules['rapida.clients.protos.provider_api_pb2'] = MagicMock()
+# Use ModuleType-based mocks to avoid breaking the package structure
+_mock_marketplace_grpc = MagicMock(spec=ModuleType)
+_mock_marketplace_pb2 = MagicMock(spec=ModuleType)
+_mock_provider_grpc = MagicMock(spec=ModuleType)
+_mock_provider_pb2 = MagicMock(spec=ModuleType)
+
+sys.modules["rapida.clients.protos.marketplace_api_pb2_grpc"] = _mock_marketplace_grpc
+sys.modules["rapida.clients.protos.marketplace_api_pb2"] = _mock_marketplace_pb2
+sys.modules["rapida.clients.protos.provider_api_pb2_grpc"] = _mock_provider_grpc
+sys.modules["rapida.clients.protos.provider_api_pb2"] = _mock_provider_pb2
 
 
 @pytest.fixture
