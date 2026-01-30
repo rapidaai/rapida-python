@@ -109,7 +109,6 @@ from rapida.clients.protos.common_pb2 import (
     Tag,
     Organization,
     Metric,
-    Content,
     Message as ProtoMessage,
     ToolCall,
     FunctionCall,
@@ -123,14 +122,7 @@ from rapida.clients.protos.common_pb2 import (
     GetAllAssistantConversationResponse,
     GetAllConversationMessageRequest,
     GetAllConversationMessageResponse,
-    AssistantConversationMessageTextContent,
-    AssistantConversationMessageAudioContent,
     AssistantDefinition,
-    AssistantConversationConfiguration,
-    AssistantConversationInterruption,
-    AssistantConversationUserMessage,
-    AssistantConversationAction,
-    AssistantConversationAssistantMessage,
 )
 
 # Now import other protos that may depend on common_pb2
@@ -162,8 +154,6 @@ from rapida.clients.protos.vault_api_pb2 import (
     GetAllOrganizationCredentialRequest,
 )
 from rapida.clients.protos.talk_api_pb2 import (
-    AssistantMessagingRequest,
-    AssistantMessagingResponse,
     CreateMessageMetricRequest,
     CreateMessageMetricResponse,
     CreateConversationMetricRequest,
@@ -172,6 +162,17 @@ from rapida.clients.protos.talk_api_pb2 import (
     CreateBulkPhoneCallResponse,
     CreatePhoneCallRequest,
     CreatePhoneCallResponse,
+    AssistantTalkInput,
+    AssistantTalkOutput,
+    TalkInput,
+    TalkOutput,
+    ConversationAssistantMessage,
+    ConversationConfiguration,
+    ConversationDirective,
+    ConversationInterruption,
+    ConversationUserMessage,
+    ConversationToolCall,
+    ConversationToolResult
 )
 from rapida.clients.protos.assistant_analysis_pb2 import (
     AssistantAnalysis,
@@ -383,6 +384,15 @@ from rapida.clients.protos.talk_api_pb2_grpc import (
     add_AgentKitServicer_to_server,
     )
 
+# Agent Kit classes
+from rapida.agentkit import (
+    AgentKitAgent,
+    AgentKitServer,
+    SSLConfig,
+    AuthConfig,
+    AuthorizationInterceptor,
+)
+
 __all__ = [
     "Any",
     "RapidaSource",
@@ -468,12 +478,6 @@ __all__ = [
     "GetCredentialResponse",
     "GetAllOrganizationCredentialRequest",
     "AssistantDefinition",
-    "AssistantMessagingRequest",
-    "AssistantConversationConfiguration",
-    "AssistantConversationInterruption",
-    "AssistantConversationUserMessage",
-    "AssistantConversationAssistantMessage",
-    "AssistantMessagingResponse",
     "CreateMessageMetricRequest",
     "CreateMessageMetricResponse",
     "CreateConversationMetricRequest",
@@ -561,7 +565,6 @@ __all__ = [
     "Tag",
     "Organization",
     "Metric",
-    "Content",
     "ProtoMessage",
     "ToolCall",
     "FunctionCall",
@@ -689,12 +692,26 @@ __all__ = [
     "UpdateAssistantDetailRequest",
     "GetAssistantConversationRequest",
     "GetAssistantConversationResponse",
-    "AssistantConversationMessageTextContent",
-    "AssistantConversationMessageAudioContent",
     "AgentKitStub",
     "AgentKit",
     "AgentKitServicer",
     "TalkServiceServicer",
     "add_AgentKitServicer_to_server",
-    "AssistantConversationAction",
+    # Agent Kit
+    "AgentKitAgent",
+    "AgentKitServer",
+    "SSLConfig",
+    "AuthConfig",
+    "AuthorizationInterceptor",
+    "AssistantTalkInput",
+    "AssistantTalkOutput",
+    "TalkInput",
+    "TalkOutput",
+    "ConversationAssistantMessage",
+    "ConversationConfiguration",
+    "ConversationDirective",
+    "ConversationInterruption",
+    "ConversationUserMessage",
+    "ConversationToolCall",
+    "ConversationToolResult"
 ]
