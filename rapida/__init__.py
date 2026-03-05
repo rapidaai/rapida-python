@@ -162,10 +162,8 @@ from rapida.clients.protos.talk_api_pb2 import (
     CreateBulkPhoneCallResponse,
     CreatePhoneCallRequest,
     CreatePhoneCallResponse,
-    AssistantTalkInput,
-    AssistantTalkOutput,
-    TalkInput,
-    TalkOutput,
+    AssistantTalkRequest,
+    AssistantTalkResponse,
     ConversationAssistantMessage,
     ConversationConfiguration,
     ConversationDirective,
@@ -173,6 +171,10 @@ from rapida.clients.protos.talk_api_pb2 import (
     ConversationUserMessage,
     ConversationToolCall,
     ConversationToolResult
+)
+from rapida.clients.protos.agentkit_pb2 import (
+    TalkInput,
+    TalkOutput,
 )
 from rapida.clients.protos.assistant_analysis_pb2 import (
     AssistantAnalysis,
@@ -377,12 +379,14 @@ from rapida.clients.protos.assistant_api_pb2 import (
 )
 
 from rapida.clients.protos.talk_api_pb2_grpc import (
-    TalkServiceServicer, 
+    TalkServiceServicer,
+)
+from rapida.clients.protos.agentkit_pb2_grpc import (
     AgentKitStub,
     AgentKit,
     AgentKitServicer,
     add_AgentKitServicer_to_server,
-    )
+)
 
 # Agent Kit classes
 from rapida.agentkit import (
@@ -703,8 +707,8 @@ __all__ = [
     "SSLConfig",
     "AuthConfig",
     "AuthorizationInterceptor",
-    "AssistantTalkInput",
-    "AssistantTalkOutput",
+    "AssistantTalkRequest",
+    "AssistantTalkResponse",
     "TalkInput",
     "TalkOutput",
     "ConversationAssistantMessage",
