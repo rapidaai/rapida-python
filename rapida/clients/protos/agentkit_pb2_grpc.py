@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import rapida.clients.protos.document_api_pb2 as document__api__pb2
+import rapida.clients.protos.agentkit_pb2 as agentkit__pb2
 
 GRPC_GENERATED_VERSION = '1.78.0'
 GRPC_VERSION = grpc.__version__
@@ -18,15 +18,16 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + ' but the generated code in document_api_pb2_grpc.py depends on'
+        + ' but the generated code in agentkit_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class DocumentServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+class AgentKitStub(object):
+    """AgentKit Service for internal agent messaging and orchestration.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -34,43 +35,46 @@ class DocumentServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.IndexKnowledgeDocument = channel.unary_unary(
-                '/document_api.DocumentService/IndexKnowledgeDocument',
-                request_serializer=document__api__pb2.IndexKnowledgeDocumentRequest.SerializeToString,
-                response_deserializer=document__api__pb2.IndexKnowledgeDocumentResponse.FromString,
+        self.Talk = channel.stream_stream(
+                '/talk_api.AgentKit/Talk',
+                request_serializer=agentkit__pb2.TalkInput.SerializeToString,
+                response_deserializer=agentkit__pb2.TalkOutput.FromString,
                 _registered_method=True)
 
 
-class DocumentServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+class AgentKitServicer(object):
+    """AgentKit Service for internal agent messaging and orchestration.
+    """
 
-    def IndexKnowledgeDocument(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+    def Talk(self, request_iterator, context):
+        """Bi-directional streaming RPC for agent communication
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_DocumentServiceServicer_to_server(servicer, server):
+def add_AgentKitServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'IndexKnowledgeDocument': grpc.unary_unary_rpc_method_handler(
-                    servicer.IndexKnowledgeDocument,
-                    request_deserializer=document__api__pb2.IndexKnowledgeDocumentRequest.FromString,
-                    response_serializer=document__api__pb2.IndexKnowledgeDocumentResponse.SerializeToString,
+            'Talk': grpc.stream_stream_rpc_method_handler(
+                    servicer.Talk,
+                    request_deserializer=agentkit__pb2.TalkInput.FromString,
+                    response_serializer=agentkit__pb2.TalkOutput.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'document_api.DocumentService', rpc_method_handlers)
+            'talk_api.AgentKit', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('document_api.DocumentService', rpc_method_handlers)
+    server.add_registered_method_handlers('talk_api.AgentKit', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class DocumentService(object):
-    """Missing associated documentation comment in .proto file."""
+class AgentKit(object):
+    """AgentKit Service for internal agent messaging and orchestration.
+    """
 
     @staticmethod
-    def IndexKnowledgeDocument(request,
+    def Talk(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -80,12 +84,12 @@ class DocumentService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
+        return grpc.experimental.stream_stream(
+            request_iterator,
             target,
-            '/document_api.DocumentService/IndexKnowledgeDocument',
-            document__api__pb2.IndexKnowledgeDocumentRequest.SerializeToString,
-            document__api__pb2.IndexKnowledgeDocumentResponse.FromString,
+            '/talk_api.AgentKit/Talk',
+            agentkit__pb2.TalkInput.SerializeToString,
+            agentkit__pb2.TalkOutput.FromString,
             options,
             channel_credentials,
             insecure,

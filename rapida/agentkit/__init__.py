@@ -33,20 +33,31 @@ Developer is responsible for:
 - Tool execution
 - Conversation logic
 
+Flow (mirrors the WebTalk/WebRTC flow):
+    1. Rapida sends ConversationInitialization — always the first message.
+       Acknowledge it with initialization_response().
+    2. Rapida may send ConversationConfiguration to change stream mode.
+       Acknowledge it with configuration_response().
+    3. Rapida sends ConversationUserMessage for each user turn.
+       Reply with assistant_response() chunks.
+
 Usage:
     from rapida import AgentKitServer, AgentKitAgent
-    
+
     class MyAgent(AgentKitAgent):
         def Talk(self, request_iterator, context):
             for request in request_iterator:
-                if request.HasField("configuration"):
+                if request.HasField("initialization"):
+                    # Always first — acknowledge and set up your session
+                    yield self.initialization_response(request.initialization)
+                elif request.HasField("configuration"):
                     yield self.configuration_response(request.configuration)
                 elif request.HasField("message"):
                     msg = request.message
                     # Your LLM logic here
                     yield self.assistant_response(msg.id, "Hello!", completed=False)
                     yield self.assistant_response(msg.id, "Hello!", completed=True)
-    
+
     server = AgentKitServer(
         agent=MyAgent(),
         port=50051,
@@ -61,26 +72,27 @@ import logging
 import os
 from concurrent import futures
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, Iterator, Optional
+from typing import Any, Callable, Dict, Optional
 
 import grpc
 from grpc import ServerInterceptor
 
 from rapida.clients.protos.talk_api_pb2 import (
+    ConversationInitialization,
     ConversationConfiguration,
     ConversationAssistantMessage,
     ConversationDirective,
     ConversationToolCall,
     ConversationToolResult,
 )
-from rapida.clients.protos.talk_api_pb2 import (
+from rapida.clients.protos.agentkit_pb2 import (
     TalkInput,
     TalkOutput,
 )
 from rapida.clients.protos.common_pb2 import (
     Error,
 )
-from rapida.clients.protos.talk_api_pb2_grpc import (
+from rapida.clients.protos.agentkit_pb2_grpc import (
     AgentKitServicer,
     add_AgentKitServicer_to_server,
 )
@@ -164,6 +176,7 @@ class AuthorizationInterceptor(ServerInterceptor):
             context.abort(
                 grpc.StatusCode.UNAUTHENTICATED, "Invalid authorization token"
             )
+
         return grpc.unary_unary_rpc_method_handler(abort)
 
 
@@ -184,11 +197,20 @@ class AgentKitAgent(AgentKitServicer):
 
     Subclass this and implement Talk() with your LLM logic.
 
+    The message flow mirrors WebTalk/WebRTC:
+        1. ConversationInitialization — always the first message. Acknowledge it.
+        2. ConversationConfiguration — optional mode change. Acknowledge it.
+        3. ConversationUserMessage — user turns. Reply with assistant_response().
+
     Example:
         class MyAgent(AgentKitAgent):
             def Talk(self, request_iterator, context):
                 for request in request_iterator:
-                    if request.HasField("configuration"):
+                    if request.HasField("initialization"):
+                        # Always first — set up your session here
+                        conv_id = self.get_conversation_id(request)
+                        yield self.initialization_response(request.initialization)
+                    elif request.HasField("configuration"):
                         yield self.configuration_response(request.configuration)
                     elif request.HasField("message"):
                         msg = request.message
@@ -202,9 +224,7 @@ class AgentKitAgent(AgentKitServicer):
     # RESPONSE BUILDERS - Send data back to Rapida
     # ========================================================================
 
-    def response(
-        self, code: int = 200, success: bool = True, **kwargs
-    ) -> TalkOutput:
+    def response(self, code: int = 200, success: bool = True, **kwargs) -> TalkOutput:
         """
         Build a generic response to send back to Rapida.
 
@@ -218,19 +238,41 @@ class AgentKitAgent(AgentKitServicer):
         """
         return TalkOutput(code=code, success=success, **kwargs)
 
+    def initialization_response(
+        self, initialization: ConversationInitialization
+    ) -> TalkOutput:
+        """
+        Acknowledge a ConversationInitialization from Rapida.
+
+        This should always be the first response yielded in Talk().
+        Rapida always sends initialization as the first message on the stream,
+        mirroring the WebTalk/WebRTC flow.
+
+        Args:
+            initialization: The ConversationInitialization received from Rapida
+
+        Returns:
+            TalkOutput acknowledging the initialization
+        """
+        return self.response(initialization=initialization)
+
     def configuration_response(
-        self, configuration: ConversationConfiguration
+        self, configuration: ConversationConfiguration = None
     ) -> TalkOutput:
         """
         Acknowledge a configuration request from Rapida.
 
+        Note: TalkOutput has no configuration field in its data oneof, so this
+        sends a plain code-200 acknowledgement with no data payload.
+        Configuration changes do not carry a data ack in the AgentKit protocol.
+
         Args:
-            configuration: The configuration received from the request
+            configuration: Unused; kept for API compatibility.
 
         Returns:
-            TalkOutput acknowledging the configuration
+            TalkOutput with code=200 and no data payload
         """
-        return self.response(configuration=configuration)
+        return self.response()
 
     def assistant_response(
         self, msg_id: str, content: str, completed: bool = False
@@ -295,13 +337,12 @@ class AgentKitAgent(AgentKitServicer):
         for k, v in (args or {}).items():
             _args[str(k)] = string_to_any(str(v))
 
-        return self.response(tool=ConversationToolCall(
-            id=str(msg_id),
-            toolId=str(tool_id),
-            name=str(name),
-            args=_args
-        ))
-    
+        return self.response(
+            tool=ConversationToolCall(
+                id=str(msg_id), toolId=str(tool_id), name=str(name), args=_args
+            )
+        )
+
     def tool_call_result(
         self, msg_id: str, tool_id: str, name: str, result: Any, success: bool = True
     ) -> TalkOutput:
@@ -330,17 +371,17 @@ class AgentKitAgent(AgentKitServicer):
                 # For non-dict results, store under "result" key
                 _args["result"] = string_to_any(str(result))
 
-        return self.response(toolResult=ConversationToolResult(
-            id=str(msg_id),
-            toolId=str(tool_id),
-            name=str(name),
-            success=bool(success),
-            args=_args
-        ))
+        return self.response(
+            toolResult=ConversationToolResult(
+                id=str(msg_id),
+                toolId=str(tool_id),
+                name=str(name),
+                success=bool(success),
+                args=_args,
+            )
+        )
 
-    def transfer_call(
-        self, msg_id: str, args: Dict[str, Any]
-    ) -> TalkOutput:
+    def transfer_call(self, msg_id: str, args: Dict[str, Any]) -> TalkOutput:
         """
         Send a transfer call directive back to Rapida.
 
@@ -356,15 +397,15 @@ class AgentKitAgent(AgentKitServicer):
         for k, v in (args or {}).items():
             _args[str(k)] = string_to_any(str(v))
 
-        return self.response(directive=ConversationDirective(
-            id=str(msg_id),
-            type=ConversationDirective.TRANSFER_CONVERSATION,
-            args=_args
-        ))
+        return self.response(
+            directive=ConversationDirective(
+                id=str(msg_id),
+                type=ConversationDirective.TRANSFER_CONVERSATION,
+                args=_args,
+            )
+        )
 
-    def terminate_call(
-        self, msg_id: str, args: Dict[str, Any]
-    ) -> TalkOutput:
+    def terminate_call(self, msg_id: str, args: Dict[str, Any]) -> TalkOutput:
         """
         Send a tool call that ends the conversation back to Rapida.
 
@@ -381,11 +422,12 @@ class AgentKitAgent(AgentKitServicer):
         # Set map fields with Any values after construction
         for k, v in (args or {}).items():
             _arg[str(k)] = string_to_any(str(v))
-        
-        return self.response(directive=ConversationDirective(
-            id=str(msg_id),
-            type=ConversationDirective.END_CONVERSATION,
-            args=_arg))
+
+        return self.response(
+            directive=ConversationDirective(
+                id=str(msg_id), type=ConversationDirective.END_CONVERSATION, args=_arg
+            )
+        )
 
     # ========================================================================
     # REQUEST HELPERS - Receive data from Rapida
@@ -419,6 +461,40 @@ class AgentKitAgent(AgentKitServicer):
             return request.message.id
         return None
 
+    def get_conversation_id(self, request: TalkInput) -> Optional[int]:
+        """
+        Extract the conversation ID from an initialization request.
+
+        Args:
+            request: The incoming initialization request from Rapida
+
+        Returns:
+            Conversation ID, or None if not an initialization request
+        """
+        if request.HasField("initialization"):
+            return request.initialization.assistantConversationId
+        return None
+
+    def get_assistant_id(self, request: TalkInput) -> Optional[int]:
+        """
+        Extract the assistant ID from an initialization request.
+
+        Args:
+            request: The incoming initialization request from Rapida
+
+        Returns:
+            Assistant ID, or None if not an initialization request or assistant is unset
+        """
+        if request.HasField("initialization") and request.initialization.HasField(
+            "assistant"
+        ):
+            return request.initialization.assistant.assistantId
+        return None
+
+    def is_initialization_request(self, request: TalkInput) -> bool:
+        """Check if request is the initial ConversationInitialization message."""
+        return request.HasField("initialization")
+
     def is_configuration_request(self, request: TalkInput) -> bool:
         """Check if request is a configuration request."""
         return request.HasField("configuration")
@@ -429,17 +505,11 @@ class AgentKitAgent(AgentKitServicer):
 
     def is_text_message(self, request: TalkInput) -> bool:
         """Check if request is a text message."""
-        return (
-            request.HasField("message")
-            and request.message.HasField("text")
-        )
+        return request.HasField("message") and request.message.HasField("text")
 
     def is_audio_message(self, request: TalkInput) -> bool:
         """Check if request is an audio message."""
-        return (
-            request.HasField("message")
-            and request.message.HasField("audio")
-        )
+        return request.HasField("message") and request.message.HasField("audio")
 
 
 # ============================================================================
@@ -464,14 +534,17 @@ class AgentKitServer:
         class MyAgent(AgentKitAgent):
             def Talk(self, request_iterator, context):
                 for request in request_iterator:
-                    if self.is_configuration_request(request):
+                    if self.is_initialization_request(request):
+                        # Always first — set up your session here
+                        yield self.initialization_response(request.initialization)
+                    elif self.is_configuration_request(request):
                         yield self.configuration_response(request.configuration)
                     elif self.is_text_message(request):
                         msg_id = self.get_message_id(request)
                         text = self.get_user_text(request)
                         # Your LLM logic here
                         yield self.assistant_response(msg_id, "Hello!", completed=True)
-        
+
         server = AgentKitServer(agent=MyAgent(), port=50051)
         server.start()
         server.wait_for_termination()

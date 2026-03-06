@@ -86,4 +86,3 @@ pip install --upgrade rapida-python
 ## Conclusion
 
 The Rapida Python SDK provides everything necessary to integrate seamlessly with Rapida AI services, offering flexible configuration and authentication options. With the examples provided, you should be able to get started quickly and make advanced API calls as needed.
-
