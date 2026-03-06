@@ -44,7 +44,10 @@ sys.modules['rapida.clients.protos.marketplace_api_pb2_grpc'] = MagicMock()
 sys.modules['rapida.clients.protos.assistant_deployment_pb2_grpc'] = MagicMock()
 sys.modules['rapida.clients.protos.connect_api_pb2_grpc'] = MagicMock()
 sys.modules['rapida.clients.protos.provider_api_pb2_grpc'] = MagicMock()
-sys.modules['grpc'] = MagicMock()
+# Save real grpc so test_agentkit's patch("grpc.server") keeps working after
+# this module is imported. The connections module uses 'import grpc' at module
+# level, but grpc is installed — no need to replace the real module globally.
+_real_grpc = sys.modules.get('grpc')
 
 # Import header and source utils directly
 module_path = os.path.join(os.path.dirname(__file__), '..', 'rapida', 'utils', 'rapida_header.py')
@@ -96,6 +99,11 @@ connections_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(connections_module)
 
 ConnectionConfig = connections_module.ConnectionConfig
+
+# Restore real grpc module so other test modules (e.g. test_agentkit) can
+# patch it correctly. Connections only needs grpc at call-time, not import-time.
+if _real_grpc is not None:
+    sys.modules['grpc'] = _real_grpc
 
 
 class TestConnectionConfigStaticMethods:
