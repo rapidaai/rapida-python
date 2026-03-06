@@ -72,7 +72,7 @@ import logging
 import os
 from concurrent import futures
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, Iterator, Optional
+from typing import Any, Callable, Dict, Optional
 
 import grpc
 from grpc import ServerInterceptor
@@ -176,6 +176,7 @@ class AuthorizationInterceptor(ServerInterceptor):
             context.abort(
                 grpc.StatusCode.UNAUTHENTICATED, "Invalid authorization token"
             )
+
         return grpc.unary_unary_rpc_method_handler(abort)
 
 
@@ -223,9 +224,7 @@ class AgentKitAgent(AgentKitServicer):
     # RESPONSE BUILDERS - Send data back to Rapida
     # ========================================================================
 
-    def response(
-        self, code: int = 200, success: bool = True, **kwargs
-    ) -> TalkOutput:
+    def response(self, code: int = 200, success: bool = True, **kwargs) -> TalkOutput:
         """
         Build a generic response to send back to Rapida.
 
@@ -338,13 +337,12 @@ class AgentKitAgent(AgentKitServicer):
         for k, v in (args or {}).items():
             _args[str(k)] = string_to_any(str(v))
 
-        return self.response(tool=ConversationToolCall(
-            id=str(msg_id),
-            toolId=str(tool_id),
-            name=str(name),
-            args=_args
-        ))
-    
+        return self.response(
+            tool=ConversationToolCall(
+                id=str(msg_id), toolId=str(tool_id), name=str(name), args=_args
+            )
+        )
+
     def tool_call_result(
         self, msg_id: str, tool_id: str, name: str, result: Any, success: bool = True
     ) -> TalkOutput:
@@ -373,17 +371,17 @@ class AgentKitAgent(AgentKitServicer):
                 # For non-dict results, store under "result" key
                 _args["result"] = string_to_any(str(result))
 
-        return self.response(toolResult=ConversationToolResult(
-            id=str(msg_id),
-            toolId=str(tool_id),
-            name=str(name),
-            success=bool(success),
-            args=_args
-        ))
+        return self.response(
+            toolResult=ConversationToolResult(
+                id=str(msg_id),
+                toolId=str(tool_id),
+                name=str(name),
+                success=bool(success),
+                args=_args,
+            )
+        )
 
-    def transfer_call(
-        self, msg_id: str, args: Dict[str, Any]
-    ) -> TalkOutput:
+    def transfer_call(self, msg_id: str, args: Dict[str, Any]) -> TalkOutput:
         """
         Send a transfer call directive back to Rapida.
 
@@ -399,15 +397,15 @@ class AgentKitAgent(AgentKitServicer):
         for k, v in (args or {}).items():
             _args[str(k)] = string_to_any(str(v))
 
-        return self.response(directive=ConversationDirective(
-            id=str(msg_id),
-            type=ConversationDirective.TRANSFER_CONVERSATION,
-            args=_args
-        ))
+        return self.response(
+            directive=ConversationDirective(
+                id=str(msg_id),
+                type=ConversationDirective.TRANSFER_CONVERSATION,
+                args=_args,
+            )
+        )
 
-    def terminate_call(
-        self, msg_id: str, args: Dict[str, Any]
-    ) -> TalkOutput:
+    def terminate_call(self, msg_id: str, args: Dict[str, Any]) -> TalkOutput:
         """
         Send a tool call that ends the conversation back to Rapida.
 
@@ -424,11 +422,12 @@ class AgentKitAgent(AgentKitServicer):
         # Set map fields with Any values after construction
         for k, v in (args or {}).items():
             _arg[str(k)] = string_to_any(str(v))
-        
-        return self.response(directive=ConversationDirective(
-            id=str(msg_id),
-            type=ConversationDirective.END_CONVERSATION,
-            args=_arg))
+
+        return self.response(
+            directive=ConversationDirective(
+                id=str(msg_id), type=ConversationDirective.END_CONVERSATION, args=_arg
+            )
+        )
 
     # ========================================================================
     # REQUEST HELPERS - Receive data from Rapida
@@ -486,7 +485,9 @@ class AgentKitAgent(AgentKitServicer):
         Returns:
             Assistant ID, or None if not an initialization request or assistant is unset
         """
-        if request.HasField("initialization") and request.initialization.HasField("assistant"):
+        if request.HasField("initialization") and request.initialization.HasField(
+            "assistant"
+        ):
             return request.initialization.assistant.assistantId
         return None
 
@@ -504,17 +505,11 @@ class AgentKitAgent(AgentKitServicer):
 
     def is_text_message(self, request: TalkInput) -> bool:
         """Check if request is a text message."""
-        return (
-            request.HasField("message")
-            and request.message.HasField("text")
-        )
+        return request.HasField("message") and request.message.HasField("text")
 
     def is_audio_message(self, request: TalkInput) -> bool:
         """Check if request is an audio message."""
-        return (
-            request.HasField("message")
-            and request.message.HasField("audio")
-        )
+        return request.HasField("message") and request.message.HasField("audio")
 
 
 # ============================================================================

@@ -14,9 +14,9 @@ from typing import List, Tuple
 
 class TestCommonPb2Imports:
     """Test imports from common_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.common_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "FieldSelector",
         "Criteria",
@@ -48,16 +48,16 @@ class TestCommonPb2Imports:
         "AssistantDefinition",
         "Source",  # Enum
     ]
-    
+
     @pytest.fixture
     def module(self):
         """Load the protobuf module."""
         return importlib.import_module(self.MODULE)
-    
+
     def test_module_loads(self, module):
         """Test that the module can be imported."""
         assert module is not None
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         """Test that each expected class can be imported from the module."""
@@ -66,7 +66,7 @@ class TestCommonPb2Imports:
             f"The proto file may have changed. "
             f"Available exports: {[name for name in dir(module) if not name.startswith('_')]}"
         )
-    
+
     def test_list_available_exports(self, module):
         """Helper test to show all available exports from the module."""
         exports = [name for name in dir(module) if not name.startswith('_')]
@@ -77,9 +77,9 @@ class TestCommonPb2Imports:
 
 class TestAssistantKnowledgePb2Imports:
     """Test imports from assistant_knowledge_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.assistant_knowledge_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "AssistantKnowledge",
         "CreateAssistantKnowledgeRequest",
@@ -90,11 +90,11 @@ class TestAssistantKnowledgePb2Imports:
         "GetAllAssistantKnowledgeRequest",
         "GetAllAssistantKnowledgeResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -105,9 +105,9 @@ class TestAssistantKnowledgePb2Imports:
 
 class TestVaultApiPb2Imports:
     """Test imports from vault_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.vault_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "VaultCredential",
         "CreateProviderCredentialRequest",
@@ -116,11 +116,11 @@ class TestVaultApiPb2Imports:
         "GetCredentialResponse",
         "GetAllOrganizationCredentialRequest",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -131,9 +131,9 @@ class TestVaultApiPb2Imports:
 
 class TestTalkApiPb2Imports:
     """Test imports from talk_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.talk_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "CreateMessageMetricRequest",
         "CreateMessageMetricResponse",
@@ -144,11 +144,11 @@ class TestTalkApiPb2Imports:
         "CreatePhoneCallRequest",
         "CreatePhoneCallResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -159,9 +159,9 @@ class TestTalkApiPb2Imports:
 
 class TestAssistantAnalysisPb2Imports:
     """Test imports from assistant_analysis_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.assistant_analysis_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "AssistantAnalysis",
         "CreateAssistantAnalysisRequest",
@@ -172,11 +172,11 @@ class TestAssistantAnalysisPb2Imports:
         "GetAllAssistantAnalysisRequest",
         "GetAllAssistantAnalysisResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -187,9 +187,9 @@ class TestAssistantAnalysisPb2Imports:
 
 class TestInvokerApiPb2Imports:
     """Test imports from invoker_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.invoker_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "EndpointDefinition",
         "InvokeRequest",
@@ -199,11 +199,11 @@ class TestInvokerApiPb2Imports:
         "ProbeRequest",
         "ProbeResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -214,9 +214,9 @@ class TestInvokerApiPb2Imports:
 
 class TestWebApiPb2Imports:
     """Test imports from web_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.web_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "AuthenticateRequest",
         "RegisterUserRequest",
@@ -269,11 +269,11 @@ class TestWebApiPb2Imports:
         "CreateProjectCredentialResponse",
         "GetAllProjectCredentialResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -284,9 +284,9 @@ class TestWebApiPb2Imports:
 
 class TestAssistantWebhookPb2Imports:
     """Test imports from assistant_webhook_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.assistant_webhook_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "AssistantWebhook",
         "AssistantWebhookLog",
@@ -302,11 +302,11 @@ class TestAssistantWebhookPb2Imports:
         "GetAssistantWebhookLogResponse",
         "GetAllAssistantWebhookLogResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -317,20 +317,20 @@ class TestAssistantWebhookPb2Imports:
 
 class TestConnectApiPb2Imports:
     """Test imports from connect_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.connect_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "GeneralConnectRequest",
         "GeneralConnectResponse",
         "GetConnectorFilesRequest",
         "GetConnectorFilesResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -341,9 +341,9 @@ class TestConnectApiPb2Imports:
 
 class TestEndpointApiPb2Imports:
     """Test imports from endpoint_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.endpoint_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "EndpointAttribute",
         "EndpointProviderModelAttribute",
@@ -377,11 +377,11 @@ class TestEndpointApiPb2Imports:
         "GetEndpointLogRequest",
         "GetEndpointLogResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -392,9 +392,9 @@ class TestEndpointApiPb2Imports:
 
 class TestAssistantToolPb2Imports:
     """Test imports from assistant_tool_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.assistant_tool_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "AssistantTool",
         "CreateAssistantToolRequest",
@@ -405,11 +405,11 @@ class TestAssistantToolPb2Imports:
         "GetAllAssistantToolRequest",
         "GetAllAssistantToolResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -420,9 +420,9 @@ class TestAssistantToolPb2Imports:
 
 class TestIntegrationApiPb2Imports:
     """Test imports from integration_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.integration_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "Credential",
         "ToolDefinition",
@@ -443,11 +443,11 @@ class TestIntegrationApiPb2Imports:
         "GetModerationRequest",
         "GetModerationResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -458,9 +458,9 @@ class TestIntegrationApiPb2Imports:
 
 class TestAssistantDeploymentPb2Imports:
     """Test imports from assistant_deployment_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.assistant_deployment_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "DeploymentAudioProvider",
         "AssistantWebpluginDeployment",
@@ -470,11 +470,11 @@ class TestAssistantDeploymentPb2Imports:
         "AssistantApiDeployment",
         "GetAssistantDeploymentRequest",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -485,9 +485,9 @@ class TestAssistantDeploymentPb2Imports:
 
 class TestKnowledgeApiPb2Imports:
     """Test imports from knowledge_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.knowledge_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "CreateKnowledgeRequest",
         "CreateKnowledgeResponse",
@@ -508,11 +508,11 @@ class TestKnowledgeApiPb2Imports:
         "UpdateKnowledgeDocumentSegmentRequest",
         "DeleteKnowledgeDocumentSegmentRequest",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -523,9 +523,9 @@ class TestKnowledgeApiPb2Imports:
 
 class TestAssistantApiPb2Imports:
     """Test imports from assistant_api_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.assistant_api_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "Assistant",
         "CreateAssistantRequest",
@@ -543,11 +543,11 @@ class TestAssistantApiPb2Imports:
         "GetAssistantConversationRequest",
         "GetAssistantConversationResponse",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -558,17 +558,17 @@ class TestAssistantApiPb2Imports:
 
 class TestAssistantProviderPb2Imports:
     """Test imports from assistant_provider_pb2 module."""
-    
+
     MODULE = "rapida.clients.protos.assistant_provider_pb2"
-    
+
     EXPECTED_IMPORTS = [
         "AssistantProviderModel",
     ]
-    
+
     @pytest.fixture
     def module(self):
         return importlib.import_module(self.MODULE)
-    
+
     @pytest.mark.parametrize("class_name", EXPECTED_IMPORTS)
     def test_import_exists(self, module, class_name):
         assert hasattr(module, class_name), (
@@ -584,7 +584,7 @@ class TestAssistantProviderPb2Imports:
 def get_module_exports(module_path: str) -> List[str]:
     """
     Helper function to get all public exports from a module.
-    
+
     Usage:
         exports = get_module_exports("rapida.clients.protos.common_pb2")
         print(exports)
@@ -599,7 +599,7 @@ def get_module_exports(module_path: str) -> List[str]:
 def validate_imports(module_path: str, expected_imports: List[str]) -> Tuple[List[str], List[str], List[str]]:
     """
     Validate imports against a module and return valid, invalid, and extra exports.
-    
+
     Returns:
         Tuple of (valid_imports, invalid_imports, extra_exports)
     """
@@ -607,11 +607,11 @@ def validate_imports(module_path: str, expected_imports: List[str]) -> Tuple[Lis
         module = importlib.import_module(module_path)
         actual_exports = set(name for name in dir(module) if not name.startswith('_'))
         expected_set = set(expected_imports)
-        
+
         valid = list(expected_set & actual_exports)
         invalid = list(expected_set - actual_exports)
         extra = list(actual_exports - expected_set)
-        
+
         return sorted(valid), sorted(invalid), sorted(extra)
     except ImportError as e:
         return [], expected_imports, [f"ERROR: {e}"]
@@ -619,11 +619,11 @@ def validate_imports(module_path: str, expected_imports: List[str]) -> Tuple[Lis
 
 class TestRapidaPackageImport:
     """Test that the main rapida package can be imported without errors."""
-    
+
     def test_rapida_import(self):
         """
         Test that 'import rapida' works without ImportError.
-        
+
         If this test fails, it means there's a broken import in rapida/__init__.py
         """
         try:
@@ -643,7 +643,7 @@ class TestRapidaPackageImport:
 
 class TestProtoImportSummary:
     """Generate a summary report of all proto import issues."""
-    
+
     PROTO_MODULES = {
         "rapida.clients.protos.common_pb2": TestCommonPb2Imports.EXPECTED_IMPORTS,
         "rapida.clients.protos.assistant_knowledge_pb2": TestAssistantKnowledgePb2Imports.EXPECTED_IMPORTS,
@@ -662,22 +662,22 @@ class TestProtoImportSummary:
         "rapida.clients.protos.assistant_api_pb2": TestAssistantApiPb2Imports.EXPECTED_IMPORTS,
         "rapida.clients.protos.assistant_provider_pb2": TestAssistantProviderPb2Imports.EXPECTED_IMPORTS,
     }
-    
+
     def test_generate_import_report(self):
         """
         Generate a comprehensive report of all import issues.
-        
+
         This test always passes but prints a detailed report.
         """
         print("\n" + "=" * 80)
         print("PROTO IMPORT VALIDATION REPORT")
         print("=" * 80)
-        
+
         all_issues = []
-        
+
         for module_path, expected_imports in self.PROTO_MODULES.items():
             valid, invalid, extra = validate_imports(module_path, expected_imports)
-            
+
             if invalid:
                 all_issues.append((module_path, invalid))
                 print(f"\n❌ {module_path}")
@@ -686,9 +686,9 @@ class TestProtoImportSummary:
                     print(f"   AVAILABLE ALTERNATIVES: {extra[:10]}{'...' if len(extra) > 10 else ''}")
             else:
                 print(f"\n✅ {module_path} - All {len(valid)} imports valid")
-        
+
         print("\n" + "=" * 80)
-        
+
         if all_issues:
             print("\n⚠️  SUMMARY: Found import issues in the following modules:")
             for module_path, invalid in all_issues:
@@ -696,5 +696,5 @@ class TestProtoImportSummary:
             print("\nTo fix: Update rapida/__init__.py to remove or replace these imports.")
         else:
             print("\n✅ SUMMARY: All proto imports are valid!")
-        
+
         print("=" * 80)
