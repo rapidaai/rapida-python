@@ -35,6 +35,12 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 # Import the actual protos package first to ensure it's registered as a package
 import rapida.clients.protos
 
+# Explicitly register rapida.agentkit as a subpackage attribute so that
+# patch("rapida.agentkit.X") works reliably across Python 3.9–3.11,
+# even if rapida/__init__.py fails partway through (e.g. due to a missing
+# proto module) before it reaches its own 'from rapida.agentkit import ...'
+import rapida.agentkit  # noqa: E402
+
 # Mock missing protobuf modules before any rapida imports
 # These mocks need to be set up before the modules are imported
 # Use ModuleType-based mocks to avoid breaking the package structure

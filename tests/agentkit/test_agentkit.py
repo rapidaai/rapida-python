@@ -33,6 +33,7 @@ Covers:
 from unittest.mock import MagicMock, Mock, patch, mock_open
 
 import pytest
+import rapida.agentkit  # ensure the subpackage is registered as a rapida attribute
 
 from rapida.agentkit import (
     AgentKitAgent,
