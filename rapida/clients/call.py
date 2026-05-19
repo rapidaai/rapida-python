@@ -56,6 +56,16 @@ def _call_conversation_client(
         metadata=_resolve_auth(client_cfg, auth),
     )
 
+def _call_talk_client(
+    client_cfg: ConnectionConfig,
+    method_name: str,
+    request: Any,
+    auth: AuthMetadata = None,
+) -> Any:
+    return getattr(client_cfg.talk_client, method_name)(
+        request,
+        metadata=_resolve_auth(client_cfg, auth),
+    )
 
 def create_message_metric(
     client_cfg: ConnectionConfig,
