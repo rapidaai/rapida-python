@@ -18,28 +18,40 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-"""
-Tests for call client functions.
-These tests use mocking to verify the function behavior without
-requiring actual gRPC connections or protobuf dependencies.
-"""
+"""Tests for call client helper functions."""
+
+import importlib.util
+import os
+import sys
+from unittest.mock import MagicMock, Mock
 
 import pytest
-import sys
-import os
-import importlib.util
-from unittest.mock import Mock, MagicMock
 
 
-# Mock all the protobuf modules before importing
-sys.modules['rapida.clients.protos.talk_api_pb2'] = MagicMock()
-sys.modules['rapida.connections'] = MagicMock()
+sys.modules["rapida.clients.protos.talk_api_pb2"] = MagicMock()
+sys.modules["rapida.connections"] = MagicMock()
 
-# Load the call module directly
-module_path = os.path.join(os.path.dirname(__file__), '..', '..', 'rapida', 'clients', 'call.py')
-spec = importlib.util.spec_from_file_location('call', module_path)
+
+module_path = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "..",
+    "rapida",
+    "clients",
+    "call.py",
+)
+spec = importlib.util.spec_from_file_location("call", module_path)
 call_module = importlib.util.module_from_spec(spec)
+assert spec.loader is not None
 spec.loader.exec_module(call_module)
+
+
+FUNCTION_CASES = [
+    ("create_message_metric", "CreateMessageMetric"),
+    ("create_conversation_metric", "CreateConversationMetric"),
+    ("create_phone_call", "CreatePhoneCall"),
+    ("create_bulk_phone_call", "CreateBulkPhoneCall"),
+]
 
 
 @pytest.fixture
@@ -57,85 +69,69 @@ def mock_auth():
     return [("authorization", "Bearer test-token")]
 
 
-class TestCreatePhoneCall:
-    """Test cases for create_phone_call function."""
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_default_auth(function_name, client_method, mock_connection_config):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.conversation_client, client_method).return_value = (
+        expected_response
+    )
 
-    def test_create_phone_call_with_default_auth(self, mock_connection_config):
-        """Test create_phone_call uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.conversation_client.CreatePhoneCall.return_value = expected_response
+    result = getattr(call_module, function_name)(mock_connection_config, request)
 
-        result = call_module.create_phone_call(mock_connection_config, request)
-
-        mock_connection_config.conversation_client.CreatePhoneCall.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-    def test_create_phone_call_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test create_phone_call uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.conversation_client.CreatePhoneCall.return_value = expected_response
-
-        result = call_module.create_phone_call(mock_connection_config, request, auth=mock_auth)
-
-        mock_connection_config.conversation_client.CreatePhoneCall.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-        assert result == expected_response
-
-    def test_create_phone_call_with_none_auth(self, mock_connection_config):
-        """Test create_phone_call with explicitly None auth uses config auth."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.conversation_client.CreatePhoneCall.return_value = expected_response
-
-        result = call_module.create_phone_call(mock_connection_config, request, auth=None)
-
-        mock_connection_config.conversation_client.CreatePhoneCall.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
+    getattr(mock_connection_config.conversation_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_connection_config.auth,
+    )
+    assert result == expected_response
 
 
-class TestCreateBulkPhoneCall:
-    """Test cases for create_bulk_phone_call function."""
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_custom_auth(
+    function_name,
+    client_method,
+    mock_connection_config,
+    mock_auth,
+):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.conversation_client, client_method).return_value = (
+        expected_response
+    )
 
-    def test_create_bulk_phone_call_with_default_auth(self, mock_connection_config):
-        """Test create_bulk_phone_call uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.conversation_client.CreateBulkPhoneCall.return_value = expected_response
+    result = getattr(call_module, function_name)(
+        mock_connection_config,
+        request,
+        auth=mock_auth,
+    )
 
-        result = call_module.create_bulk_phone_call(mock_connection_config, request)
+    getattr(mock_connection_config.conversation_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_auth,
+    )
+    assert result == expected_response
 
-        mock_connection_config.conversation_client.CreateBulkPhoneCall.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
 
-    def test_create_bulk_phone_call_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test create_bulk_phone_call uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.conversation_client.CreateBulkPhoneCall.return_value = expected_response
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_config_auth_when_none_explicitly_passed(
+    function_name,
+    client_method,
+    mock_connection_config,
+):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.conversation_client, client_method).return_value = (
+        expected_response
+    )
 
-        result = call_module.create_bulk_phone_call(mock_connection_config, request, auth=mock_auth)
+    result = getattr(call_module, function_name)(
+        mock_connection_config,
+        request,
+        auth=None,
+    )
 
-        mock_connection_config.conversation_client.CreateBulkPhoneCall.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-        assert result == expected_response
-
-    def test_create_bulk_phone_call_with_none_auth(self, mock_connection_config):
-        """Test create_bulk_phone_call with explicitly None auth uses config auth."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.conversation_client.CreateBulkPhoneCall.return_value = expected_response
-
-        result = call_module.create_bulk_phone_call(mock_connection_config, request, auth=None)
-
-        mock_connection_config.conversation_client.CreateBulkPhoneCall.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
+    getattr(mock_connection_config.conversation_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_connection_config.auth,
+    )
+    assert result == expected_response

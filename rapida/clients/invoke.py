@@ -19,23 +19,68 @@
 #  THE SOFTWARE.
 #
 #  Author: Prashant <prashant@rapida.ai>
-from typing import Union
+
+from typing import Any, Union
+
 from rapida.clients.protos.invoker_api_pb2 import (
     InvokeRequest,
     InvokeResponse,
+    ProbeRequest,
+    ProbeResponse,
+    UpdateRequest,
+    UpdateResponse,
 )
-from rapida.connections import ConnectionConfig, UserAuthInfo, ClientAuthInfo
+from rapida.connections import ClientAuthInfo, ConnectionConfig, UserAuthInfo
+
+
+AuthMetadata = Union[UserAuthInfo, ClientAuthInfo, None]
+
+
+def _resolve_auth(
+    client_cfg: ConnectionConfig,
+    auth: AuthMetadata,
+) -> Union[UserAuthInfo, ClientAuthInfo]:
+    return client_cfg.auth if auth is None else auth
+
+
+def _call_deployment_client(
+    client_cfg: ConnectionConfig,
+    method_name: str,
+    request: Any,
+    auth: AuthMetadata = None,
+) -> Any:
+    return getattr(client_cfg.deployment_client, method_name)(
+        request,
+        metadata=_resolve_auth(client_cfg, auth),
+    )
 
 
 def invoke(
     client_cfg: ConnectionConfig,
     request: InvokeRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
+    auth: AuthMetadata = None,
 ) -> InvokeResponse:
-    if auth is None:
-        auth = client_cfg.auth
+    return _call_deployment_client(client_cfg, "Invoke", request, auth)
 
-    return client_cfg.deployment_client.Invoke(
-        request,
-        metadata=auth,
-    )
+
+def update(
+    client_cfg: ConnectionConfig,
+    request: UpdateRequest,
+    auth: AuthMetadata = None,
+) -> UpdateResponse:
+    return _call_deployment_client(client_cfg, "Update", request, auth)
+
+
+def probe(
+    client_cfg: ConnectionConfig,
+    request: ProbeRequest,
+    auth: AuthMetadata = None,
+) -> ProbeResponse:
+    return _call_deployment_client(client_cfg, "Probe", request, auth)
+
+
+__all__ = [
+    "invoke",
+    "update",
+    "probe",
+]

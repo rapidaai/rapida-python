@@ -81,9 +81,10 @@ from rapida.clients.protos.talk_api_pb2 import (
     ConversationInitialization,
     ConversationConfiguration,
     ConversationAssistantMessage,
-    ConversationDirective,
     ConversationToolCall,
-    ConversationToolResult,
+    ConversationToolCallResult,
+    TOOL_CALL_ACTION_END_CONVERSATION,
+    TOOL_CALL_ACTION_TRANSFER_CONVERSATION,
 )
 from rapida.clients.protos.agentkit_pb2 import (
     TalkInput,
@@ -96,8 +97,6 @@ from rapida.clients.protos.agentkit_pb2_grpc import (
     AgentKitServicer,
     add_AgentKitServicer_to_server,
 )
-from rapida.utils.rapida_value import string_to_any
-
 logger = logging.getLogger(__name__)
 
 
@@ -224,6 +223,13 @@ class AgentKitAgent(AgentKitServicer):
     # RESPONSE BUILDERS - Send data back to Rapida
     # ========================================================================
 
+    @staticmethod
+    def _stringify_map(values: Optional[Dict[str, Any]]) -> Dict[str, str]:
+        result = {}
+        for key, value in (values or {}).items():
+            result[str(key)] = str(value)
+        return result
+
     def response(self, code: int = 200, success: bool = True, **kwargs) -> TalkOutput:
         """
         Build a generic response to send back to Rapida.
@@ -332,14 +338,12 @@ class AgentKitAgent(AgentKitServicer):
         Returns:
             TalkOutput with tool action
         """
-        _args = {}
-        # Set map fields with Any values after construction
-        for k, v in (args or {}).items():
-            _args[str(k)] = string_to_any(str(v))
-
         return self.response(
-            tool=ConversationToolCall(
-                id=str(msg_id), toolId=str(tool_id), name=str(name), args=_args
+            toolCall=ConversationToolCall(
+                id=str(msg_id),
+                toolId=str(tool_id),
+                name=str(name),
+                args=self._stringify_map(args),
             )
         )
 
@@ -361,47 +365,43 @@ class AgentKitAgent(AgentKitServicer):
         Returns:
             TalkOutput with tool result
         """
-        _args = {}
-        # Set map fields with Any values after construction
+        _result = {}
         if result is not None:
             if isinstance(result, dict):
-                for k, v in result.items():
-                    _args[str(k)] = string_to_any(str(v))
+                _result = self._stringify_map(result)
             else:
                 # For non-dict results, store under "result" key
-                _args["result"] = string_to_any(str(result))
+                _result["result"] = str(result)
+
+        # Preserve the helper's explicit failure signal on the current wire shape.
+        if not success:
+            _result.setdefault("success", "false")
 
         return self.response(
-            toolResult=ConversationToolResult(
+            toolCallResult=ConversationToolCallResult(
                 id=str(msg_id),
                 toolId=str(tool_id),
                 name=str(name),
-                success=bool(success),
-                args=_args,
+                result=_result,
             )
         )
 
     def transfer_call(self, msg_id: str, args: Dict[str, Any]) -> TalkOutput:
         """
-        Send a transfer call directive back to Rapida.
+        Send a transfer call action back to Rapida.
 
         Args:
             msg_id: Message ID from the request
             args: Transfer arguments as a dictionary
 
         Returns:
-            TalkOutput with TRANSFER_CALL action
+            TalkOutput with TRANSFER_CONVERSATION tool action
         """
-        _args = {}
-        # Set map fields with Any values after construction
-        for k, v in (args or {}).items():
-            _args[str(k)] = string_to_any(str(v))
-
         return self.response(
-            directive=ConversationDirective(
+            toolCall=ConversationToolCall(
                 id=str(msg_id),
-                type=ConversationDirective.TRANSFER_CONVERSATION,
-                args=_args,
+                action=TOOL_CALL_ACTION_TRANSFER_CONVERSATION,
+                args=self._stringify_map(args),
             )
         )
 
@@ -416,16 +416,13 @@ class AgentKitAgent(AgentKitServicer):
             args: Tool arguments as a dictionary
 
         Returns:
-            TalkOutput with END_CONVERSATION action
+            TalkOutput with END_CONVERSATION tool action
         """
-        _arg = {}
-        # Set map fields with Any values after construction
-        for k, v in (args or {}).items():
-            _arg[str(k)] = string_to_any(str(v))
-
         return self.response(
-            directive=ConversationDirective(
-                id=str(msg_id), type=ConversationDirective.END_CONVERSATION, args=_arg
+            toolCall=ConversationToolCall(
+                id=str(msg_id),
+                action=TOOL_CALL_ACTION_END_CONVERSATION,
+                args=self._stringify_map(args),
             )
         )
 

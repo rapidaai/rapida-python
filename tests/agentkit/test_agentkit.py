@@ -46,12 +46,12 @@ from rapida.clients.protos.agentkit_pb2 import TalkInput, TalkOutput
 from rapida.clients.protos.common_pb2 import AssistantDefinition
 from rapida.clients.protos.talk_api_pb2 import (
     ConversationConfiguration,
-    ConversationDirective,
     ConversationInitialization,
     ConversationUserMessage,
     StreamMode,
+    TOOL_CALL_ACTION_END_CONVERSATION,
+    TOOL_CALL_ACTION_TRANSFER_CONVERSATION,
 )
-from rapida.utils.rapida_value import any_to_string
 
 
 # ============================================================================
@@ -236,105 +236,104 @@ class TestAgentKitAgentResponseBuilders:
 
     def test_tool_call_sets_tool_data_field(self):
         out = self.agent.tool_call("m", "t-1", "search", {"q": "rapida"})
-        assert out.WhichOneof("data") == "tool"
+        assert out.WhichOneof("data") == "toolCall"
 
     def test_tool_call_stores_ids_and_name(self):
         out = self.agent.tool_call("msg-5", "t-1", "web_search", {"query": "rapida"})
-        tc = out.tool
+        tc = out.toolCall
         assert tc.id == "msg-5"
         assert tc.toolId == "t-1"
         assert tc.name == "web_search"
 
-    def test_tool_call_args_packed_as_any(self):
+    def test_tool_call_args_stored_as_strings(self):
         out = self.agent.tool_call("m", "t", "fn", {"query": "hello world"})
-        assert "query" in out.tool.args
-        assert any_to_string(out.tool.args["query"]) == "hello world"
+        assert "query" in out.toolCall.args
+        assert out.toolCall.args["query"] == "hello world"
 
     def test_tool_call_multiple_args(self):
         out = self.agent.tool_call("m", "t", "fn", {"a": "1", "b": "two"})
-        assert any_to_string(out.tool.args["a"]) == "1"
-        assert any_to_string(out.tool.args["b"]) == "two"
+        assert out.toolCall.args["a"] == "1"
+        assert out.toolCall.args["b"] == "two"
 
     def test_tool_call_empty_args(self):
         out = self.agent.tool_call("m", "t", "fn", {})
-        assert len(out.tool.args) == 0
+        assert len(out.toolCall.args) == 0
 
     def test_tool_call_none_args(self):
         out = self.agent.tool_call("m", "t", "fn", None)
-        assert len(out.tool.args) == 0
+        assert len(out.toolCall.args) == 0
 
     # --- tool_call_result() ---
 
     def test_tool_call_result_sets_tool_result_data_field(self):
         out = self.agent.tool_call_result("m", "t", "fn", {"status": "ok"})
-        assert out.WhichOneof("data") == "toolResult"
+        assert out.WhichOneof("data") == "toolCallResult"
 
     def test_tool_call_result_dict_result_stored(self):
         out = self.agent.tool_call_result("m", "t", "fn", {"key": "value"}, success=True)
-        tr = out.toolResult
-        assert tr.success is True
-        assert any_to_string(tr.args["key"]) == "value"
+        tr = out.toolCallResult
+        assert tr.result["key"] == "value"
 
     def test_tool_call_result_string_stored_under_result_key(self):
         out = self.agent.tool_call_result("m", "t", "fn", "done")
-        assert any_to_string(out.toolResult.args["result"]) == "done"
+        assert out.toolCallResult.result["result"] == "done"
 
-    def test_tool_call_result_none_produces_empty_args(self):
+    def test_tool_call_result_none_produces_empty_result(self):
         out = self.agent.tool_call_result("m", "t", "fn", None)
-        assert len(out.toolResult.args) == 0
+        assert len(out.toolCallResult.result) == 0
 
-    def test_tool_call_result_failure_flag(self):
+    def test_tool_call_result_failure_flag_is_encoded_in_result(self):
         out = self.agent.tool_call_result("m", "t", "fn", "err", success=False)
-        assert out.toolResult.success is False
+        assert out.toolCallResult.result["success"] == "false"
 
     def test_tool_call_result_stores_ids_and_name(self):
         out = self.agent.tool_call_result("msg-x", "tid-y", "lookup", {"r": "v"})
-        tr = out.toolResult
+        tr = out.toolCallResult
         assert tr.id == "msg-x"
         assert tr.toolId == "tid-y"
         assert tr.name == "lookup"
 
     # --- transfer_call() ---
 
-    def test_transfer_call_sets_directive_data_field(self):
+    def test_transfer_call_sets_tool_call_data_field(self):
         out = self.agent.transfer_call("m", {"to": "+1"})
-        assert out.WhichOneof("data") == "directive"
+        assert out.WhichOneof("data") == "toolCall"
 
-    def test_transfer_call_directive_type_is_transfer(self):
+    def test_transfer_call_action_is_transfer(self):
         out = self.agent.transfer_call("m", {"to": "+1234567890"})
-        assert out.directive.type == ConversationDirective.TRANSFER_CONVERSATION
+        assert out.toolCall.action == TOOL_CALL_ACTION_TRANSFER_CONVERSATION
 
-    def test_transfer_call_args_packed_as_any(self):
+    def test_transfer_call_args_are_stringified(self):
         out = self.agent.transfer_call("m", {"to": "+1999000"})
-        assert any_to_string(out.directive.args["to"]) == "+1999000"
+        assert out.toolCall.args["to"] == "+1999000"
 
     def test_transfer_call_empty_args(self):
         out = self.agent.transfer_call("m", {})
-        assert out.directive.type == ConversationDirective.TRANSFER_CONVERSATION
-        assert len(out.directive.args) == 0
+        assert out.toolCall.action == TOOL_CALL_ACTION_TRANSFER_CONVERSATION
+        assert len(out.toolCall.args) == 0
 
     # --- terminate_call() ---
 
-    def test_terminate_call_sets_directive_data_field(self):
+    def test_terminate_call_sets_tool_call_data_field(self):
         out = self.agent.terminate_call("m", {})
-        assert out.WhichOneof("data") == "directive"
+        assert out.WhichOneof("data") == "toolCall"
 
-    def test_terminate_call_directive_type_is_end_conversation(self):
+    def test_terminate_call_action_is_end_conversation(self):
         out = self.agent.terminate_call("m", {"reason": "done"})
-        assert out.directive.type == ConversationDirective.END_CONVERSATION
+        assert out.toolCall.action == TOOL_CALL_ACTION_END_CONVERSATION
 
-    def test_terminate_call_args_packed_as_any(self):
+    def test_terminate_call_args_are_stringified(self):
         out = self.agent.terminate_call("m", {"reason": "user request"})
-        assert any_to_string(out.directive.args["reason"]) == "user request"
+        assert out.toolCall.args["reason"] == "user request"
 
     def test_terminate_call_empty_args(self):
         out = self.agent.terminate_call("m", {})
-        assert len(out.directive.args) == 0
+        assert len(out.toolCall.args) == 0
 
-    def test_transfer_and_terminate_use_different_directive_types(self):
+    def test_transfer_and_terminate_use_different_actions(self):
         transfer = self.agent.transfer_call("m", {})
         terminate = self.agent.terminate_call("m", {})
-        assert transfer.directive.type != terminate.directive.type
+        assert transfer.toolCall.action != terminate.toolCall.action
 
 
 # ============================================================================
@@ -566,7 +565,7 @@ class TestAgentKitAgentTalkFlow:
         assert responses[1].assistant.text == "first"
         assert responses[3].assistant.text == "second"
 
-    def test_terminate_call_yields_end_conversation_directive(self):
+    def test_terminate_call_yields_end_conversation_tool_action(self):
         class _TermAgent(AgentKitAgent):
             def Talk(self, req_iter, ctx):
                 for req in req_iter:
@@ -582,10 +581,10 @@ class TestAgentKitAgentTalkFlow:
             agent.Talk(iter([talkinput_init(), talkinput_text(msg_id="end")]), Mock())
         )
         term = responses[1]
-        assert term.directive.type == ConversationDirective.END_CONVERSATION
-        assert any_to_string(term.directive.args["reason"]) == "bye"
+        assert term.toolCall.action == TOOL_CALL_ACTION_END_CONVERSATION
+        assert term.toolCall.args["reason"] == "bye"
 
-    def test_transfer_call_yields_transfer_conversation_directive(self):
+    def test_transfer_call_yields_transfer_conversation_tool_action(self):
         class _TransferAgent(AgentKitAgent):
             def Talk(self, req_iter, ctx):
                 for req in req_iter:
@@ -600,8 +599,8 @@ class TestAgentKitAgentTalkFlow:
         responses = list(
             agent.Talk(iter([talkinput_init(), talkinput_text(msg_id="t")]), Mock())
         )
-        assert responses[1].directive.type == ConversationDirective.TRANSFER_CONVERSATION
-        assert any_to_string(responses[1].directive.args["to"]) == "+15550001234"
+        assert responses[1].toolCall.action == TOOL_CALL_ACTION_TRANSFER_CONVERSATION
+        assert responses[1].toolCall.args["to"] == "+15550001234"
 
     def test_tool_call_and_result_in_same_conversation(self):
         class _ToolAgent(AgentKitAgent):
@@ -620,8 +619,8 @@ class TestAgentKitAgentTalkFlow:
             agent.Talk(iter([talkinput_init(), talkinput_text(msg_id="q-1")]), Mock())
         )
         assert responses[0].WhichOneof("data") == "initialization"
-        assert responses[1].WhichOneof("data") == "tool"
-        assert responses[2].WhichOneof("data") == "toolResult"
+        assert responses[1].WhichOneof("data") == "toolCall"
+        assert responses[2].WhichOneof("data") == "toolCallResult"
         assert responses[3].WhichOneof("data") == "assistant"
         assert responses[3].assistant.completed is True
 

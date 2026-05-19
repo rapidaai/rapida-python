@@ -289,7 +289,7 @@ class TestAssistantWebhookPb2Imports:
 
     EXPECTED_IMPORTS = [
         "AssistantWebhook",
-        "AssistantWebhookLog",
+        "AssistantHTTPLog",
         "CreateAssistantWebhookRequest",
         "UpdateAssistantWebhookRequest",
         "GetAssistantWebhookRequest",
@@ -297,10 +297,11 @@ class TestAssistantWebhookPb2Imports:
         "GetAssistantWebhookResponse",
         "GetAllAssistantWebhookRequest",
         "GetAllAssistantWebhookResponse",
-        "GetAllAssistantWebhookLogRequest",
-        "GetAssistantWebhookLogRequest",
-        "GetAssistantWebhookLogResponse",
-        "GetAllAssistantWebhookLogResponse",
+        "GetAllAssistantHTTPLogRequest",
+        "GetAssistantHTTPLogRequest",
+        "GetAssistantHTTPLogResponse",
+        "GetAllAssistantHTTPLogResponse",
+        "RetryAssistantHTTPLogRequest",
     ]
 
     @pytest.fixture
@@ -397,6 +398,7 @@ class TestAssistantToolPb2Imports:
 
     EXPECTED_IMPORTS = [
         "AssistantTool",
+        "AssistantToolLog",
         "CreateAssistantToolRequest",
         "UpdateAssistantToolRequest",
         "GetAssistantToolRequest",
@@ -404,6 +406,10 @@ class TestAssistantToolPb2Imports:
         "GetAssistantToolResponse",
         "GetAllAssistantToolRequest",
         "GetAllAssistantToolResponse",
+        "GetAssistantToolLogRequest",
+        "GetAssistantToolLogResponse",
+        "GetAllAssistantToolLogRequest",
+        "GetAllAssistantToolLogResponse",
     ]
 
     @pytest.fixture
@@ -528,17 +534,30 @@ class TestAssistantApiPb2Imports:
 
     EXPECTED_IMPORTS = [
         "Assistant",
+        "CreateAssistantAuthenticationRequest",
         "CreateAssistantRequest",
         "CreateAssistantTagRequest",
+        "CreateAssistantTelemetryProviderRequest",
         "GetAssistantRequest",
+        "GetAssistantAuthenticationRequest",
+        "GetAssistantAuthenticationResponse",
         "DeleteAssistantRequest",
+        "DeleteAssistantTelemetryProviderRequest",
+        "DisableAssistantAuthenticationRequest",
         "GetAssistantResponse",
         "GetAllAssistantRequest",
         "GetAllAssistantResponse",
         "GetAllAssistantMessageRequest",
         "GetAllAssistantMessageResponse",
+        "GetAllAssistantTelemetryProviderRequest",
+        "GetAllAssistantTelemetryProviderResponse",
+        "GetAllAssistantTelemetryRequest",
+        "GetAllAssistantTelemetryResponse",
         "GetAllMessageRequest",
         "GetAllMessageResponse",
+        "GetAssistantTelemetryProviderRequest",
+        "GetAssistantTelemetryProviderResponse",
+        "UpdateAssistantTelemetryProviderRequest",
         "UpdateAssistantDetailRequest",
         "GetAssistantConversationRequest",
         "GetAssistantConversationResponse",
@@ -562,7 +581,14 @@ class TestAssistantProviderPb2Imports:
     MODULE = "rapida.clients.protos.assistant_provider_pb2"
 
     EXPECTED_IMPORTS = [
+        "AssistantProviderAgentkit",
         "AssistantProviderModel",
+        "AssistantProviderWebsocket",
+        "CreateAssistantProviderRequest",
+        "GetAllAssistantProviderRequest",
+        "GetAllAssistantProviderResponse",
+        "GetAssistantProviderResponse",
+        "UpdateAssistantVersionRequest",
     ]
 
     @pytest.fixture

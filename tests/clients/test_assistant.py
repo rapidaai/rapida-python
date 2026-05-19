@@ -18,33 +18,93 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-"""
-Tests for assistant client functions.
-These tests use mocking to verify the function behavior without
-requiring actual gRPC connections or protobuf dependencies.
-"""
+"""Tests for assistant client helper functions."""
+
+import importlib.util
+import os
+import sys
+from unittest.mock import MagicMock, Mock
 
 import pytest
-import sys
-import os
-import importlib.util
-from unittest.mock import Mock, MagicMock, patch
 
 
-# Mock all the protobuf modules before importing
-sys.modules['rapida.clients.protos.assistant_knowledge_pb2'] = MagicMock()
-sys.modules['rapida.clients.protos.common_pb2'] = MagicMock()
-sys.modules['rapida.clients.protos.assistant_webhook_pb2'] = MagicMock()
-sys.modules['rapida.clients.protos.assistant_analysis_pb2'] = MagicMock()
-sys.modules['rapida.clients.protos.assistant_tool_pb2'] = MagicMock()
-sys.modules['rapida.clients.protos.assistant_api_pb2'] = MagicMock()
-sys.modules['rapida.connections'] = MagicMock()
+for module_name in (
+    "rapida.clients.protos.assistant_analysis_pb2",
+    "rapida.clients.protos.assistant_api_pb2",
+    "rapida.clients.protos.assistant_knowledge_pb2",
+    "rapida.clients.protos.assistant_provider_pb2",
+    "rapida.clients.protos.assistant_tool_pb2",
+    "rapida.clients.protos.assistant_webhook_pb2",
+    "rapida.clients.protos.common_pb2",
+    "rapida.connections",
+):
+    sys.modules[module_name] = MagicMock()
 
-# Load the assistant module directly
-module_path = os.path.join(os.path.dirname(__file__), '..', '..', 'rapida', 'clients', 'assistant.py')
-spec = importlib.util.spec_from_file_location('assistant', module_path)
+
+module_path = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "..",
+    "rapida",
+    "clients",
+    "assistant.py",
+)
+spec = importlib.util.spec_from_file_location("assistant", module_path)
 assistant_module = importlib.util.module_from_spec(spec)
+assert spec.loader is not None
 spec.loader.exec_module(assistant_module)
+
+
+FUNCTION_CASES = [
+    ("get_assistant", "GetAssistant"),
+    ("get_all_assistant", "GetAllAssistant"),
+    ("create_assistant", "CreateAssistant"),
+    ("delete_assistant", "DeleteAssistant"),
+    ("get_all_assistant_provider", "GetAllAssistantProvider"),
+    ("create_assistant_provider", "CreateAssistantProvider"),
+    ("create_assistant_tag", "CreateAssistantTag"),
+    ("update_assistant_version", "UpdateAssistantVersion"),
+    ("update_assistant_detail", "UpdateAssistantDetail"),
+    ("get_all_assistant_message", "GetAllAssistantMessage"),
+    ("get_all_conversation_message", "GetAllConversationMessage"),
+    ("get_all_message", "GetAllMessage"),
+    ("get_all_assistant_telemetry", "GetAllAssistantTelemetry"),
+    ("get_assistant_telemetry_provider", "GetAssistantTelemetryProvider"),
+    ("get_all_assistant_telemetry_provider", "GetAllAssistantTelemetryProvider"),
+    ("create_assistant_telemetry_provider", "CreateAssistantTelemetryProvider"),
+    ("update_assistant_telemetry_provider", "UpdateAssistantTelemetryProvider"),
+    ("delete_assistant_telemetry_provider", "DeleteAssistantTelemetryProvider"),
+    ("create_assistant_authentication", "CreateAssistantAuthentication"),
+    ("get_assistant_authentication", "GetAssistantAuthentication"),
+    ("disable_assistant_authentication", "DisableAssistantAuthentication"),
+    ("get_assistant_conversation", "GetAssistantConversation"),
+    ("get_all_assistant_conversation", "GetAllAssistantConversation"),
+    ("get_assistant_http_log", "GetAssistantHTTPLog"),
+    ("get_all_assistant_http_log", "GetAllAssistantHTTPLog"),
+    ("retry_assistant_http_log", "RetryAssistantHTTPLog"),
+    ("get_assistant_webhook", "GetAssistantWebhook"),
+    ("get_all_assistant_webhook", "GetAllAssistantWebhook"),
+    ("create_assistant_webhook", "CreateAssistantWebhook"),
+    ("update_assistant_webhook", "UpdateAssistantWebhook"),
+    ("delete_assistant_webhook", "DeleteAssistantWebhook"),
+    ("get_assistant_tool_log", "GetAssistantToolLog"),
+    ("get_all_assistant_tool_log", "GetAllAssistantToolLog"),
+    ("get_assistant_analysis", "GetAssistantAnalysis"),
+    ("create_assistant_analysis", "CreateAssistantAnalysis"),
+    ("update_assistant_analysis", "UpdateAssistantAnalysis"),
+    ("delete_assistant_analysis", "DeleteAssistantAnalysis"),
+    ("get_all_assistant_analysis", "GetAllAssistantAnalysis"),
+    ("create_assistant_tool", "CreateAssistantTool"),
+    ("get_assistant_tool", "GetAssistantTool"),
+    ("get_all_assistant_tool", "GetAllAssistantTool"),
+    ("delete_assistant_tool", "DeleteAssistantTool"),
+    ("update_assistant_tool", "UpdateAssistantTool"),
+    ("create_assistant_knowledge", "CreateAssistantKnowledge"),
+    ("get_assistant_knowledge", "GetAssistantKnowledge"),
+    ("get_all_assistant_knowledge", "GetAllAssistantKnowledge"),
+    ("delete_assistant_knowledge", "DeleteAssistantKnowledge"),
+    ("update_assistant_knowledge", "UpdateAssistantKnowledge"),
+]
 
 
 @pytest.fixture
@@ -62,230 +122,51 @@ def mock_auth():
     return [("authorization", "Bearer test-token")]
 
 
-class TestGetAssistant:
-    """Test cases for get_assistant function."""
-
-    def test_get_assistant_with_default_auth(self, mock_connection_config):
-        """Test get_assistant uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAssistant.return_value = expected_response
-
-        result = assistant_module.get_assistant(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAssistant.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-    def test_get_assistant_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test get_assistant uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAssistant.return_value = expected_response
-
-        result = assistant_module.get_assistant(mock_connection_config, request, auth=mock_auth)
-
-        mock_connection_config.assistant_client.GetAssistant.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-        assert result == expected_response
-
-
-class TestGetAllAssistant:
-    """Test cases for get_all_assistant function."""
-
-    def test_get_all_assistant_with_default_auth(self, mock_connection_config):
-        """Test get_all_assistant uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAllAssistant.return_value = expected_response
-
-        result = assistant_module.get_all_assistant(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAllAssistant.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-    def test_get_all_assistant_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test get_all_assistant uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAllAssistant.return_value = expected_response
-
-        result = assistant_module.get_all_assistant(mock_connection_config, request, auth=mock_auth)
-
-        mock_connection_config.assistant_client.GetAllAssistant.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-
-
-class TestGetAssistantConversation:
-    """Test cases for get_assistant_conversation function."""
-
-    def test_get_assistant_conversation_with_default_auth(self, mock_connection_config):
-        """Test get_assistant_conversation uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAssistantConversation.return_value = expected_response
-
-        result = assistant_module.get_assistant_conversation(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAssistantConversation.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAllAssistantConversation:
-    """Test cases for get_all_assistant_conversation function."""
-
-    def test_get_all_assistant_conversation_with_default_auth(self, mock_connection_config):
-        """Test get_all_assistant_conversation uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAllAssistantConversation.return_value = expected_response
-
-        result = assistant_module.get_all_assistant_conversation(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAllAssistantConversation.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAssistantWebhook:
-    """Test cases for get_assistant_webhook function."""
-
-    def test_get_assistant_webhook_with_default_auth(self, mock_connection_config):
-        """Test get_assistant_webhook uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAssistantWebhook.return_value = expected_response
-
-        result = assistant_module.get_assistant_webhook(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAssistantWebhook.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAllAssistantWebhook:
-    """Test cases for get_all_assistant_webhook function."""
-
-    def test_get_all_assistant_webhook_with_default_auth(self, mock_connection_config):
-        """Test get_all_assistant_webhook uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAllAssistantWebhook.return_value = expected_response
-
-        result = assistant_module.get_all_assistant_webhook(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAllAssistantWebhook.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAssistantKnowledge:
-    """Test cases for get_assistant_knowledge function."""
-
-    def test_get_assistant_knowledge_with_default_auth(self, mock_connection_config):
-        """Test get_assistant_knowledge uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAssistantKnowledge.return_value = expected_response
-
-        result = assistant_module.get_assistant_knowledge(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAssistantKnowledge.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAllAssistantKnowledge:
-    """Test cases for get_all_assistant_knowledge function."""
-
-    def test_get_all_assistant_knowledge_with_default_auth(self, mock_connection_config):
-        """Test get_all_assistant_knowledge uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAllAssistantKnowledge.return_value = expected_response
-
-        result = assistant_module.get_all_assistant_knowledge(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAllAssistantKnowledge.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAssistantTool:
-    """Test cases for get_assistant_tool function."""
-
-    def test_get_assistant_tool_with_default_auth(self, mock_connection_config):
-        """Test get_assistant_tool uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAssistantTool.return_value = expected_response
-
-        result = assistant_module.get_assistant_tool(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAssistantTool.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAllAssistantTool:
-    """Test cases for get_all_assistant_tool function."""
-
-    def test_get_all_assistant_tool_with_default_auth(self, mock_connection_config):
-        """Test get_all_assistant_tool uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAllAssistantTool.return_value = expected_response
-
-        result = assistant_module.get_all_assistant_tool(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAllAssistantTool.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAssistantAnalysis:
-    """Test cases for get_assistant_analysis function."""
-
-    def test_get_assistant_analysis_with_default_auth(self, mock_connection_config):
-        """Test get_assistant_analysis uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAssistantAnalysis.return_value = expected_response
-
-        result = assistant_module.get_assistant_analysis(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAssistantAnalysis.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-
-class TestGetAllAssistantAnalysis:
-    """Test cases for get_all_assistant_analysis function."""
-
-    def test_get_all_assistant_analysis_with_default_auth(self, mock_connection_config):
-        """Test get_all_assistant_analysis uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.assistant_client.GetAllAssistantAnalysis.return_value = expected_response
-
-        result = assistant_module.get_all_assistant_analysis(mock_connection_config, request)
-
-        mock_connection_config.assistant_client.GetAllAssistantAnalysis.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_default_auth(function_name, client_method, mock_connection_config):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.assistant_client, client_method).return_value = (
+        expected_response
+    )
+
+    result = getattr(assistant_module, function_name)(mock_connection_config, request)
+
+    getattr(mock_connection_config.assistant_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_connection_config.auth,
+    )
+    assert result == expected_response
+
+
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_custom_auth(
+    function_name,
+    client_method,
+    mock_connection_config,
+    mock_auth,
+):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.assistant_client, client_method).return_value = (
+        expected_response
+    )
+
+    result = getattr(
+        assistant_module,
+        function_name,
+    )(mock_connection_config, request, auth=mock_auth)
+
+    getattr(mock_connection_config.assistant_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_auth,
+    )
+    assert result == expected_response
+
+
+def test_http_log_helpers_replace_removed_webhook_log_helpers():
+    assert hasattr(assistant_module, "get_assistant_http_log")
+    assert hasattr(assistant_module, "get_all_assistant_http_log")
+    assert hasattr(assistant_module, "retry_assistant_http_log")
+    assert not hasattr(assistant_module, "get_assistant_webhook_log")
+    assert not hasattr(assistant_module, "get_all_assistant_webhook_log")

@@ -19,37 +19,84 @@
 #  THE SOFTWARE.
 #
 #  Author: Prashant <prashant@rapida.ai>
-from typing import Union
+
+from typing import Any, Union
+
 from rapida.clients.protos.talk_api_pb2 import (
     CreateBulkPhoneCallRequest,
     CreateBulkPhoneCallResponse,
+    CreateConversationMetricRequest,
+    CreateConversationMetricResponse,
+    CreateMessageMetricRequest,
+    CreateMessageMetricResponse,
     CreatePhoneCallRequest,
     CreatePhoneCallResponse,
 )
-from rapida.connections import ConnectionConfig, UserAuthInfo, ClientAuthInfo
+from rapida.connections import ClientAuthInfo, ConnectionConfig, UserAuthInfo
+
+
+AuthMetadata = Union[UserAuthInfo, ClientAuthInfo, None]
+
+
+def _resolve_auth(
+    client_cfg: ConnectionConfig,
+    auth: AuthMetadata,
+) -> Union[UserAuthInfo, ClientAuthInfo]:
+    return client_cfg.auth if auth is None else auth
+
+
+def _call_conversation_client(
+    client_cfg: ConnectionConfig,
+    method_name: str,
+    request: Any,
+    auth: AuthMetadata = None,
+) -> Any:
+    return getattr(client_cfg.conversation_client, method_name)(
+        request,
+        metadata=_resolve_auth(client_cfg, auth),
+    )
+
+
+def create_message_metric(
+    client_cfg: ConnectionConfig,
+    request: CreateMessageMetricRequest,
+    auth: AuthMetadata = None,
+) -> CreateMessageMetricResponse:
+    return _call_conversation_client(client_cfg, "CreateMessageMetric", request, auth)
+
+
+def create_conversation_metric(
+    client_cfg: ConnectionConfig,
+    request: CreateConversationMetricRequest,
+    auth: AuthMetadata = None,
+) -> CreateConversationMetricResponse:
+    return _call_conversation_client(
+        client_cfg,
+        "CreateConversationMetric",
+        request,
+        auth,
+    )
 
 
 def create_phone_call(
     client_cfg: ConnectionConfig,
     request: CreatePhoneCallRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
+    auth: AuthMetadata = None,
 ) -> CreatePhoneCallResponse:
-    if auth is None:
-        auth = client_cfg.auth
-    return client_cfg.conversation_client.CreatePhoneCall(
-        request,
-        metadata=auth,
-    )
+    return _call_conversation_client(client_cfg, "CreatePhoneCall", request, auth)
 
 
 def create_bulk_phone_call(
     client_cfg: ConnectionConfig,
     request: CreateBulkPhoneCallRequest,
-    auth: Union[UserAuthInfo, ClientAuthInfo, None] = None,
+    auth: AuthMetadata = None,
 ) -> CreateBulkPhoneCallResponse:
-    if auth is None:
-        auth = client_cfg.auth
-    return client_cfg.conversation_client.CreateBulkPhoneCall(
-        request,
-        metadata=auth,
-    )
+    return _call_conversation_client(client_cfg, "CreateBulkPhoneCall", request, auth)
+
+
+__all__ = [
+    "create_message_metric",
+    "create_conversation_metric",
+    "create_phone_call",
+    "create_bulk_phone_call",
+]

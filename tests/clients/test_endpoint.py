@@ -18,28 +18,50 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-"""
-Tests for endpoint client functions.
-These tests use mocking to verify the function behavior without
-requiring actual gRPC connections or protobuf dependencies.
-"""
+"""Tests for endpoint client helper functions."""
+
+import importlib.util
+import os
+import sys
+from unittest.mock import MagicMock, Mock
 
 import pytest
-import sys
-import os
-import importlib.util
-from unittest.mock import Mock, MagicMock
 
 
-# Mock all the protobuf modules before importing
-sys.modules['rapida.clients.protos.endpoint_api_pb2'] = MagicMock()
-sys.modules['rapida.connections'] = MagicMock()
+sys.modules["rapida.clients.protos.common_pb2"] = MagicMock()
+sys.modules["rapida.clients.protos.endpoint_api_pb2"] = MagicMock()
+sys.modules["rapida.connections"] = MagicMock()
 
-# Load the endpoint module directly
-module_path = os.path.join(os.path.dirname(__file__), '..', '..', 'rapida', 'clients', 'endpoint.py')
-spec = importlib.util.spec_from_file_location('endpoint', module_path)
+
+module_path = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "..",
+    "rapida",
+    "clients",
+    "endpoint.py",
+)
+spec = importlib.util.spec_from_file_location("endpoint", module_path)
 endpoint_module = importlib.util.module_from_spec(spec)
+assert spec.loader is not None
 spec.loader.exec_module(endpoint_module)
+
+
+FUNCTION_CASES = [
+    ("get_endpoint", "GetEndpoint"),
+    ("get_all_endpoint", "GetAllEndpoint"),
+    ("get_all_endpoint_provider_model", "GetAllEndpointProviderModel"),
+    ("update_endpoint_version", "UpdateEndpointVersion"),
+    ("create_endpoint", "CreateEndpoint"),
+    ("create_endpoint_provider_model", "CreateEndpointProviderModel"),
+    ("create_endpoint_cache_configuration", "CreateEndpointCacheConfiguration"),
+    ("create_endpoint_retry_configuration", "CreateEndpointRetryConfiguration"),
+    ("create_endpoint_tag", "CreateEndpointTag"),
+    ("fork_endpoint", "ForkEndpoint"),
+    ("update_endpoint_detail", "UpdateEndpointDetail"),
+    ("get_endpoint_log", "GetEndpointLog"),
+    ("get_all_endpoint_log", "GetAllEndpointLog"),
+]
 
 
 @pytest.fixture
@@ -57,133 +79,69 @@ def mock_auth():
     return [("authorization", "Bearer test-token")]
 
 
-class TestGetEndpoint:
-    """Test cases for get_endpoint function."""
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_default_auth(function_name, client_method, mock_connection_config):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.endpoint_client, client_method).return_value = (
+        expected_response
+    )
 
-    def test_get_endpoint_with_default_auth(self, mock_connection_config):
-        """Test get_endpoint uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetEndpoint.return_value = expected_response
+    result = getattr(endpoint_module, function_name)(mock_connection_config, request)
 
-        result = endpoint_module.get_endpoint(mock_connection_config, request)
-
-        mock_connection_config.endpoint_client.GetEndpoint.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-    def test_get_endpoint_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test get_endpoint uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetEndpoint.return_value = expected_response
-
-        result = endpoint_module.get_endpoint(mock_connection_config, request, auth=mock_auth)
-
-        mock_connection_config.endpoint_client.GetEndpoint.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-        assert result == expected_response
-
-    def test_get_endpoint_with_none_auth(self, mock_connection_config):
-        """Test get_endpoint with explicitly None auth uses config auth."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetEndpoint.return_value = expected_response
-
-        result = endpoint_module.get_endpoint(mock_connection_config, request, auth=None)
-
-        mock_connection_config.endpoint_client.GetEndpoint.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
+    getattr(mock_connection_config.endpoint_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_connection_config.auth,
+    )
+    assert result == expected_response
 
 
-class TestGetAllEndpoint:
-    """Test cases for get_all_endpoint function."""
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_custom_auth(
+    function_name,
+    client_method,
+    mock_connection_config,
+    mock_auth,
+):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.endpoint_client, client_method).return_value = (
+        expected_response
+    )
 
-    def test_get_all_endpoint_with_default_auth(self, mock_connection_config):
-        """Test get_all_endpoint uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetAllEndpoint.return_value = expected_response
+    result = getattr(endpoint_module, function_name)(
+        mock_connection_config,
+        request,
+        auth=mock_auth,
+    )
 
-        result = endpoint_module.get_all_endpoint(mock_connection_config, request)
-
-        mock_connection_config.endpoint_client.GetAllEndpoint.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-    def test_get_all_endpoint_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test get_all_endpoint uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetAllEndpoint.return_value = expected_response
-
-        result = endpoint_module.get_all_endpoint(mock_connection_config, request, auth=mock_auth)
-
-        mock_connection_config.endpoint_client.GetAllEndpoint.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-        assert result == expected_response
+    getattr(mock_connection_config.endpoint_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_auth,
+    )
+    assert result == expected_response
 
 
-class TestGetEndpointLog:
-    """Test cases for get_endpoint_log function."""
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_config_auth_when_none_explicitly_passed(
+    function_name,
+    client_method,
+    mock_connection_config,
+):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.endpoint_client, client_method).return_value = (
+        expected_response
+    )
 
-    def test_get_endpoint_log_with_default_auth(self, mock_connection_config):
-        """Test get_endpoint_log uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetEndpointLog.return_value = expected_response
+    result = getattr(endpoint_module, function_name)(
+        mock_connection_config,
+        request,
+        auth=None,
+    )
 
-        result = endpoint_module.get_endpoint_log(mock_connection_config, request)
-
-        mock_connection_config.endpoint_client.GetEndpointLog.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-    def test_get_endpoint_log_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test get_endpoint_log uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetEndpointLog.return_value = expected_response
-
-        result = endpoint_module.get_endpoint_log(mock_connection_config, request, auth=mock_auth)
-
-        mock_connection_config.endpoint_client.GetEndpointLog.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-        assert result == expected_response
-
-
-class TestGetAllEndpointLog:
-    """Test cases for get_all_endpoint_log function."""
-
-    def test_get_all_endpoint_log_with_default_auth(self, mock_connection_config):
-        """Test get_all_endpoint_log uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetAllEndpointLog.return_value = expected_response
-
-        result = endpoint_module.get_all_endpoint_log(mock_connection_config, request)
-
-        mock_connection_config.endpoint_client.GetAllEndpointLog.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
-
-    def test_get_all_endpoint_log_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test get_all_endpoint_log uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.endpoint_client.GetAllEndpointLog.return_value = expected_response
-
-        result = endpoint_module.get_all_endpoint_log(mock_connection_config, request, auth=mock_auth)
-
-        mock_connection_config.endpoint_client.GetAllEndpointLog.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-        assert result == expected_response
+    getattr(mock_connection_config.endpoint_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_connection_config.auth,
+    )
+    assert result == expected_response

@@ -18,28 +18,39 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-"""
-Tests for invoke client functions.
-These tests use mocking to verify the function behavior without
-requiring actual gRPC connections or protobuf dependencies.
-"""
+"""Tests for invoke client helper functions."""
+
+import importlib.util
+import os
+import sys
+from unittest.mock import MagicMock, Mock
 
 import pytest
-import sys
-import os
-import importlib.util
-from unittest.mock import Mock, MagicMock
 
 
-# Mock all the protobuf modules before importing
-sys.modules['rapida.clients.protos.invoker_api_pb2'] = MagicMock()
-sys.modules['rapida.connections'] = MagicMock()
+sys.modules["rapida.clients.protos.invoker_api_pb2"] = MagicMock()
+sys.modules["rapida.connections"] = MagicMock()
 
-# Load the invoke module directly
-module_path = os.path.join(os.path.dirname(__file__), '..', '..', 'rapida', 'clients', 'invoke.py')
-spec = importlib.util.spec_from_file_location('invoke', module_path)
+
+module_path = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "..",
+    "rapida",
+    "clients",
+    "invoke.py",
+)
+spec = importlib.util.spec_from_file_location("invoke", module_path)
 invoke_module = importlib.util.module_from_spec(spec)
+assert spec.loader is not None
 spec.loader.exec_module(invoke_module)
+
+
+FUNCTION_CASES = [
+    ("invoke", "Invoke"),
+    ("update", "Update"),
+    ("probe", "Probe"),
+]
 
 
 @pytest.fixture
@@ -57,64 +68,69 @@ def mock_auth():
     return [("authorization", "Bearer test-token")]
 
 
-class TestInvoke:
-    """Test cases for invoke function."""
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_default_auth(function_name, client_method, mock_connection_config):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.deployment_client, client_method).return_value = (
+        expected_response
+    )
 
-    def test_invoke_with_default_auth(self, mock_connection_config):
-        """Test invoke uses default auth from config."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.deployment_client.Invoke.return_value = expected_response
+    result = getattr(invoke_module, function_name)(mock_connection_config, request)
 
-        result = invoke_module.invoke(mock_connection_config, request)
+    getattr(mock_connection_config.deployment_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_connection_config.auth,
+    )
+    assert result == expected_response
 
-        mock_connection_config.deployment_client.Invoke.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
-        assert result == expected_response
 
-    def test_invoke_with_custom_auth(self, mock_connection_config, mock_auth):
-        """Test invoke uses custom auth when provided."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.deployment_client.Invoke.return_value = expected_response
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_custom_auth(
+    function_name,
+    client_method,
+    mock_connection_config,
+    mock_auth,
+):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.deployment_client, client_method).return_value = (
+        expected_response
+    )
 
-        result = invoke_module.invoke(mock_connection_config, request, auth=mock_auth)
+    result = getattr(invoke_module, function_name)(
+        mock_connection_config,
+        request,
+        auth=mock_auth,
+    )
 
-        mock_connection_config.deployment_client.Invoke.assert_called_once_with(
-            request, metadata=mock_auth
-        )
-        assert result == expected_response
+    getattr(mock_connection_config.deployment_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_auth,
+    )
+    assert result == expected_response
 
-    def test_invoke_with_none_auth(self, mock_connection_config):
-        """Test invoke with explicitly None auth uses config auth."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.deployment_client.Invoke.return_value = expected_response
 
-        result = invoke_module.invoke(mock_connection_config, request, auth=None)
+@pytest.mark.parametrize("function_name, client_method", FUNCTION_CASES)
+def test_helper_uses_config_auth_when_none_explicitly_passed(
+    function_name,
+    client_method,
+    mock_connection_config,
+):
+    request = Mock()
+    expected_response = Mock()
+    getattr(mock_connection_config.deployment_client, client_method).return_value = (
+        expected_response
+    )
 
-        mock_connection_config.deployment_client.Invoke.assert_called_once_with(
-            request, metadata=mock_connection_config.auth
-        )
+    result = getattr(invoke_module, function_name)(
+        mock_connection_config,
+        request,
+        auth=None,
+    )
 
-    def test_invoke_returns_response(self, mock_connection_config):
-        """Test invoke returns the correct response."""
-        request = Mock()
-        expected_response = Mock()
-        mock_connection_config.deployment_client.Invoke.return_value = expected_response
-
-        result = invoke_module.invoke(mock_connection_config, request)
-
-        assert result is expected_response
-
-    def test_invoke_passes_request_correctly(self, mock_connection_config):
-        """Test invoke passes the request object correctly."""
-        request = Mock()
-        mock_connection_config.deployment_client.Invoke.return_value = Mock()
-
-        invoke_module.invoke(mock_connection_config, request)
-
-        # Verify the first argument to Invoke is the request object
-        call_args = mock_connection_config.deployment_client.Invoke.call_args
-        assert call_args[0][0] is request
+    getattr(mock_connection_config.deployment_client, client_method).assert_called_once_with(
+        request,
+        metadata=mock_connection_config.auth,
+    )
+    assert result == expected_response
