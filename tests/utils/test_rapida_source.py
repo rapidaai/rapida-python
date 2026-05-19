@@ -43,17 +43,33 @@ mock_rapida.clients = types.ModuleType('rapida.clients')
 mock_rapida.clients.protos = types.ModuleType('rapida.clients.protos')
 mock_rapida.clients.protos.common_pb2 = mock_common_pb2
 
-# Install the mocks before loading rapida_source
-sys.modules['rapida'] = mock_rapida
-sys.modules['rapida.clients'] = mock_rapida.clients
-sys.modules['rapida.clients.protos'] = mock_rapida.clients.protos
-sys.modules['rapida.clients.protos.common_pb2'] = mock_common_pb2
+_mocked_module_names = (
+    'rapida',
+    'rapida.clients',
+    'rapida.clients.protos',
+    'rapida.clients.protos.common_pb2',
+)
+_original_modules = {
+    name: sys.modules.get(name) for name in _mocked_module_names
+}
 
 # Now import rapida_source which depends on common_pb2
 module_path = os.path.join(os.path.dirname(__file__), '..', '..', 'rapida', 'utils', 'rapida_source.py')
 spec = importlib.util.spec_from_file_location('rapida_source', module_path)
 module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(module)
+try:
+    # Install the mocks only while loading rapida_source.
+    sys.modules['rapida'] = mock_rapida
+    sys.modules['rapida.clients'] = mock_rapida.clients
+    sys.modules['rapida.clients.protos'] = mock_rapida.clients.protos
+    sys.modules['rapida.clients.protos.common_pb2'] = mock_common_pb2
+    spec.loader.exec_module(module)
+finally:
+    for name, original_module in _original_modules.items():
+        if original_module is None:
+            sys.modules.pop(name, None)
+        else:
+            sys.modules[name] = original_module
 
 RapidaSource = module.RapidaSource
 common_pb2 = mock_common_pb2
