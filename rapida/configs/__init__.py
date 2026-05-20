@@ -24,14 +24,10 @@ Author: Prashant <prashant@rapida.ai>
 This module provides functions for managing projects through the ProjectService.
 """
 
-ASSISTANT_API = "websocket-01.in.rapida.ai"
-WEB_API = "api-01.in.rapida.ai"
-ENDPOINT_API = "endpoint-01.in.rapida.ai"
+ASSISTANT_API = "websocket-01.in.rapida.ai:50051"
+WEB_API = "api-01.in.rapida.ai:50051"
+ENDPOINT_API = "api-01.in.rapida.ai:50051"
 
 LOCAL_ASSISTANT_API = "localhost:9007"
 LOCAL_WEB_API = "localhost:9001"
 LOCAL_ENDPOINT_API = "localhost:9005"
-
-GRPC_ENDPOINT_URL = "endpoint-01.in.rapida.ai"
-GRPC_ASSISTANT_URL = "websocket-01.in.rapida.ai"
-GRPC_GATEWAY_URL = "gateway-01.rapida.ai"

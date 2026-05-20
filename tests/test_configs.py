@@ -36,15 +36,11 @@ ENDPOINT_API = module.ENDPOINT_API
 LOCAL_ASSISTANT_API = module.LOCAL_ASSISTANT_API
 LOCAL_WEB_API = module.LOCAL_WEB_API
 LOCAL_ENDPOINT_API = module.LOCAL_ENDPOINT_API
-GRPC_ENDPOINT_URL = module.GRPC_ENDPOINT_URL
-GRPC_ASSISTANT_URL = module.GRPC_ASSISTANT_URL
-GRPC_GATEWAY_URL = module.GRPC_GATEWAY_URL
 
 # Old import kept for reference:
 # from rapida.configs import (
 #     ASSISTANT_API, WEB_API, ENDPOINT_API,
 #     LOCAL_ASSISTANT_API, LOCAL_WEB_API, LOCAL_ENDPOINT_API,
-#     GRPC_ENDPOINT_URL, GRPC_ASSISTANT_URL, GRPC_GATEWAY_URL,
 # )
 
 
@@ -77,21 +73,6 @@ class TestConfigs:
     def test_local_endpoint_api_is_localhost(self):
         """Test LOCAL_ENDPOINT_API points to localhost."""
         assert "localhost" in LOCAL_ENDPOINT_API
-
-    def test_grpc_endpoint_url_is_set(self):
-        """Test GRPC_ENDPOINT_URL has a value."""
-        assert GRPC_ENDPOINT_URL is not None
-        assert len(GRPC_ENDPOINT_URL) > 0
-
-    def test_grpc_assistant_url_is_set(self):
-        """Test GRPC_ASSISTANT_URL has a value."""
-        assert GRPC_ASSISTANT_URL is not None
-        assert len(GRPC_ASSISTANT_URL) > 0
-
-    def test_grpc_gateway_url_is_set(self):
-        """Test GRPC_GATEWAY_URL has a value."""
-        assert GRPC_GATEWAY_URL is not None
-        assert len(GRPC_GATEWAY_URL) > 0
 
     def test_production_apis_are_rapida_domain(self):
         """Test production APIs use rapida.ai domain."""
