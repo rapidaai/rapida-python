@@ -171,12 +171,13 @@ class AuthorizationInterceptor(ServerInterceptor):
         return continuation(handler_call_details)
 
     def _abort_handler(self):
-        def abort(ignored_request, context):
+        def abort(ignored_request_iterator, context):
             context.abort(
                 grpc.StatusCode.UNAUTHENTICATED, "Invalid authorization token"
             )
+            return iter(())
 
-        return grpc.unary_unary_rpc_method_handler(abort)
+        return grpc.stream_stream_rpc_method_handler(abort)
 
 
 # ============================================================================
@@ -658,6 +659,7 @@ class AgentKitServer:
         if self._server:
             logger.info(f"Stopping server (grace={grace}s)...")
             self._server.stop(grace)
+            self._server = None
             logger.info("Server stopped")
 
     def wait_for_termination(self, timeout: Optional[float] = None) -> bool:

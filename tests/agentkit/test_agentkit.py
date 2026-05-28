@@ -895,6 +895,12 @@ class TestAuthorizationInterceptor:
         handler = interceptor._abort_handler()
         assert handler is not None
 
+    def test_abort_handler_is_stream_stream_compatible(self):
+        interceptor = AuthorizationInterceptor(AuthConfig(enabled=True, token="t"))
+        handler = interceptor._abort_handler()
+        assert handler.request_streaming is True
+        assert handler.response_streaming is True
+
 
 # ============================================================================
 # AgentKitServer
@@ -1122,6 +1128,12 @@ class TestAgentKitServer:
         server._server = mock_grpc_server
         server.stop()
         mock_grpc_server.stop.assert_called_once_with(5)
+
+    def test_stop_marks_server_not_running(self):
+        server = self._make_server()
+        server._server = MagicMock()
+        server.stop()
+        assert server.is_running is False
 
     def test_stop_noop_when_server_never_started(self):
         server = self._make_server()

@@ -1,6 +1,6 @@
 # Rapida Python SDK
 
-[![Build and Publish Python SDK](https://github.com/rapidaai/rapida-python/actions/workflows/python-build.yml/badge.svg?branch=main)](https://github.com/rapidaai/rapida-python/actions/workflows/build.yml)
+[![Build and Publish Python SDK](https://github.com/rapidaai/rapida-python/actions/workflows/python-build.yml/badge.svg?branch=main)](https://github.com/rapidaai/rapida-python/actions/workflows/python-build.yml)
 
 The Rapida Python SDK provides a powerful interface for interacting with Rapida AI services. This SDK simplifies the process of making API calls, handling authentication, and managing responses from Rapida endpoints.
 
@@ -17,18 +17,13 @@ pip install rapida-python
 Here's how to get started with the Rapida Python SDK:
 
 ```python
-from rapida import (
-    ConnectionConfig,
-)
-from pprint import pprint
-
+from rapida import ConnectionConfig
 
 connection_config = ConnectionConfig.default_connection_config(
     ConnectionConfig.with_sdk(
-        "{your-api-key-here}"  # Replace with your actual API key
+        "{your-api-key-here}"
     )
 )
-
 ```
 
 ## Authentication
@@ -40,8 +35,11 @@ You can configure the Rapida SDK to authenticate using your **API Key** or **Per
 ```python
 import os
 from rapida.connections import ConnectionConfig
-connection_config = ConnectionConfig.with_sdk(
-    os.environ["RAPIDA_API_KEY"]  # API Key from environment variables
+
+connection_config = ConnectionConfig.default_connection_config(
+    ConnectionConfig.with_sdk(
+        os.environ["RAPIDA_API_KEY"]  # API Key from environment variables
+    )
 )
 ```
 
@@ -51,25 +49,46 @@ connection_config = ConnectionConfig.with_sdk(
 import os
 from rapida.connections import ConnectionConfig
 
-connection_config = ConnectionConfig.with_personal_token(
-  os.environ["RAPIDA_AUTHORIZATION_TOKEN"],  # Authorization Token
-  os.environ["RAPIDA_AUTH_ID"],              # Authentication ID
-  os.environ["RAPIDA_PROJECT_ID"],           # Project ID
+connection_config = ConnectionConfig.default_connection_config(
+    ConnectionConfig.with_personal_token(
+        os.environ["RAPIDA_AUTHORIZATION_TOKEN"],  # Authorization Token
+        os.environ["RAPIDA_AUTH_ID"],              # Authentication ID
+        os.environ["RAPIDA_PROJECT_ID"],           # Project ID
+    )
 )
 ```
 
 ## Configuration Options
 
-The `DefaultConnectionConfig` accepts multiple options for configuring the SDK. Key options include:
+`ConnectionConfig` accepts multiple options for configuring the SDK:
 
 - `with_sdk(api_key: str)`: Sets the API key for authentication.
 - `with_personal_token(auth_token: str, auth_id: str, project_id: str)`: Configures the connection for personal tokens.
-- `with_endpoint_url(url: str)`: Overrides the default API endpoint URL.
-- `with_timeout(timeout: float)`: Sets the timeout for API requests (in seconds).
+- `with_webplugin_client(api_key: str, user_id: Optional[str] = None)`: Configures web plugin client authentication.
+- `with_debugger(authorization: str, user_id: str, project_id: str)`: Configures debugger authentication.
+- `with_custom_endpoint(endpoint: Optional[dict] = None, debug: Optional[bool] = None)`: Overrides the default assistant, web, and endpoint API hosts.
+- `with_local()`: Uses local service endpoints and insecure gRPC channels for local development.
+- `default_connection_config(auth)`: Creates a `ConnectionConfig` with the supplied auth metadata.
+
+Example using custom endpoints:
+
+```python
+from rapida import ConnectionConfig
+
+connection_config = ConnectionConfig.default_connection_config(
+    ConnectionConfig.with_sdk("{your-api-key-here}")
+).with_custom_endpoint(
+    {
+        "assistant": "assistant.example.com:50051",
+        "web": "api.example.com:50051",
+        "endpoint": "endpoint.example.com:50051",
+    }
+)
+```
 
 ## Compatibility
 
-This SDK requires **Python 3.8 or later**. Ensure your system meets this requirement:
+This SDK requires **Python 3.9 or later**. Ensure your system meets this requirement:
 
 ```bash
 python --version
